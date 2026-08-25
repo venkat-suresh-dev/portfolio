@@ -169,3 +169,84 @@
     }
   }
 }
+
+/* Hero — name hover glitch (hover-capable + motion OK only) */
+@keyframes hero-name-glitch {
+  0% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+  }
+  25% {
+    transform: translate3d(-1px, 0, 0);
+    text-shadow: 1px 0 color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+  55% {
+    transform: translate3d(1px, 0.5px, 0);
+    text-shadow: -1px 0 color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: none;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero-name:hover {
+    animation: hero-name-glitch 0.32s ease-out;
+  }
+}
+
+/* Hero — highlights rhythm via dividers, not KPI cards */
+.hero-highlights > .hero-highlight:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  left: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--color-surface-2) 90%, transparent);
+}
+
+@media (max-width: 639px) {
+  .hero-highlights > .hero-highlight:nth-child(2n + 1)::before {
+    display: none;
+  }
+}
+
+.hero-highlights > .hero-highlight--featured::before {
+  display: none;
+}
+
+.hero-highlight--featured {
+  padding-left: 0.85rem;
+}
+
+.hero-highlight--featured::after {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  left: 0;
+  width: 2px;
+  background: var(--color-highlight);
+  opacity: 0.85;
+}
+
+@media (min-width: 640px) {
+  .hero-highlight--featured {
+    padding-left: 1rem;
+  }
+}
+
+/* Reduced-motion: boot always resolved visually */
+@media (prefers-reduced-motion: reduce) {
+  .hero-section[data-boot="pending"] .hero-identity,
+  .hero-section[data-boot="running"] .hero-identity {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-boot-line {
+    opacity: 1 !important;
+  }
+}
