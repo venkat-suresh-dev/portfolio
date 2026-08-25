@@ -261,12 +261,135 @@
   mask-image: linear-gradient(to right, black 0 78%, transparent);
 }
 
+/* Radius hierarchy
+   0     text controls, GATE plate, featured project, credential rows
+   2px   instrument buttons
+   4px   secondary project panels
+   Do not collapse these into one radius. */
+.text-control {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  gap: 0.4rem;
+  border-radius: 0;
+  padding-inline: 0.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.text-control:hover {
+  color: var(--color-accent);
+}
+
+.text-control:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.instrument-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  gap: 0.5rem;
+  padding: 0 0.875rem;
+  border-radius: 0.125rem;
+  border-width: 1px;
+  border-style: solid;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.instrument-btn svg {
+  transform: translateY(0.5px);
+}
+
+.instrument-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.instrument-btn-primary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.instrument-btn-primary:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 82%, white);
+  background: color-mix(in srgb, var(--color-accent) 82%, white);
+}
+
+.instrument-btn-secondary {
+  border-color: var(--color-surface-2);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.instrument-btn-secondary:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-surface-2));
+  color: var(--color-text);
+}
+
 .project-featured {
-  background-image: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-accent) 6%, transparent),
-    transparent 48%
-  );
+  border-block: 1px solid
+    color-mix(in srgb, var(--color-surface-2) 82%, var(--color-accent) 18%);
+  border-radius: 0;
+  padding-block: 1.35rem;
+}
+
+.project-index {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--color-text-muted) 38%, transparent);
+}
+
+.project-secondary {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  border: 1px solid var(--color-surface-2);
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--color-surface) 65%, transparent);
+  padding: 1rem 1.05rem 0.95rem;
+}
+
+.academic-block {
+  position: relative;
+  padding-left: 0.95rem;
+  border-left: 1px solid
+    color-mix(in srgb, var(--color-surface-2) 78%, transparent);
+}
+
+.credential-row {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-surface-2) 72%, transparent);
+  border-radius: 0;
+  padding: 0.7rem 0 0.65rem;
 }
 
 .timeline-content::before {
@@ -413,20 +536,9 @@
   }
 }
 
-.hero-cta-primary {
-  font-size: 0.8125rem;
-}
-
-.contact-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 16rem 12rem at calc(100% - 7rem) 42%,
-    color-mix(in srgb, var(--color-accent-2) 6%, transparent),
-    transparent 74%
-  );
+.contact-stage {
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-surface-2) 80%, transparent);
 }
 
 /* Hero — name hover glitch (hover-capable + motion OK only) */
@@ -737,6 +849,11 @@
   .glow-card-interactive:focus-within {
     transform: none;
     box-shadow: none;
+  }
+
+  .text-control,
+  .instrument-btn {
+    transition: none;
   }
 
   .outbound-icon {

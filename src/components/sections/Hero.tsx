@@ -12,7 +12,6 @@ import { motion } from "motion/react";
 
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
-import { buttonVariants } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
@@ -225,22 +224,16 @@ export function Hero() {
               <a
                 href={profile.resumePath}
                 download
-                className={cn(
-                  buttonVariants({ variant: "default", size: "default" }),
-                  "hero-cta-primary min-h-11 gap-2 px-3.5"
-                )}
+                className="instrument-btn instrument-btn-primary"
               >
-                <ArrowDownToLine aria-hidden="true" className="size-4" />
+                <ArrowDownToLine aria-hidden="true" className="size-3.5" />
                 Download Resume
               </a>
               <a
                 href="#contact"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "default" }),
-                  "min-h-11 gap-2 px-3.5 hover:border-accent/45"
-                )}
+                className="instrument-btn instrument-btn-secondary"
               >
-                <MessageSquare aria-hidden="true" className="size-4" />
+                <MessageSquare aria-hidden="true" className="size-3.5" />
                 Get in Touch
               </a>
             </div>

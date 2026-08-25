@@ -1,21 +1,7 @@
 import { SectionKicker } from "@/components/layout/SectionKicker";
-import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionReveal } from "@/components/layout/SectionReveal";
+import { TechLegend } from "@/components/layout/TechLegend";
 import { experience, type ExperienceEntry } from "@/data/experience";
-
-function TechTags({ labels }: { labels: string[] }) {
-  return (
-    <ul className="mt-3.5 flex flex-wrap gap-1.5" aria-label="Technologies">
-      {labels.map((label, index) => (
-        <li key={`${label}-${index}`}>
-          <span className="inline-flex max-w-full items-center rounded-sm border border-surface-2 px-2 py-[0.28rem] font-mono text-[0.65rem] leading-none tracking-wide text-text-muted">
-            {label}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
   return (
@@ -63,7 +49,7 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             ))}
           </ul>
 
-          <TechTags labels={entry.tech} />
+          <TechLegend labels={entry.tech} className="mt-3.5" />
         </div>
       </article>
     </li>
@@ -78,7 +64,7 @@ export function Experience() {
       className="relative px-4 pt-14 pb-12 sm:px-6 sm:pt-16 sm:pb-14"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-8 sm:mb-9">
+        <header className="mb-6 sm:mb-7">
           <SectionKicker index="§02" label="Experience" />
           <h2
             id="experience-heading"
@@ -86,7 +72,6 @@ export function Experience() {
           >
             Work Experience
           </h2>
-          <CoordinateMotif className="mt-4 h-5 w-full max-w-sm" />
         </header>
 
         <ol className="m-0 list-none p-0">

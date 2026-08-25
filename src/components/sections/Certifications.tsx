@@ -1,7 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
 
-import { GlowCard } from "@/components/layout/GlowCard";
-import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { SectionReveal } from "@/components/layout/SectionReveal";
 import {
@@ -11,45 +9,20 @@ import {
 import { cn } from "@/lib/utils";
 
 const credentialLinkClassName = cn(
-  "group mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-sm",
-  "font-mono text-xs tracking-wide text-text-muted",
+  "group mt-1.5 inline-flex min-h-9 items-center gap-1",
+  "font-mono text-[0.65rem] tracking-[0.14em] text-text-muted uppercase",
   "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
 );
 
 const outboundIconClassName = cn(
-  "outbound-icon size-3.5 shrink-0 transition-transform duration-200 ease-out",
+  "outbound-icon size-3 shrink-0 transition-transform duration-200 ease-out",
   "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
   "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
 );
 
-function CertificationBody({
-  certification,
-  nameId,
-}: {
-  certification: Certification;
-  nameId: string;
-}) {
-  return (
-    <>
-      <h3
-        id={nameId}
-        className="font-heading text-base font-medium tracking-tight text-text sm:text-[1.05rem]"
-      >
-        {certification.name}
-      </h3>
-      <p className="mt-1 text-sm leading-snug text-text/80">
-        {certification.issuer}
-      </p>
-      <p className="mt-2 font-mono text-xs tracking-wide text-text-muted">
-        {certification.date}
-      </p>
-    </>
-  );
-}
-
-function CertificationCard({
+function CertificationItem({
   certification,
 }: {
   certification: Certification;
@@ -60,31 +33,36 @@ function CertificationCard({
   return (
     <article
       aria-labelledby={nameId}
-      className="h-full min-w-0"
+      className="credential-row"
       data-interactive={hasCredential ? "true" : "false"}
     >
-      <GlowCard
-        interactive={hasCredential}
-        className="flex h-full min-w-0 flex-col rounded-md p-3.5 sm:p-4"
-      >
-        <CertificationBody
-          certification={certification}
-          nameId={nameId}
-        />
+      <div className="flex items-start justify-between gap-3">
+        <h3
+          id={nameId}
+          className="min-w-0 font-heading text-[0.95rem] font-medium tracking-tight text-text"
+        >
+          {certification.name}
+        </h3>
+        <p className="shrink-0 pt-0.5 font-mono text-[0.65rem] tracking-wide text-text-muted">
+          {certification.date}
+        </p>
+      </div>
+      <p className="mt-0.5 text-sm leading-snug text-text/75">
+        {certification.issuer}
+      </p>
 
-        {hasCredential && certification.credentialUrl ? (
-          <a
-            href={certification.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`View credential for ${certification.name}`}
-            className={cn(credentialLinkClassName, "mt-auto pt-1")}
-          >
-            View credential
-            <ArrowUpRight aria-hidden="true" className={outboundIconClassName} />
-          </a>
-        ) : null}
-      </GlowCard>
+      {hasCredential && certification.credentialUrl ? (
+        <a
+          href={certification.credentialUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View credential for ${certification.name}`}
+          className={credentialLinkClassName}
+        >
+          Credential
+          <ArrowUpRight aria-hidden="true" className={outboundIconClassName} />
+        </a>
+      ) : null}
     </article>
   );
 }
@@ -94,24 +72,23 @@ export function Certifications() {
     <section
       id="certifications"
       aria-labelledby="certifications-heading"
-      className="relative px-4 py-10 sm:px-6 sm:py-12"
+      className="relative px-4 pt-8 pb-8 sm:px-6 sm:pt-10 sm:pb-10"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-6 sm:mb-7">
+        <header className="mb-4 sm:mb-5">
           <SectionKicker index="§05" label="Certifications" />
           <h2
             id="certifications-heading"
-            className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
+            className="mt-2 font-heading text-xl font-medium tracking-tight text-text sm:text-[1.45rem]"
           >
             Certifications
           </h2>
-          <CoordinateMotif className="mt-4 h-5 w-full max-w-[17rem]" />
         </header>
 
-        <ul className="m-0 grid list-none grid-cols-1 gap-2.5 p-0 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+        <ul className="m-0 grid list-none grid-cols-1 gap-0 border-t border-surface-2/70 p-0 sm:grid-cols-2 sm:gap-x-8">
           {certifications.map((certification) => (
             <li key={certification.id} className="min-w-0">
-              <CertificationCard certification={certification} />
+              <CertificationItem certification={certification} />
             </li>
           ))}
         </ul>

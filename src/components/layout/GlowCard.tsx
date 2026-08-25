@@ -15,15 +15,13 @@ export function GlowCard({
   return (
     <div
       className={cn(
-        "rounded-md border border-surface-2 bg-surface p-5",
+        "rounded-sm border border-surface-2 bg-surface p-4",
         interactive && [
           "glow-card-interactive",
-          "transition-[border-color,box-shadow,transform] duration-200 ease-out",
-          "hover:-translate-y-0.5 hover:border-accent/45",
-          "hover:shadow-[0_0_28px_-8px_color-mix(in_srgb,var(--color-accent)_48%,transparent)]",
-          "focus-within:-translate-y-0.5 focus-within:border-accent/45",
-          "focus-within:shadow-[0_0_28px_-8px_color-mix(in_srgb,var(--color-accent)_48%,transparent)]",
-          "motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0",
+          "transition-[border-color,background-color] duration-200 ease-out",
+          "hover:border-accent/40 hover:bg-surface-2/35",
+          "focus-within:border-accent/40 focus-within:bg-surface-2/35",
+          "motion-reduce:transition-none",
         ],
         className
       )}

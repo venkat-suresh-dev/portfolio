@@ -1,5 +1,4 @@
 import { SectionKicker } from "@/components/layout/SectionKicker";
-import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionReveal } from "@/components/layout/SectionReveal";
 import {
   achievements,
@@ -12,52 +11,40 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
   const details = entry.details ?? [];
 
   return (
-    <li className="timeline-entry">
+    <li>
       <article
         aria-labelledby={`${entry.id}-title`}
-        className="grid grid-cols-[0.7rem_minmax(0,1fr)] gap-x-3 lg:grid-cols-[6.75rem_0.85rem_minmax(0,1fr)] lg:gap-x-5"
+        className="academic-block"
       >
-        <p className="hidden pt-[0.4rem] text-right font-mono text-xs leading-snug tracking-wide text-text-muted lg:block">
+        <h3
+          id={`${entry.id}-title`}
+          className="font-heading text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.55rem]"
+        >
+          {entry.degree}
+        </h3>
+        <p className="mt-1 text-base text-text sm:text-[1.05rem]">
+          {entry.institution}
+        </p>
+        <p className="mt-1.5 font-mono text-xs tracking-wide text-text-muted">
           {entry.dates}
+          <span className="mx-2" aria-hidden="true">
+            ·
+          </span>
+          <span>{entry.location}</span>
         </p>
 
-        <div className="timeline-rail" aria-hidden="true">
-          <span className="timeline-node" />
-        </div>
-
-        <div className="timeline-content min-w-0">
-          <header>
-            <h3
-              id={`${entry.id}-title`}
-              className="font-heading text-xl font-medium tracking-tight text-text sm:text-[1.35rem]"
-            >
-              {entry.degree}
-            </h3>
-            <p className="mt-0.5 text-[0.95rem] text-text/85 sm:text-base">
-              {entry.institution}
-            </p>
-            <p className="mt-1 font-mono text-xs tracking-wide text-text-muted">
-              <span className="lg:hidden">{entry.dates}</span>
-              <span className="mx-2 lg:hidden" aria-hidden="true">
-                ·
-              </span>
-              <span>{entry.location}</span>
-            </p>
-          </header>
-
-          {details.length > 0 ? (
-            <ul className="timeline-bullets mt-3.5 max-w-2xl space-y-2">
-              {details.map((detail, index) => (
-                <li
-                  key={`${entry.id}-detail-${index}`}
-                  className="text-[0.95rem] leading-relaxed text-text"
-                >
-                  {detail}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
+        {details.length > 0 ? (
+          <ul className="mt-3 max-w-2xl space-y-2">
+            {details.map((detail, index) => (
+              <li
+                key={`${entry.id}-detail-${index}`}
+                className="text-[0.95rem] leading-relaxed text-text"
+              >
+                {detail}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </article>
     </li>
   );
@@ -114,7 +101,7 @@ export function Education() {
     >
       <div className="mx-auto w-full max-w-5xl">
         <SectionReveal>
-          <header className="mb-8 sm:mb-9">
+          <header className="mb-5 sm:mb-6">
             <SectionKicker index="§03" label="Education" />
             <h2
               id="education-heading"
@@ -122,7 +109,6 @@ export function Education() {
             >
               Education & Achievements
             </h2>
-            <CoordinateMotif className="mt-4 h-5 w-full max-w-sm" />
           </header>
 
           <ol className="m-0 list-none p-0">

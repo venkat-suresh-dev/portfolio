@@ -3,7 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import { Menu } from "lucide-react";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -102,16 +102,49 @@ function getServerScrollSnapshot() {
 }
 
 const navLinkClassName = cn(
-  "relative rounded-sm px-2 py-1 text-sm text-text-muted transition-colors duration-200",
-  "hover:text-accent",
+  "relative inline-flex min-h-9 items-center px-0.5 py-1",
+  "font-mono text-[0.68rem] tracking-[0.14em] text-text-muted",
+  "transition-colors duration-200 hover:text-text",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
 );
 
 const mobileNavLinkClassName = cn(
   navLinkClassName,
-  "block w-full px-2 py-3 text-base"
+  "min-h-11 w-full px-1 py-3 text-[0.8rem]"
 );
+
+function IdentityMark({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <a
+      href="#hero"
+      onClick={onClick}
+      className={cn(
+        "group inline-flex min-h-9 shrink-0 items-center gap-2.5",
+        "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
+        className
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className="h-3 w-px bg-text-muted/70 transition-colors duration-200 group-hover:bg-accent motion-reduce:transition-none"
+      />
+      <span className="font-mono text-[0.7rem] tracking-[0.18em] text-text transition-colors duration-200 group-hover:text-accent motion-reduce:transition-none">
+        {profile.initials}
+      </span>
+      <span
+        aria-hidden="true"
+        className="hidden h-px w-7 bg-surface-2 transition-colors duration-200 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
+      />
+    </a>
+  );
+}
 
 function ResumeLink({
   className,
@@ -125,13 +158,12 @@ function ResumeLink({
       href={profile.resumePath}
       download
       onClick={onClick}
-      className={cn(
-        buttonVariants({ variant: "outline", size: "sm" }),
-        "hover:border-accent/45",
-        className
-      )}
+      className={cn("text-control", className)}
     >
       Resume
+      <span aria-hidden="true" className="text-[0.85em] leading-none">
+        ↘
+      </span>
     </a>
   );
 }
@@ -157,105 +189,97 @@ export function Header() {
     >
       <div className="px-4 sm:px-6">
         <div className="shell-wide flex h-14 items-center justify-between gap-3">
-        <a
-          href="#hero"
-          className={cn(
-            "inline-flex shrink-0 items-center rounded-sm border border-surface-2 px-2 py-1",
-            "font-mono text-xs tracking-wider text-text",
-            "transition-colors duration-200 hover:border-accent/45 hover:text-accent",
-            "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-            "motion-reduce:transition-none"
-          )}
-        >
-          {profile.initials}
-        </a>
+          <IdentityMark />
 
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-1 md:flex lg:gap-2"
-        >
-          {navigationItems.map((item) => {
-            const sectionId = item.href.slice(1);
-            const isActive = activeId === sectionId;
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-5 md:flex lg:gap-7"
+          >
+            {navigationItems.map((item) => {
+              const sectionId = item.href.slice(1);
+              const isActive = activeId === sectionId;
 
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                aria-current={isActive ? "location" : undefined}
-                className={cn(navLinkClassName, isActive && "text-accent")}
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "location" : undefined}
+                  className={cn(navLinkClassName, isActive && "text-accent")}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "pointer-events-none absolute inset-x-0 -bottom-px mx-auto h-px w-3 bg-accent",
+                      "transition-opacity duration-200 motion-reduce:transition-none",
+                      isActive ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </a>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-1">
+            <ResumeLink className="hidden md:inline-flex" />
+
+            <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
+              <SheetTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-sm text-text md:hidden"
+                    aria-label="Open navigation menu"
+                  />
+                }
               >
-                {item.label}
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "pointer-events-none absolute inset-x-2 -bottom-px h-px bg-accent",
-                    "transition-opacity duration-200 motion-reduce:transition-none",
-                    isActive ? "opacity-100" : "opacity-0"
-                  )}
-                />
-              </a>
-            );
-          })}
-        </nav>
+                <Menu aria-hidden="true" />
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
+              >
+                <SheetHeader>
+                  <SheetTitle className="font-mono text-xs tracking-widest text-text-muted uppercase">
+                    Navigation
+                  </SheetTitle>
+                  <SheetDescription className="sr-only">
+                    Page section links and resume
+                  </SheetDescription>
+                </SheetHeader>
+                <nav
+                  aria-label="Mobile"
+                  className="flex flex-col gap-0.5 px-4 pb-6"
+                >
+                  {navigationItems.map((item) => {
+                    const sectionId = item.href.slice(1);
+                    const isActive = activeId === sectionId;
 
-        <div className="flex items-center gap-2">
-          <ResumeLink className="hidden md:inline-flex" />
-
-          <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
-            <SheetTrigger
-              render={
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="md:hidden"
-                  aria-label="Open navigation menu"
-                />
-              }
-            >
-              <Menu aria-hidden="true" />
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
-            >
-              <SheetHeader>
-                <SheetTitle className="font-mono text-xs tracking-widest text-text-muted uppercase">
-                  Navigation
-                </SheetTitle>
-                <SheetDescription className="sr-only">
-                  Page section links and resume
-                </SheetDescription>
-              </SheetHeader>
-              <nav aria-label="Mobile" className="flex flex-col gap-1 px-4 pb-6">
-                {navigationItems.map((item) => {
-                  const sectionId = item.href.slice(1);
-                  const isActive = activeId === sectionId;
-
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      aria-current={isActive ? "location" : undefined}
-                      className={cn(
-                        mobileNavLinkClassName,
-                        isActive && "text-accent"
-                      )}
-                      onClick={() => setMobileNavOpen(false)}
-                    >
-                      {item.label}
-                    </a>
-                  );
-                })}
-                <ResumeLink
-                  className="mt-4 w-full"
-                  onClick={() => setMobileNavOpen(false)}
-                />
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </div>
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        aria-current={isActive ? "location" : undefined}
+                        className={cn(
+                          mobileNavLinkClassName,
+                          isActive && "text-accent"
+                        )}
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        {item.label}
+                      </a>
+                    );
+                  })}
+                  <ResumeLink
+                    className="mt-3"
+                    onClick={() => setMobileNavOpen(false)}
+                  />
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

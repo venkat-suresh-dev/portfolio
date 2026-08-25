@@ -1,15 +1,15 @@
 import { ArrowUpRight, FolderGit2 } from "lucide-react";
 
-import { GlowCard } from "@/components/layout/GlowCard";
 import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { SectionReveal } from "@/components/layout/SectionReveal";
+import { TechLegend } from "@/components/layout/TechLegend";
 import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 const projectLinkClassName = cn(
-  "group inline-flex min-h-11 items-center gap-1.5 rounded-sm",
-  "font-mono text-xs tracking-wide text-text-muted",
+  "group inline-flex min-h-11 items-center gap-1.5",
+  "font-mono text-[0.68rem] tracking-[0.14em] text-text-muted uppercase",
   "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
@@ -21,32 +21,22 @@ const outboundIconClassName = cn(
   "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
 );
 
-function TechTags({
-  labels,
-  className,
+function ProjectLinks({
+  project,
+  stacked = false,
 }: {
-  labels: string[];
-  className?: string;
+  project: Project;
+  stacked?: boolean;
 }) {
   return (
-    <ul
-      className={cn("flex flex-wrap gap-1.5", className)}
-      aria-label="Technologies"
+    <div
+      className={cn(
+        "flex",
+        stacked
+          ? "flex-col items-start gap-0"
+          : "mt-auto flex-wrap items-center gap-x-5 gap-y-0 pt-3"
+      )}
     >
-      {labels.map((label, index) => (
-        <li key={`${label}-${index}`}>
-          <span className="inline-flex max-w-full items-center rounded-sm border border-surface-2 px-2 py-[0.28rem] font-mono text-[0.65rem] leading-none tracking-wide text-text-muted">
-            {label}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function ProjectLinks({ project }: { project: Project }) {
-  return (
-    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1 pt-4">
       <a
         href={project.repoUrl}
         target="_blank"
@@ -73,99 +63,93 @@ function ProjectLinks({ project }: { project: Project }) {
   );
 }
 
-function ProjectCard({
+function FeaturedProject({
   project,
   index,
 }: {
   project: Project;
   index: number;
 }) {
-  const isFeatured = Boolean(project.featured);
   const marker = String(index + 1).padStart(2, "0");
   const titleId = `${project.id}-title`;
 
   return (
-    <article aria-labelledby={titleId} className="h-full min-w-0">
-      <GlowCard
-        className={cn(
-          "relative flex h-full min-w-0 flex-col",
-          isFeatured && "project-featured rounded-sm px-5 py-5 sm:px-6 sm:py-5"
-        )}
-      >
-        {isFeatured ? (
-          <span
-            aria-hidden="true"
-            className="absolute top-4 bottom-4 left-0 w-0.5 bg-accent/70 sm:top-5 sm:bottom-5"
-          />
-        ) : null}
-
-        <div
-          className={cn(
-            "flex min-h-0 min-w-0 flex-1 flex-col",
-            isFeatured &&
-              "lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] lg:items-stretch lg:gap-10"
-          )}
-        >
-          <header className="min-w-0">
-            <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-              {isFeatured ? `${marker} · Featured` : marker}
-            </p>
-            {isFeatured ? (
-              <CoordinateMotif className="mt-2 h-4 w-48" variant="project" />
-            ) : null}
-            <h3
-              id={titleId}
-              className={cn(
-                "mt-2.5 font-heading font-medium tracking-tight text-text",
-                isFeatured
-                  ? "text-xl sm:text-[1.45rem]"
-                  : "text-lg sm:text-[1.25rem]"
-              )}
-            >
-              {project.title}
-            </h3>
-            <p
-              className={cn(
-                "mt-2.5 text-[0.95rem] leading-relaxed text-text",
-                isFeatured ? "max-w-xl" : "max-w-prose"
-              )}
-            >
-              {project.description}
-            </p>
-          </header>
-
-          <div
-            className={cn(
-              "flex min-w-0 flex-1 flex-col",
-              isFeatured ? "mt-4 lg:mt-0" : "mt-4"
-            )}
+    <article aria-labelledby={titleId} className="project-featured">
+      <div className="grid gap-6 lg:grid-cols-[minmax(9.5rem,0.85fr)_minmax(0,1.45fr)_minmax(11rem,0.8fr)] lg:items-start lg:gap-x-10 lg:gap-y-0">
+        <header className="min-w-0">
+          <p className="project-index" aria-hidden="true">
+            {marker}
+          </p>
+          <h3
+            id={titleId}
+            className="mt-3 font-heading text-xl font-medium tracking-tight text-text sm:text-[1.4rem]"
           >
-            <TechTags
-              labels={project.tech}
-              className={isFeatured ? "lg:pt-1" : undefined}
-            />
-            <ProjectLinks project={project} />
-          </div>
-        </div>
-      </GlowCard>
+            {project.title}
+          </h3>
+        </header>
+
+        <p className="max-w-xl text-[0.95rem] leading-relaxed text-text lg:pt-1">
+          {project.description}
+        </p>
+
+        <aside className="flex min-w-0 flex-col gap-4 lg:pt-1" aria-label="Project details">
+          <TechLegend labels={project.tech} />
+          <ProjectLinks project={project} stacked />
+        </aside>
+      </div>
     </article>
   );
 }
 
+function SecondaryProject({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const marker = String(index + 1).padStart(2, "0");
+  const titleId = `${project.id}-title`;
+
+  return (
+    <article aria-labelledby={titleId} className="project-secondary">
+      <p className="font-mono text-[0.65rem] tracking-[0.2em] text-text-muted">
+        {marker}
+      </p>
+      <h3
+        id={titleId}
+        className="mt-2 font-heading text-lg font-medium tracking-tight text-text sm:text-[1.2rem]"
+      >
+        {project.title}
+      </h3>
+      <p className="mt-2 text-[0.95rem] leading-relaxed text-text">
+        {project.description}
+      </p>
+      <TechLegend labels={project.tech} className="mt-3" />
+      <ProjectLinks project={project} />
+    </article>
+  );
+}
+
+function secondaryGridClass(count: number) {
+  if (count <= 1) return "grid-cols-1";
+  if (count === 3) return "grid-cols-1 lg:grid-cols-3";
+  return "grid-cols-1 md:grid-cols-2";
+}
+
 export function Projects() {
-  const ordered = [
-    ...projects.filter((project) => project.featured),
-    ...projects.filter((project) => !project.featured),
-  ];
+  const featured = projects.filter((project) => project.featured);
+  const secondary = projects.filter((project) => !project.featured);
+  const featuredCount = featured.length;
 
   return (
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative px-4 pt-14 pb-14 sm:px-6 sm:pt-16 sm:pb-16"
+      className="relative px-4 pt-12 pb-12 sm:px-6 sm:pt-14 sm:pb-14"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-8 sm:mb-9">
+        <header className="mb-6 sm:mb-7">
           <SectionKicker index="§04" label="Projects" />
           <h2
             id="projects-heading"
@@ -173,19 +157,36 @@ export function Projects() {
           >
             Projects
           </h2>
-          <CoordinateMotif className="mt-4 h-5 w-full max-w-md" />
+          <CoordinateMotif className="mt-3.5 h-5 w-full max-w-md" />
         </header>
 
-        <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 md:grid-cols-2 md:gap-4">
-          {ordered.map((project, index) => (
-            <li
+        <div className="flex flex-col gap-6">
+          {featured.map((project, index) => (
+            <FeaturedProject
               key={project.id}
-              className={cn("min-w-0", project.featured && "md:col-span-2")}
-            >
-              <ProjectCard project={project} index={index} />
-            </li>
+              project={project}
+              index={index}
+            />
           ))}
-        </ul>
+
+          {secondary.length > 0 ? (
+            <ul
+              className={cn(
+                "m-0 grid list-none gap-3 p-0",
+                secondaryGridClass(secondary.length)
+              )}
+            >
+              {secondary.map((project, index) => (
+                <li key={project.id} className="min-w-0">
+                  <SecondaryProject
+                    project={project}
+                    index={featuredCount + index}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       </SectionReveal>
     </section>
   );
