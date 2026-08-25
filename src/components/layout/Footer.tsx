@@ -30,7 +30,7 @@ const COPYRIGHT_YEAR = 2026;
 
 const iconLinkClassName = cn(
   "inline-flex size-9 items-center justify-center rounded-sm text-text-muted",
-  "transition-colors hover:text-accent",
+  "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
 );

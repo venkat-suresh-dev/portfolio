@@ -1,3 +1,5 @@
+import { SectionKicker } from "@/components/layout/SectionKicker";
+import { SectionReveal } from "@/components/layout/SectionReveal";
 import { experience, type ExperienceEntry } from "@/data/experience";
 
 function TechTags({ labels }: { labels: string[] }) {
@@ -72,13 +74,11 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 py-16 sm:px-6 sm:py-20"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <SectionReveal className="mx-auto w-full max-w-5xl">
         <header className="mb-10 sm:mb-12">
-          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-            §02 · Experience
-          </p>
+          <SectionKicker index="§02" label="Experience" />
           <h2
             id="experience-heading"
             className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
@@ -92,7 +92,7 @@ export function Experience() {
             <ExperienceRole key={entry.id} entry={entry} />
           ))}
         </ol>
-      </div>
+      </SectionReveal>
     </section>
   );
 }

@@ -10,6 +10,7 @@ import {
 import { ArrowDownToLine, MessageSquare } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
+import { SectionKicker } from "@/components/layout/SectionKicker";
 import { buttonVariants } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
@@ -73,6 +74,7 @@ function Highlights() {
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const [systemReduceMotion, setSystemReduceMotion] = useState(false);
   const [bootStatus, setBootStatus] = useState<BootStatus>("pending");
   const [visibleLines, setVisibleLines] = useState(0);
   const timersRef = useRef<number[]>([]);
@@ -98,8 +100,22 @@ export function Hero() {
   }, [bootStatus]);
 
   useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setSystemReduceMotion(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (systemReduceMotion) {
+      completeBoot();
+    }
+  }, [systemReduceMotion, completeBoot]);
+
+  useEffect(() => {
     // Reduced-motion users never enter the timed sequence; derived UI stays "done".
-    if (prefersReducedMotion !== false) {
+    if (prefersReducedMotion !== false || systemReduceMotion) {
       return;
     }
 
@@ -133,7 +149,7 @@ export function Hero() {
       cancelled = true;
       clearTimers();
     };
-  }, [prefersReducedMotion, completeBoot, clearTimers]);
+  }, [prefersReducedMotion, systemReduceMotion, completeBoot, clearTimers]);
 
   useEffect(() => {
     if (bootStatus !== "running") return;
@@ -158,7 +174,7 @@ export function Hero() {
     [completeBoot]
   );
 
-  const motionOff = prefersReducedMotion === true;
+  const motionOff = prefersReducedMotion === true || systemReduceMotion;
   const isResolving = motionOff || bootStatus === "done";
   const linesToShow = motionOff ? BOOT_LINES.length : visibleLines;
   const dataBoot: BootStatus = motionOff ? "done" : bootStatus;
@@ -167,7 +183,7 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="hero-section relative scroll-mt-20 overflow-hidden px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20"
+      className="hero-section relative overflow-hidden px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20"
       data-boot={dataBoot}
       onClick={skipBoot}
     >
@@ -177,7 +193,7 @@ export function Hero() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-24 right-[12%] hidden size-24 rounded-full border border-surface-2/40 lg:block"
+        className="pointer-events-none absolute top-24 right-[12%] hidden size-24 rounded-full border border-accent-2/25 lg:block"
       />
 
       <div className="relative mx-auto w-full max-w-5xl">
@@ -196,9 +212,7 @@ export function Hero() {
                 : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
             }
           >
-            <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-              §01 · Profile
-            </p>
+            <SectionKicker index="§01" label="Profile" />
 
             <h1
               id="hero-heading"

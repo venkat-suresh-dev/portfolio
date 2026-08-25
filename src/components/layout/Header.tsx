@@ -17,22 +17,92 @@ import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD_PX = 12;
+const SECTION_IDS = navigationItems.map((item) => item.href.slice(1));
+const ACTIVE_LINE_PX = 80;
+
+type HeaderScrollState = {
+  scrolled: boolean;
+  activeId: string | null;
+};
+
+const SERVER_SNAPSHOT: HeaderScrollState = {
+  scrolled: false,
+  activeId: null,
+};
+
+let clientSnapshot: HeaderScrollState = SERVER_SNAPSHOT;
 
 function subscribeToScroll(onStoreChange: () => void) {
   window.addEventListener("scroll", onStoreChange, { passive: true });
-  return () => window.removeEventListener("scroll", onStoreChange);
+  window.addEventListener("hashchange", onStoreChange);
+  window.addEventListener("resize", onStoreChange);
+  document.addEventListener("click", onStoreChange);
+
+  const observer = new IntersectionObserver(onStoreChange, {
+    rootMargin: "-72px 0px -45% 0px",
+    threshold: 0,
+  });
+
+  for (const id of SECTION_IDS) {
+    const element = document.getElementById(id);
+    if (element) observer.observe(element);
+  }
+
+  onStoreChange();
+
+  return () => {
+    window.removeEventListener("scroll", onStoreChange);
+    window.removeEventListener("hashchange", onStoreChange);
+    window.removeEventListener("resize", onStoreChange);
+    document.removeEventListener("click", onStoreChange);
+    observer.disconnect();
+  };
+}
+
+function readScrollState(): HeaderScrollState {
+  const scrolled = window.scrollY > SCROLL_THRESHOLD_PX;
+  let activeId: string | null = null;
+
+  for (const id of SECTION_IDS) {
+    const element = document.getElementById(id);
+    if (!element) continue;
+    if (element.getBoundingClientRect().top <= ACTIVE_LINE_PX) {
+      activeId = id;
+    }
+  }
+
+  const doc = document.documentElement;
+  const atBottom =
+    window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
+  if (atBottom) {
+    activeId = SECTION_IDS.at(-1) ?? null;
+  }
+
+  if (window.scrollY < 40) {
+    activeId = null;
+  }
+
+  return { scrolled, activeId };
 }
 
 function getScrollSnapshot() {
-  return window.scrollY > SCROLL_THRESHOLD_PX;
+  const next = readScrollState();
+  if (
+    next.scrolled === clientSnapshot.scrolled &&
+    next.activeId === clientSnapshot.activeId
+  ) {
+    return clientSnapshot;
+  }
+  clientSnapshot = next;
+  return clientSnapshot;
 }
 
 function getServerScrollSnapshot() {
-  return false;
+  return SERVER_SNAPSHOT;
 }
 
 const navLinkClassName = cn(
-  "rounded-sm px-2 py-1 text-sm text-text-muted transition-colors",
+  "relative rounded-sm px-2 py-1 text-sm text-text-muted transition-colors duration-200",
   "hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
@@ -67,7 +137,7 @@ function ResumeLink({
 }
 
 export function Header() {
-  const scrolled = useSyncExternalStore(
+  const { scrolled, activeId } = useSyncExternalStore(
     subscribeToScroll,
     getScrollSnapshot,
     getServerScrollSnapshot
@@ -91,7 +161,7 @@ export function Header() {
           className={cn(
             "inline-flex shrink-0 items-center rounded-sm border border-surface-2 px-2 py-1",
             "font-mono text-xs tracking-wider text-text",
-            "transition-colors hover:border-accent/35 hover:text-accent",
+            "transition-colors duration-200 hover:border-accent/35 hover:text-accent",
             "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
             "motion-reduce:transition-none"
           )}
@@ -103,11 +173,29 @@ export function Header() {
           aria-label="Primary"
           className="hidden items-center gap-1 md:flex lg:gap-2"
         >
-          {navigationItems.map((item) => (
-            <a key={item.href} href={item.href} className={navLinkClassName}>
-              {item.label}
-            </a>
-          ))}
+          {navigationItems.map((item) => {
+            const sectionId = item.href.slice(1);
+            const isActive = activeId === sectionId;
+
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "location" : undefined}
+                className={cn(navLinkClassName, isActive && "text-accent")}
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "pointer-events-none absolute inset-x-2 -bottom-px h-px bg-accent",
+                    "transition-opacity duration-200 motion-reduce:transition-none",
+                    isActive ? "opacity-100" : "opacity-0"
+                  )}
+                />
+              </a>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -140,16 +228,25 @@ export function Header() {
                 </SheetDescription>
               </SheetHeader>
               <nav aria-label="Mobile" className="flex flex-col gap-1 px-4 pb-6">
-                {navigationItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    className={mobileNavLinkClassName}
-                    onClick={() => setMobileNavOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                {navigationItems.map((item) => {
+                  const sectionId = item.href.slice(1);
+                  const isActive = activeId === sectionId;
+
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      aria-current={isActive ? "location" : undefined}
+                      className={cn(
+                        mobileNavLinkClassName,
+                        isActive && "text-accent"
+                      )}
+                      onClick={() => setMobileNavOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
                 <ResumeLink
                   className="mt-4 w-full"
                   onClick={() => setMobileNavOpen(false)}

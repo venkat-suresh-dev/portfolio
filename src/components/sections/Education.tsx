@@ -1,3 +1,5 @@
+import { SectionKicker } from "@/components/layout/SectionKicker";
+import { SectionReveal } from "@/components/layout/SectionReveal";
 import {
   achievements,
   education,
@@ -107,29 +109,31 @@ export function Education() {
     <section
       id="education"
       aria-labelledby="education-heading"
-      className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 py-16 sm:px-6 sm:py-20"
     >
       <div className="mx-auto w-full max-w-5xl">
-        <header className="mb-10 sm:mb-12">
-          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-            §03 · Education
-          </p>
-          <h2
-            id="education-heading"
-            className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
-          >
-            Education & Achievements
-          </h2>
-        </header>
+        <SectionReveal>
+          <header className="mb-10 sm:mb-12">
+            <SectionKicker index="§03" label="Education" />
+            <h2
+              id="education-heading"
+              className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
+            >
+              Education & Achievements
+            </h2>
+          </header>
 
-        <ol className="m-0 list-none p-0">
-          {education.map((entry) => (
-            <EducationItem key={entry.id} entry={entry} />
-          ))}
-        </ol>
+          <ol className="m-0 list-none p-0">
+            {education.map((entry) => (
+              <EducationItem key={entry.id} entry={entry} />
+            ))}
+          </ol>
+        </SectionReveal>
 
         {featuredAchievements.map((achievement) => (
-          <GateFeature key={achievement.id} achievement={achievement} />
+          <SectionReveal key={achievement.id} delay={0.1}>
+            <GateFeature achievement={achievement} />
+          </SectionReveal>
         ))}
       </div>
     </section>

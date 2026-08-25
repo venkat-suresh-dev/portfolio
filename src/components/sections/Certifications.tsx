@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { GlowCard } from "@/components/layout/GlowCard";
+import { SectionKicker } from "@/components/layout/SectionKicker";
+import { SectionReveal } from "@/components/layout/SectionReveal";
 import {
   certifications,
   type Certification,
@@ -8,11 +10,17 @@ import {
 import { cn } from "@/lib/utils";
 
 const credentialLinkClassName = cn(
-  "mt-4 inline-flex min-h-10 items-center gap-1.5 rounded-sm",
+  "group mt-4 inline-flex min-h-10 items-center gap-1.5 rounded-sm",
   "font-mono text-xs tracking-wide text-text-muted",
-  "transition-colors hover:text-accent",
+  "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
+);
+
+const outboundIconClassName = cn(
+  "outbound-icon size-3.5 shrink-0 transition-transform duration-200 ease-out",
+  "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+  "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
 );
 
 function CertificationBody({
@@ -55,11 +63,8 @@ function CertificationCard({
       data-interactive={hasCredential ? "true" : "false"}
     >
       <GlowCard
-        className={cn(
-          "flex h-full min-w-0 flex-col p-4 sm:p-5",
-          !hasCredential &&
-            "hover:border-surface-2 hover:shadow-none focus-within:border-surface-2 focus-within:shadow-none"
-        )}
+        interactive={hasCredential}
+        className="flex h-full min-w-0 flex-col p-4 sm:p-5"
       >
         <CertificationBody
           certification={certification}
@@ -75,7 +80,7 @@ function CertificationCard({
             className={cn(credentialLinkClassName, "mt-auto pt-1")}
           >
             View credential
-            <ArrowUpRight aria-hidden="true" className="size-3.5 shrink-0" />
+            <ArrowUpRight aria-hidden="true" className={outboundIconClassName} />
           </a>
         ) : null}
       </GlowCard>
@@ -88,13 +93,11 @@ export function Certifications() {
     <section
       id="certifications"
       aria-labelledby="certifications-heading"
-      className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 py-16 sm:px-6 sm:py-20"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <SectionReveal className="mx-auto w-full max-w-5xl">
         <header className="mb-8 sm:mb-10">
-          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-            §05 · Certifications
-          </p>
+          <SectionKicker index="§05" label="Certifications" />
           <h2
             id="certifications-heading"
             className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
@@ -110,7 +113,7 @@ export function Certifications() {
             </li>
           ))}
         </ul>
-      </div>
+      </SectionReveal>
     </section>
   );
 }

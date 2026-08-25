@@ -5,6 +5,8 @@ import {
   createLucideIcon,
 } from "lucide-react";
 
+import { SectionKicker } from "@/components/layout/SectionKicker";
+import { SectionReveal } from "@/components/layout/SectionReveal";
 import { buttonVariants } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
@@ -37,20 +39,24 @@ const actionLinkClassName = cn(
   "w-full justify-center gap-2 px-4 hover:border-accent/35 sm:w-auto lg:w-full"
 );
 
+const outboundIconClassName = cn(
+  "outbound-icon size-3.5 opacity-60 transition-transform duration-200 ease-out",
+  "group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5",
+  "motion-reduce:transition-none motion-reduce:group-hover/button:translate-x-0 motion-reduce:group-hover/button:translate-y-0"
+);
+
 export function Contact() {
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative scroll-mt-20 px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-20"
+      className="relative px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-20"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <SectionReveal className="mx-auto w-full max-w-5xl">
         <div className="border-t border-surface-2 pt-12 sm:pt-14">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,17.5rem)] lg:items-start lg:gap-16">
             <header className="min-w-0">
-              <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-                §06 · Contact
-              </p>
+              <SectionKicker index="§06" label="Contact" />
               <h2
                 id="contact-heading"
                 className="mt-3 max-w-lg font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
@@ -87,7 +93,7 @@ export function Contact() {
                 LinkedIn
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="size-3.5 opacity-60"
+                  className={outboundIconClassName}
                 />
               </a>
 
@@ -101,7 +107,7 @@ export function Contact() {
                 GitHub
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="size-3.5 opacity-60"
+                  className={outboundIconClassName}
                 />
               </a>
 
@@ -116,7 +122,7 @@ export function Contact() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionReveal>
     </section>
   );
 }

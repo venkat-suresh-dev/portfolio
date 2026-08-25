@@ -1,15 +1,23 @@
 import { ArrowUpRight, FolderGit2 } from "lucide-react";
 
 import { GlowCard } from "@/components/layout/GlowCard";
+import { SectionKicker } from "@/components/layout/SectionKicker";
+import { SectionReveal } from "@/components/layout/SectionReveal";
 import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 const projectLinkClassName = cn(
-  "inline-flex min-h-11 items-center gap-1.5 rounded-sm",
+  "group inline-flex min-h-11 items-center gap-1.5 rounded-sm",
   "font-mono text-xs tracking-wide text-text-muted",
-  "transition-colors hover:text-accent",
+  "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
+);
+
+const outboundIconClassName = cn(
+  "outbound-icon size-3.5 shrink-0 transition-transform duration-200 ease-out",
+  "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+  "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
 );
 
 function TechTags({
@@ -56,7 +64,7 @@ function ProjectLinks({ project }: { project: Project }) {
           aria-label={`Live demo of ${project.title}`}
           className={projectLinkClassName}
         >
-          <ArrowUpRight aria-hidden="true" className="size-3.5 shrink-0" />
+          <ArrowUpRight aria-hidden="true" className={outboundIconClassName} />
           Live demo
         </a>
       ) : null}
@@ -86,7 +94,7 @@ function ProjectCard({
         {isFeatured ? (
           <span
             aria-hidden="true"
-            className="absolute top-5 bottom-5 left-0 w-0.5 bg-accent/40 sm:top-7 sm:bottom-7"
+            className="absolute top-5 bottom-5 left-0 w-0.5 bg-accent/55 sm:top-7 sm:bottom-7"
           />
         ) : null}
 
@@ -150,13 +158,11 @@ export function Projects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 py-16 sm:px-6 sm:py-20"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <SectionReveal className="mx-auto w-full max-w-5xl">
         <header className="mb-10 sm:mb-12">
-          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-            §04 · Projects
-          </p>
+          <SectionKicker index="§04" label="Projects" />
           <h2
             id="projects-heading"
             className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
@@ -175,7 +181,7 @@ export function Projects() {
             </li>
           ))}
         </ul>
-      </div>
+      </SectionReveal>
     </section>
   );
 }

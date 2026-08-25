@@ -6,12 +6,12 @@
 
 @theme inline {
   /* Portfolio color tokens */
-  --color-bg: #0a0e14;
+  --color-bg: #080c13;
   --color-surface: #131722;
   --color-surface-2: #1e2433;
   --color-text: #e6e9f0;
   --color-text-muted: #8b93a7;
-  --color-accent: #22d3ee;
+  --color-accent: #2ae8f5;
   --color-accent-2: #d946ef;
   --color-highlight: #fbbf24;
 
@@ -140,7 +140,7 @@
 
   html {
     @apply font-sans;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 4.5rem;
     scrollbar-width: thin;
     scrollbar-color: color-mix(
         in srgb,
@@ -428,5 +428,15 @@
 
   .hero-boot-line {
     opacity: 1 !important;
+  }
+
+  .glow-card-interactive:hover,
+  .glow-card-interactive:focus-within {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .outbound-icon {
+    transform: none !important;
   }
 }
