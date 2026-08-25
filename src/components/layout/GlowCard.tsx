@@ -15,7 +15,7 @@ export function GlowCard({
   return (
     <div
       className={cn(
-        "rounded-lg border border-surface-2 bg-surface p-6",
+        "rounded-md border border-surface-2 bg-surface p-5",
         interactive && [
           "glow-card-interactive",
           "transition-[border-color,box-shadow,transform] duration-200 ease-out",

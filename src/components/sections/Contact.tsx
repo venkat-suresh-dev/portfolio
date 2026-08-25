@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import { SectionKicker } from "@/components/layout/SectionKicker";
+import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionReveal } from "@/components/layout/SectionReveal";
 import { buttonVariants } from "@/components/ui/button";
 import { profile } from "@/data/profile";
@@ -36,7 +37,7 @@ const Linkedin = createLucideIcon("linkedin", [
 
 const actionLinkClassName = cn(
   buttonVariants({ variant: "outline", size: "lg" }),
-  "w-full justify-center gap-2 px-4 hover:border-accent/35 sm:w-auto lg:w-full"
+  "min-h-11 w-full justify-center gap-2 px-4 hover:border-accent/45 sm:w-auto lg:w-full"
 );
 
 const outboundIconClassName = cn(
@@ -50,33 +51,34 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-20"
+      className="contact-stage relative px-4 pt-14 pb-12 sm:px-6 sm:pt-16 sm:pb-14"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <div className="border-t border-surface-2 pt-12 sm:pt-14">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,17.5rem)] lg:items-start lg:gap-16">
+        <div className="relative border-t border-surface-2 pt-8 sm:pt-10">
+          <CoordinateMotif className="absolute -top-3 right-0 hidden h-5 w-64 opacity-85 md:block" />
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,16.5rem)] lg:items-start lg:gap-12">
             <header className="min-w-0">
               <SectionKicker index="§06" label="Contact" />
               <h2
                 id="contact-heading"
-                className="mt-3 max-w-lg font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
+                className="mt-2.5 max-w-lg font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
               >
                 {profile.contactHeading}
               </h2>
-              <p className="mt-4 max-w-md text-base leading-relaxed text-text-muted sm:text-[1.05rem]">
+              <p className="mt-3 max-w-md text-base leading-relaxed text-text-muted">
                 {profile.contactStatement}
               </p>
             </header>
 
             <div
-              className="flex min-w-0 flex-col gap-3"
+              className="flex min-w-0 flex-col gap-2.5"
               aria-label="Contact actions"
             >
               <a
                 href={`mailto:${profile.email}`}
                 className={cn(
                   buttonVariants({ variant: "default", size: "lg" }),
-                  "w-full justify-center gap-2 px-4 sm:w-auto lg:w-full"
+                  "min-h-11 w-full justify-center gap-2 px-4 sm:w-auto lg:w-full"
                 )}
               >
                 <Mail aria-hidden="true" className="size-4" />

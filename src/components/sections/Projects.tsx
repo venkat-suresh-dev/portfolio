@@ -1,6 +1,7 @@
 import { ArrowUpRight, FolderGit2 } from "lucide-react";
 
 import { GlowCard } from "@/components/layout/GlowCard";
+import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { SectionReveal } from "@/components/layout/SectionReveal";
 import { projects, type Project } from "@/data/projects";
@@ -45,7 +46,7 @@ function TechTags({
 
 function ProjectLinks({ project }: { project: Project }) {
   return (
-    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1 pt-6">
+    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1 pt-4">
       <a
         href={project.repoUrl}
         target="_blank"
@@ -88,13 +89,13 @@ function ProjectCard({
       <GlowCard
         className={cn(
           "relative flex h-full min-w-0 flex-col",
-          isFeatured && "px-5 py-5 sm:px-8 sm:py-7"
+          isFeatured && "project-featured rounded-sm px-5 py-5 sm:px-6 sm:py-5"
         )}
       >
         {isFeatured ? (
           <span
             aria-hidden="true"
-            className="absolute top-5 bottom-5 left-0 w-0.5 bg-accent/55 sm:top-7 sm:bottom-7"
+            className="absolute top-4 bottom-4 left-0 w-0.5 bg-accent/70 sm:top-5 sm:bottom-5"
           />
         ) : null}
 
@@ -102,27 +103,30 @@ function ProjectCard({
           className={cn(
             "flex min-h-0 min-w-0 flex-1 flex-col",
             isFeatured &&
-              "lg:grid lg:grid-cols-[minmax(0,1.35fr)_minmax(12rem,0.85fr)] lg:items-end lg:gap-10"
+              "lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] lg:items-stretch lg:gap-10"
           )}
         >
           <header className="min-w-0">
             <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
               {isFeatured ? `${marker} · Featured` : marker}
             </p>
+            {isFeatured ? (
+              <CoordinateMotif className="mt-2 h-4 w-48" variant="project" />
+            ) : null}
             <h3
               id={titleId}
               className={cn(
-                "mt-3 font-heading font-medium tracking-tight text-text",
+                "mt-2.5 font-heading font-medium tracking-tight text-text",
                 isFeatured
-                  ? "text-xl sm:text-[1.65rem]"
-                  : "text-xl sm:text-[1.35rem]"
+                  ? "text-xl sm:text-[1.45rem]"
+                  : "text-lg sm:text-[1.25rem]"
               )}
             >
               {project.title}
             </h3>
             <p
               className={cn(
-                "mt-3 text-[0.95rem] leading-relaxed text-text",
+                "mt-2.5 text-[0.95rem] leading-relaxed text-text",
                 isFeatured ? "max-w-xl" : "max-w-prose"
               )}
             >
@@ -133,7 +137,7 @@ function ProjectCard({
           <div
             className={cn(
               "flex min-w-0 flex-1 flex-col",
-              isFeatured ? "mt-5 lg:mt-0" : "mt-5"
+              isFeatured ? "mt-4 lg:mt-0" : "mt-4"
             )}
           >
             <TechTags
@@ -158,20 +162,21 @@ export function Projects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 pt-14 pb-14 sm:px-6 sm:pt-16 sm:pb-16"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-10 sm:mb-12">
+        <header className="mb-8 sm:mb-9">
           <SectionKicker index="§04" label="Projects" />
           <h2
             id="projects-heading"
-            className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
+            className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
           >
             Projects
           </h2>
+          <CoordinateMotif className="mt-4 h-5 w-full max-w-md" />
         </header>
 
-        <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2 md:gap-5">
+        <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 md:grid-cols-2 md:gap-4">
           {ordered.map((project, index) => (
             <li
               key={project.id}

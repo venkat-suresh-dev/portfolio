@@ -29,7 +29,7 @@ const Linkedin = createLucideIcon("linkedin", [
 const COPYRIGHT_YEAR = 2026;
 
 const iconLinkClassName = cn(
-  "inline-flex size-9 items-center justify-center rounded-sm text-text-muted",
+  "inline-flex size-10 items-center justify-center rounded-sm text-text-muted",
   "transition-colors duration-200 hover:text-accent",
   "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
   "motion-reduce:transition-none"
@@ -37,8 +37,8 @@ const iconLinkClassName = cn(
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto border-t border-surface-2">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6">
+    <footer className="relative mt-auto border-t border-surface-2/80">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p className="text-sm text-text-muted">[PLACEHOLDER]</p>
 
         <div className="flex items-center gap-1">
@@ -69,7 +69,7 @@ export function Footer() {
           </a>
         </div>
 
-        <p className="font-mono text-xs text-text-muted">
+        <p className="font-mono text-xs text-text-muted sm:text-right">
           © {COPYRIGHT_YEAR} {profile.name}
         </p>
       </div>

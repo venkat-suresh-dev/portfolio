@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD_PX = 12;
 const SECTION_IDS = navigationItems.map((item) => item.href.slice(1));
-const ACTIVE_LINE_PX = 80;
+const ACTIVE_LINE_PX = 220;
 
 type HeaderScrollState = {
   scrolled: boolean;
@@ -127,7 +127,7 @@ function ResumeLink({
       onClick={onClick}
       className={cn(
         buttonVariants({ variant: "outline", size: "sm" }),
-        "hover:border-accent/35",
+        "hover:border-accent/45",
         className
       )}
     >
@@ -155,13 +155,14 @@ export function Header() {
           : "border-transparent bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
+      <div className="px-4 sm:px-6">
+        <div className="shell-wide flex h-14 items-center justify-between gap-3">
         <a
           href="#hero"
           className={cn(
             "inline-flex shrink-0 items-center rounded-sm border border-surface-2 px-2 py-1",
             "font-mono text-xs tracking-wider text-text",
-            "transition-colors duration-200 hover:border-accent/35 hover:text-accent",
+            "transition-colors duration-200 hover:border-accent/45 hover:text-accent",
             "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
             "motion-reduce:transition-none"
           )}
@@ -254,6 +255,7 @@ export function Header() {
               </nav>
             </SheetContent>
           </Sheet>
+        </div>
         </div>
       </div>
     </header>

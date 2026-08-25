@@ -5,7 +5,7 @@ export function GridBackground() {
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
       <svg
-        className="absolute inset-0 h-full w-full opacity-[0.035]"
+        className="absolute inset-0 h-full w-full opacity-[0.045]"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -46,7 +46,8 @@ export function GridBackground() {
         <rect width="100%" height="100%" fill="url(#portfolio-grid-major)" />
       </svg>
 
-      <div className="absolute inset-0 bg-linear-to-b from-bg via-transparent to-bg/80" />
+      <div className="page-illumination" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-bg/55" />
     </div>
   );
 }

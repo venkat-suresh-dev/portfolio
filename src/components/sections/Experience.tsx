@@ -1,10 +1,11 @@
 import { SectionKicker } from "@/components/layout/SectionKicker";
+import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
 import { SectionReveal } from "@/components/layout/SectionReveal";
 import { experience, type ExperienceEntry } from "@/data/experience";
 
 function TechTags({ labels }: { labels: string[] }) {
   return (
-    <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+    <ul className="mt-3.5 flex flex-wrap gap-1.5" aria-label="Technologies">
       {labels.map((label, index) => (
         <li key={`${label}-${index}`}>
           <span className="inline-flex max-w-full items-center rounded-sm border border-surface-2 px-2 py-[0.28rem] font-mono text-[0.65rem] leading-none tracking-wide text-text-muted">
@@ -39,10 +40,10 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             >
               {entry.title}
             </h3>
-            <p className="mt-1 text-[0.95rem] text-text/85 sm:text-base">
+            <p className="mt-0.5 text-[0.95rem] text-text/85 sm:text-base">
               {entry.company}
             </p>
-            <p className="mt-1.5 font-mono text-xs tracking-wide text-text-muted">
+            <p className="mt-1 font-mono text-xs tracking-wide text-text-muted">
               <span className="lg:hidden">{entry.dates}</span>
               <span className="mx-2 lg:hidden" aria-hidden="true">
                 ·
@@ -51,7 +52,7 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             </p>
           </header>
 
-          <ul className="timeline-bullets mt-5 max-w-2xl space-y-2.5">
+          <ul className="timeline-bullets mt-3.5 max-w-2xl space-y-2">
             {entry.bullets.map((bullet, index) => (
               <li
                 key={`${entry.id}-bullet-${index}`}
@@ -74,17 +75,18 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative px-4 py-16 sm:px-6 sm:py-20"
+      className="relative px-4 pt-14 pb-12 sm:px-6 sm:pt-16 sm:pb-14"
     >
       <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-10 sm:mb-12">
+        <header className="mb-8 sm:mb-9">
           <SectionKicker index="§02" label="Experience" />
           <h2
             id="experience-heading"
-            className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
+            className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
           >
             Work Experience
           </h2>
+          <CoordinateMotif className="mt-4 h-5 w-full max-w-sm" />
         </header>
 
         <ol className="m-0 list-none p-0">

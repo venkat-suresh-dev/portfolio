@@ -7,7 +7,7 @@ export function SectionKicker({
 }) {
   return (
     <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
-      <span className="text-accent/80">{index}</span>
+      <span className="text-accent">{index}</span>
       {" · "}
       {label}
     </p>
