@@ -238,6 +238,131 @@
   }
 }
 
+/* Experience — editorial timeline rail (chrome only; content stays plain) */
+.experience-rail {
+  position: relative;
+  width: 100%;
+}
+
+.experience-node {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  z-index: 1;
+  width: 6px;
+  height: 6px;
+  border: 1px solid
+    color-mix(in srgb, var(--color-accent) 42%, var(--color-surface-2));
+  background: var(--color-bg);
+  box-shadow: 0 0 0 3px var(--color-bg);
+  transform: translateX(-50%);
+}
+
+.experience-rail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: color-mix(
+    in srgb,
+    var(--color-surface-2) 82%,
+    var(--color-accent) 18%
+  );
+  opacity: 0.72;
+  transform: translateX(-50%);
+}
+
+.experience-entry:first-child .experience-rail::before {
+  top: 0.7rem;
+}
+
+.experience-rail::after {
+  content: "";
+  position: absolute;
+  top: calc(0.55rem + 2.5px);
+  left: 50%;
+  width: 0.45rem;
+  height: 1px;
+  background: color-mix(
+    in srgb,
+    var(--color-surface-2) 70%,
+    var(--color-accent) 30%
+  );
+  opacity: 0.8;
+}
+
+@media (min-width: 1024px) {
+  .experience-rail::after {
+    width: 0.7rem;
+  }
+}
+
+.experience-entry:last-child .experience-rail::before {
+  top: 0;
+  bottom: auto;
+  height: 0.7rem;
+}
+
+.experience-entry:first-child:last-child .experience-rail::before {
+  top: 0.7rem;
+  height: 0.7rem;
+}
+
+.experience-content {
+  position: relative;
+  padding-bottom: 2.75rem;
+}
+
+.experience-content::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 1.35rem;
+  left: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-surface-2) 80%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .experience-content {
+    padding-bottom: 3.5rem;
+  }
+
+  .experience-content::after {
+    bottom: 1.75rem;
+  }
+}
+
+.experience-entry:last-child .experience-content {
+  padding-bottom: 0;
+}
+
+.experience-entry:last-child .experience-content::after {
+  content: none;
+}
+
+.experience-bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.experience-bullets > li {
+  position: relative;
+  padding-left: 0.95rem;
+}
+
+.experience-bullets > li::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: color-mix(in srgb, var(--color-accent) 68%, transparent);
+}
+
 /* Reduced-motion: boot always resolved visually */
 @media (prefers-reduced-motion: reduce) {
   .hero-section[data-boot="pending"] .hero-identity,
