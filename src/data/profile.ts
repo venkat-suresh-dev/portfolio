@@ -21,6 +21,8 @@ export type Profile = {
   resumePath: string;
   email: string;
   socials: SocialLinks;
+  contactHeading: string;
+  contactStatement: string;
   highlights: Highlight[];
 };
 
@@ -38,6 +40,8 @@ export const profile: Profile = {
     github: "[PLACEHOLDER]",
     linkedin: "[PLACEHOLDER]",
   },
+  contactHeading: "[PLACEHOLDER]",
+  contactStatement: "[PLACEHOLDER]",
   highlights: [
     {
       id: "degree",
