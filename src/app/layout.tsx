@@ -4,6 +4,12 @@ import {
   JetBrains_Mono,
   Space_Grotesk,
 } from "next/font/google";
+
+import { Footer } from "@/components/layout/Footer";
+import { GridBackground } from "@/components/layout/GridBackground";
+import { Header } from "@/components/layout/Header";
+import { ScanlineOverlay } from "@/components/layout/ScanlineOverlay";
+
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -35,7 +41,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <GridBackground />
+        <ScanlineOverlay />
+        <Header />
+        <div className="relative flex flex-1 flex-col">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }

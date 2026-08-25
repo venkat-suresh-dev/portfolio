@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/layout/GlowCard";
-import { GridBackground } from "@/components/layout/GridBackground";
-import { ScanlineOverlay } from "@/components/layout/ScanlineOverlay";
 import { cn } from "@/lib/utils";
 
 const colorSwatches = [
@@ -63,11 +61,7 @@ function Badge({
 
 export default function ThemePreviewPage() {
   return (
-    <>
-      <GridBackground />
-      <ScanlineOverlay />
-
-      <main className="relative mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+    <main className="relative mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
         <header className="mb-12 space-y-4">
           <p className="font-mono text-xs tracking-widest text-accent uppercase">
             SYSTEM.STATUS / theme-preview
@@ -233,7 +227,6 @@ export default function ThemePreviewPage() {
             </button>
           </div>
         </section>
-      </main>
-    </>
+    </main>
   );
 }
