@@ -1,9 +1,9 @@
 import { Education } from "@/components/sections/Education";
 import { Experience } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
+import { Projects } from "@/components/sections/Projects";
 
 const placeholderSections = [
-  { id: "projects", label: "[PLACEHOLDER] PROJECTS" },
   { id: "certifications", label: "[PLACEHOLDER] CERTIFICATIONS" },
   { id: "contact", label: "[PLACEHOLDER] CONTACT" },
 ] as const;
@@ -14,6 +14,7 @@ export default function Home() {
       <Hero />
       <Experience />
       <Education />
+      <Projects />
 
       {placeholderSections.map((section) => (
         <section

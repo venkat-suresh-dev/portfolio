@@ -1,0 +1,181 @@
+import { ArrowUpRight, FolderGit2 } from "lucide-react";
+
+import { GlowCard } from "@/components/layout/GlowCard";
+import { projects, type Project } from "@/data/projects";
+import { cn } from "@/lib/utils";
+
+const projectLinkClassName = cn(
+  "inline-flex min-h-11 items-center gap-1.5 rounded-sm",
+  "font-mono text-xs tracking-wide text-text-muted",
+  "transition-colors hover:text-accent",
+  "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
+  "motion-reduce:transition-none"
+);
+
+function TechTags({
+  labels,
+  className,
+}: {
+  labels: string[];
+  className?: string;
+}) {
+  return (
+    <ul
+      className={cn("flex flex-wrap gap-1.5", className)}
+      aria-label="Technologies"
+    >
+      {labels.map((label, index) => (
+        <li key={`${label}-${index}`}>
+          <span className="inline-flex max-w-full items-center rounded-sm border border-surface-2 px-2 py-[0.28rem] font-mono text-[0.65rem] leading-none tracking-wide text-text-muted">
+            {label}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ProjectLinks({ project }: { project: Project }) {
+  return (
+    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1 pt-6">
+      <a
+        href={project.repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Repository for ${project.title}`}
+        className={projectLinkClassName}
+      >
+        <FolderGit2 aria-hidden="true" className="size-3.5 shrink-0" />
+        Repository
+      </a>
+      {project.liveUrl ? (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Live demo of ${project.title}`}
+          className={projectLinkClassName}
+        >
+          <ArrowUpRight aria-hidden="true" className="size-3.5 shrink-0" />
+          Live demo
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const isFeatured = Boolean(project.featured);
+  const marker = String(index + 1).padStart(2, "0");
+  const titleId = `${project.id}-title`;
+
+  return (
+    <article aria-labelledby={titleId} className="h-full min-w-0">
+      <GlowCard
+        className={cn(
+          "relative flex h-full min-w-0 flex-col",
+          isFeatured && "px-5 py-5 sm:px-8 sm:py-7"
+        )}
+      >
+        {isFeatured ? (
+          <span
+            aria-hidden="true"
+            className="absolute top-5 bottom-5 left-0 w-0.5 bg-accent/40 sm:top-7 sm:bottom-7"
+          />
+        ) : null}
+
+        <div
+          className={cn(
+            "flex min-h-0 min-w-0 flex-1 flex-col",
+            isFeatured &&
+              "lg:grid lg:grid-cols-[minmax(0,1.35fr)_minmax(12rem,0.85fr)] lg:items-end lg:gap-10"
+          )}
+        >
+          <header className="min-w-0">
+            <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
+              {isFeatured ? `${marker} · Featured` : marker}
+            </p>
+            <h3
+              id={titleId}
+              className={cn(
+                "mt-3 font-heading font-medium tracking-tight text-text",
+                isFeatured
+                  ? "text-xl sm:text-[1.65rem]"
+                  : "text-xl sm:text-[1.35rem]"
+              )}
+            >
+              {project.title}
+            </h3>
+            <p
+              className={cn(
+                "mt-3 text-[0.95rem] leading-relaxed text-text",
+                isFeatured ? "max-w-xl" : "max-w-prose"
+              )}
+            >
+              {project.description}
+            </p>
+          </header>
+
+          <div
+            className={cn(
+              "flex min-w-0 flex-1 flex-col",
+              isFeatured ? "mt-5 lg:mt-0" : "mt-5"
+            )}
+          >
+            <TechTags
+              labels={project.tech}
+              className={isFeatured ? "lg:pt-1" : undefined}
+            />
+            <ProjectLinks project={project} />
+          </div>
+        </div>
+      </GlowCard>
+    </article>
+  );
+}
+
+export function Projects() {
+  const ordered = [
+    ...projects.filter((project) => project.featured),
+    ...projects.filter((project) => !project.featured),
+  ];
+
+  return (
+    <section
+      id="projects"
+      aria-labelledby="projects-heading"
+      className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+    >
+      <div className="mx-auto w-full max-w-5xl">
+        <header className="mb-10 sm:mb-12">
+          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-text-muted uppercase">
+            §04 · Projects
+          </p>
+          <h2
+            id="projects-heading"
+            className="mt-3 font-heading text-2xl font-medium tracking-tight text-text sm:text-3xl"
+          >
+            Projects
+          </h2>
+        </header>
+
+        <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2 md:gap-5">
+          {ordered.map((project, index) => (
+            <li
+              key={project.id}
+              className={cn("min-w-0", project.featured && "md:col-span-2")}
+            >
+              <ProjectCard project={project} index={index} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
