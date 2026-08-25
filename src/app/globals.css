@@ -238,13 +238,13 @@
   }
 }
 
-/* Experience — editorial timeline rail (chrome only; content stays plain) */
-.experience-rail {
+/* Shared editorial timeline rail — Experience + Education chrome */
+.timeline-rail {
   position: relative;
   width: 100%;
 }
 
-.experience-node {
+.timeline-node {
   position: absolute;
   top: 0.55rem;
   left: 50%;
@@ -258,7 +258,7 @@
   transform: translateX(-50%);
 }
 
-.experience-rail::before {
+.timeline-rail::before {
   content: "";
   position: absolute;
   top: 0;
@@ -274,11 +274,11 @@
   transform: translateX(-50%);
 }
 
-.experience-entry:first-child .experience-rail::before {
+.timeline-entry:first-child .timeline-rail::before {
   top: 0.7rem;
 }
 
-.experience-rail::after {
+.timeline-rail::after {
   content: "";
   position: absolute;
   top: calc(0.55rem + 2.5px);
@@ -294,28 +294,28 @@
 }
 
 @media (min-width: 1024px) {
-  .experience-rail::after {
+  .timeline-rail::after {
     width: 0.7rem;
   }
 }
 
-.experience-entry:last-child .experience-rail::before {
+.timeline-entry:last-child .timeline-rail::before {
   top: 0;
   bottom: auto;
   height: 0.7rem;
 }
 
-.experience-entry:first-child:last-child .experience-rail::before {
+.timeline-entry:first-child:last-child .timeline-rail::before {
   top: 0.7rem;
   height: 0.7rem;
 }
 
-.experience-content {
+.timeline-content {
   position: relative;
   padding-bottom: 2.75rem;
 }
 
-.experience-content::after {
+.timeline-content::after {
   content: "";
   position: absolute;
   right: 0;
@@ -326,34 +326,34 @@
 }
 
 @media (min-width: 1024px) {
-  .experience-content {
+  .timeline-content {
     padding-bottom: 3.5rem;
   }
 
-  .experience-content::after {
+  .timeline-content::after {
     bottom: 1.75rem;
   }
 }
 
-.experience-entry:last-child .experience-content {
+.timeline-entry:last-child .timeline-content {
   padding-bottom: 0;
 }
 
-.experience-entry:last-child .experience-content::after {
+.timeline-entry:last-child .timeline-content::after {
   content: none;
 }
 
-.experience-bullets {
+.timeline-bullets {
   list-style: none;
   padding: 0;
 }
 
-.experience-bullets > li {
+.timeline-bullets > li {
   position: relative;
   padding-left: 0.95rem;
 }
 
-.experience-bullets > li::before {
+.timeline-bullets > li::before {
   content: "";
   position: absolute;
   top: 0.62em;
@@ -361,6 +361,23 @@
   width: 4px;
   height: 4px;
   background: color-mix(in srgb, var(--color-accent) 68%, transparent);
+}
+
+/* GATE AIR — amber isolated to this featured panel */
+.gate-feature {
+  position: relative;
+  border: 1px solid var(--color-surface-2);
+  background: var(--color-surface);
+}
+
+.gate-feature::before {
+  content: "";
+  position: absolute;
+  top: 0.85rem;
+  bottom: 0.85rem;
+  left: 0;
+  width: 2px;
+  background: var(--color-highlight);
 }
 
 /* Reduced-motion: boot always resolved visually */

@@ -16,7 +16,7 @@ function TechTags({ labels }: { labels: string[] }) {
 
 function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
   return (
-    <li className="experience-entry">
+    <li className="timeline-entry">
       <article
         aria-labelledby={`${entry.id}-title`}
         className="grid grid-cols-[0.7rem_minmax(0,1fr)] gap-x-3 lg:grid-cols-[6.75rem_0.85rem_minmax(0,1fr)] lg:gap-x-5"
@@ -25,11 +25,11 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
           {entry.dates}
         </p>
 
-        <div className="experience-rail" aria-hidden="true">
-          <span className="experience-node" />
+        <div className="timeline-rail" aria-hidden="true">
+          <span className="timeline-node" />
         </div>
 
-        <div className="experience-content min-w-0">
+        <div className="timeline-content min-w-0">
           <header>
             <h3
               id={`${entry.id}-title`}
@@ -49,7 +49,7 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             </p>
           </header>
 
-          <ul className="experience-bullets mt-5 max-w-2xl space-y-2.5">
+          <ul className="timeline-bullets mt-5 max-w-2xl space-y-2.5">
             {entry.bullets.map((bullet, index) => (
               <li
                 key={`${entry.id}-bullet-${index}`}
