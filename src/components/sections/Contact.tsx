@@ -20,11 +20,11 @@ export function Contact() {
             <SectionKicker index="§06" label="Contact" />
             <h2
               id="contact-heading"
-              className="mt-3 max-w-lg font-heading text-[1.85rem] font-medium tracking-tight text-text sm:text-[2.15rem]"
+              className="mt-3 max-w-lg font-heading text-[1.85rem] leading-[1.18] font-medium tracking-[-0.028em] text-text sm:text-[2.15rem]"
             >
               {profile.contactHeading}
             </h2>
-            <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-text-muted">
+            <p className="mt-3.5 max-w-md text-[0.95rem] leading-[1.7] text-text/88">
               {profile.contactStatement}
             </p>
           </header>
@@ -49,7 +49,9 @@ export function Contact() {
                 className={secondaryActionClassName}
               >
                 LinkedIn
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true" className="text-control-glyph">
+                  ↗
+                </span>
               </a>
               <a
                 href={profile.socials.github}
@@ -58,7 +60,9 @@ export function Contact() {
                 className={secondaryActionClassName}
               >
                 GitHub
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true" className="text-control-glyph">
+                  ↗
+                </span>
               </a>
               <a
                 href={profile.resumePath}
@@ -66,7 +70,9 @@ export function Contact() {
                 className={secondaryActionClassName}
               >
                 Resume
-                <span aria-hidden="true">↘</span>
+                <span aria-hidden="true" className="text-control-glyph">
+                  ↘
+                </span>
               </a>
             </div>
           </div>

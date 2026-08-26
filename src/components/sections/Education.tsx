@@ -18,14 +18,14 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
       >
         <h3
           id={`${entry.id}-title`}
-          className="font-heading text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.55rem]"
+          className="font-heading text-[1.35rem] font-medium tracking-[-0.02em] text-text sm:text-[1.55rem]"
         >
           {entry.degree}
         </h3>
         <p className="mt-1 text-base text-text sm:text-[1.05rem]">
           {entry.institution}
         </p>
-        <p className="mt-1.5 font-mono text-xs tracking-wide text-text-muted">
+        <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
           {entry.dates}
           <span className="mx-2" aria-hidden="true">
             ·
@@ -38,7 +38,7 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
             {details.map((detail, index) => (
               <li
                 key={`${entry.id}-detail-${index}`}
-                className="text-[0.95rem] leading-relaxed text-text"
+                className="text-[0.95rem] leading-[1.7] text-text"
               >
                 {detail}
               </li>
@@ -63,23 +63,23 @@ function GateFeature({ achievement }: { achievement: AchievementEntry }) {
             aria-label={`${achievement.subtitle} ${achievement.value}`}
             className="text-highlight"
           >
-            <span className="block font-mono text-[0.7rem] tracking-[0.18em] uppercase">
+            <span className="block font-mono text-[0.72rem] tracking-[0.14em] uppercase">
               {achievement.subtitle}
             </span>
-            <span className="mt-1.5 block font-heading text-[clamp(2.5rem,9vw,4.35rem)] leading-none font-medium tracking-[-0.04em] tabular-nums">
+            <span className="mt-1.5 block font-heading text-[clamp(2.5rem,9vw,4.35rem)] leading-none font-medium tracking-[-0.03em] tabular-nums">
               {achievement.value}
             </span>
           </h3>
         </div>
 
         <div className="min-w-0 sm:pt-1">
-          <p className="font-heading text-lg font-medium tracking-tight text-text">
+          <p className="font-heading text-lg font-medium tracking-[-0.02em] text-text">
             {achievement.title}
           </p>
-          <p className="mt-1.5 font-mono text-xs tracking-wide text-text-muted">
+          <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
             {achievement.year}
           </p>
-          <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-text">
+          <p className="mt-3 max-w-xl text-[0.95rem] leading-[1.7] text-text">
             All-India Rank {achievement.value}. {achievement.description}
           </p>
         </div>
@@ -105,7 +105,7 @@ export function Education() {
             <SectionKicker index="§03" label="Education" />
             <h2
               id="education-heading"
-              className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
+              className="mt-2.5 font-heading text-2xl font-medium tracking-[-0.02em] text-text sm:text-[1.75rem]"
             >
               Education & Achievements
             </h2>

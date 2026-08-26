@@ -10,7 +10,7 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
         aria-labelledby={`${entry.id}-title`}
         className="grid grid-cols-[0.7rem_minmax(0,1fr)] gap-x-3 lg:grid-cols-[6.75rem_0.85rem_minmax(0,1fr)] lg:gap-x-5"
       >
-        <p className="hidden pt-[0.4rem] text-right font-mono text-xs leading-snug tracking-wide text-text-muted lg:block">
+        <p className="hidden pt-[0.4rem] text-right font-mono text-[0.7rem] leading-snug tracking-[0.06em] text-text-muted lg:block">
           {entry.dates}
         </p>
 
@@ -22,14 +22,14 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
           <header>
             <h3
               id={`${entry.id}-title`}
-              className="font-heading text-xl font-medium tracking-tight text-text sm:text-[1.35rem]"
+              className="font-heading text-xl font-medium tracking-[-0.02em] text-text sm:text-[1.35rem]"
             >
               {entry.title}
             </h3>
-            <p className="mt-0.5 text-[0.95rem] text-text/85 sm:text-base">
+            <p className="mt-0.5 text-[0.95rem] text-text sm:text-base">
               {entry.company}
             </p>
-            <p className="mt-1 font-mono text-xs tracking-wide text-text-muted">
+            <p className="mt-1 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
               <span className="lg:hidden">{entry.dates}</span>
               <span className="mx-2 lg:hidden" aria-hidden="true">
                 ·
@@ -38,11 +38,11 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             </p>
           </header>
 
-          <ul className="timeline-bullets mt-3.5 max-w-2xl space-y-2">
+          <ul className="timeline-bullets mt-3.5 max-w-2xl space-y-2.5">
             {entry.bullets.map((bullet, index) => (
               <li
                 key={`${entry.id}-bullet-${index}`}
-                className="text-[0.95rem] leading-relaxed text-text"
+                className="text-[0.95rem] leading-[1.7] text-text"
               >
                 {bullet}
               </li>
@@ -68,7 +68,7 @@ export function Experience() {
           <SectionKicker index="§02" label="Experience" />
           <h2
             id="experience-heading"
-            className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
+            className="mt-2.5 font-heading text-2xl font-medium tracking-[-0.018em] text-text sm:text-[1.75rem]"
           >
             Work Experience
           </h2>

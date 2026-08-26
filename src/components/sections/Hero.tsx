@@ -53,8 +53,8 @@ function Highlights() {
           </p>
           <p
             className={cn(
-              "mt-0.5 font-mono text-[0.65rem] tracking-widest uppercase",
-              item.featured ? "text-highlight/80" : "text-text-muted"
+              "mt-0.5 font-mono text-[0.6875rem] tracking-[0.14em] uppercase",
+              item.featured ? "text-highlight/85" : "text-text-muted"
             )}
           >
             {item.label}
@@ -62,8 +62,8 @@ function Highlights() {
           {item.detail ? (
             <p
               className={cn(
-                "mt-0.5 text-xs leading-snug",
-                item.featured ? "text-highlight/60" : "text-text-muted/80"
+                "mt-0.5 text-[0.75rem] leading-snug",
+                item.featured ? "text-highlight/75" : "text-text-muted"
               )}
             >
               {item.detail}
@@ -203,20 +203,20 @@ export function Hero() {
 
             <h1
               id="hero-heading"
-              className="hero-name mt-3 font-heading font-medium tracking-[-0.04em] text-text"
+              className="hero-name mt-3 font-heading text-text"
             >
               {profile.name}
             </h1>
 
-            <p className="hero-role mt-2.5 font-heading tracking-tight text-text">
+            <p className="hero-role mt-2.5 font-heading text-text">
               {profile.role}
             </p>
 
-            <p className="hero-lede mt-2 max-w-[34ch] text-[0.95rem] leading-relaxed text-text/80">
+            <p className="hero-lede mt-2">
               {profile.tagline}
             </p>
 
-            <p className="hero-intro mt-1.5 max-w-sm">
+            <p className="hero-intro mt-1.5">
               {profile.shortIntro}
             </p>
 
@@ -245,23 +245,23 @@ export function Hero() {
           >
             <div className="hero-status-head space-y-2">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <p className="font-mono text-[0.65rem] tracking-[0.2em] text-text-muted uppercase">
+                <p className="font-mono text-[0.6875rem] tracking-[0.16em] text-text-muted uppercase">
                   PROFILE.STATUS
                 </p>
-                <p className="font-mono text-sm tracking-wide text-accent">
+                <p className="font-mono text-[0.8rem] tracking-[0.12em] text-accent uppercase">
                   AVAILABLE
                 </p>
               </div>
 
-              <dl className="hero-status-meta grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-3 gap-y-1 font-mono text-[0.7rem] tracking-wide">
-                <dt className="text-text-muted/70">LOC</dt>
-                <dd className="min-w-0 text-text-muted">
+              <dl className="hero-status-meta grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-3 gap-y-1 font-mono text-[0.7rem] tracking-[0.08em]">
+                <dt className="text-text-muted">LOC</dt>
+                <dd className="min-w-0 text-text">
                   {profile.location ?? "[PLACEHOLDER]"}
                 </dd>
-                <dt className="text-text-muted/70">FOCUS</dt>
-                <dd className="min-w-0 text-text-muted">[PLACEHOLDER]</dd>
-                <dt className="text-text-muted/70">SIGNAL</dt>
-                <dd className="min-w-0 text-text-muted">[PLACEHOLDER]</dd>
+                <dt className="text-text-muted">FOCUS</dt>
+                <dd className="min-w-0 text-text">[PLACEHOLDER]</dd>
+                <dt className="text-text-muted">SIGNAL</dt>
+                <dd className="min-w-0 text-text">[PLACEHOLDER]</dd>
               </dl>
             </div>
 
@@ -273,7 +273,7 @@ export function Hero() {
             </div>
 
             <div
-              className="hero-boot mt-3 font-mono text-[0.7rem] leading-snug tracking-wide text-text-muted/85"
+              className="hero-boot mt-3 font-mono text-[0.7rem] leading-relaxed tracking-[0.04em] text-text-muted"
               aria-hidden="true"
             >
               {BOOT_LINES.map((line, index) => {
@@ -287,7 +287,7 @@ export function Hero() {
                       shown ? "opacity-100" : "opacity-0"
                     )}
                   >
-                    <span className="text-text-muted/55">{">"}</span> {line}
+                    <span className="text-text-muted/70">{">"}</span> {line}
                   </p>
                 );
               })}

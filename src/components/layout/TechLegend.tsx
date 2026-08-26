@@ -10,7 +10,7 @@ export function TechLegend({
   return (
     <ul
       className={cn(
-        "flex flex-wrap items-baseline font-mono text-[0.65rem] leading-5 tracking-[0.08em] text-text-muted",
+        "flex flex-wrap items-baseline font-mono text-[0.6875rem] leading-5 tracking-[0.06em] text-text-muted",
         className
       )}
       aria-label="Technologies"
@@ -20,7 +20,7 @@ export function TechLegend({
           {index > 0 ? (
             <span
               aria-hidden="true"
-              className="mx-2 text-text-muted/35 select-none"
+              className="mx-2 text-text-muted/50 select-none"
             >
               ·
             </span>

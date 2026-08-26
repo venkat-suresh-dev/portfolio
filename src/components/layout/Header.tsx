@@ -102,16 +102,13 @@ function getServerScrollSnapshot() {
 }
 
 const navLinkClassName = cn(
-  "relative inline-flex min-h-9 items-center px-0.5 py-1",
-  "font-mono text-[0.68rem] tracking-[0.14em] text-text-muted",
-  "transition-colors duration-200 hover:text-text",
-  "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-  "motion-reduce:transition-none"
+  "nav-legend py-1",
+  "motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 );
 
 const mobileNavLinkClassName = cn(
-  navLinkClassName,
-  "min-h-11 w-full px-1 py-3 text-[0.8rem]"
+  "nav-legend min-h-11 w-full justify-start px-1 py-3 text-[0.8rem]",
+  "motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 );
 
 function IdentityMark({
@@ -126,21 +123,20 @@ function IdentityMark({
       href="#hero"
       onClick={onClick}
       className={cn(
-        "group inline-flex min-h-9 shrink-0 items-center gap-2.5",
-        "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
+        "identity-mark group inline-flex min-h-9 shrink-0 items-center gap-2.5",
         className
       )}
     >
       <span
         aria-hidden="true"
-        className="h-3 w-px bg-text-muted/70 transition-colors duration-200 group-hover:bg-accent motion-reduce:transition-none"
+        className="h-3 w-px bg-text-muted/70 transition-colors duration-150 group-hover:bg-accent motion-reduce:transition-none"
       />
-      <span className="font-mono text-[0.7rem] tracking-[0.18em] text-text transition-colors duration-200 group-hover:text-accent motion-reduce:transition-none">
+      <span className="font-mono text-[0.7rem] tracking-[0.16em] text-text transition-colors duration-150 group-hover:text-accent motion-reduce:transition-none">
         {profile.initials}
       </span>
       <span
         aria-hidden="true"
-        className="hidden h-px w-7 bg-surface-2 transition-colors duration-200 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
+        className="hidden h-px w-7 bg-surface-2 transition-colors duration-150 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
       />
     </a>
   );
@@ -161,7 +157,7 @@ function ResumeLink({
       className={cn("text-control", className)}
     >
       Resume
-      <span aria-hidden="true" className="text-[0.85em] leading-none">
+      <span aria-hidden="true" className="text-control-glyph text-[0.85em] leading-none">
         ↘
       </span>
     </a>
@@ -209,11 +205,7 @@ export function Header() {
                   {item.label}
                   <span
                     aria-hidden="true"
-                    className={cn(
-                      "pointer-events-none absolute inset-x-0 -bottom-px mx-auto h-px w-3 bg-accent",
-                      "transition-opacity duration-200 motion-reduce:transition-none",
-                      isActive ? "opacity-100" : "opacity-0"
-                    )}
+                    className="nav-legend-tick"
                   />
                 </a>
               );
@@ -230,7 +222,7 @@ export function Header() {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="rounded-sm text-text md:hidden"
+                    className="menu-trigger cursor-pointer rounded-sm text-text md:hidden hover:bg-transparent hover:text-accent focus-visible:border-transparent focus-visible:ring-0"
                     aria-label="Open navigation menu"
                   />
                 }
@@ -242,7 +234,7 @@ export function Header() {
                 className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
               >
                 <SheetHeader>
-                  <SheetTitle className="font-mono text-xs tracking-widest text-text-muted uppercase">
+                  <SheetTitle className="font-mono text-[0.7rem] tracking-[0.16em] text-text-muted uppercase">
                     Navigation
                   </SheetTitle>
                   <SheetDescription className="sr-only">
@@ -269,6 +261,7 @@ export function Header() {
                         onClick={() => setMobileNavOpen(false)}
                       >
                         {item.label}
+                        <span aria-hidden="true" className="nav-legend-tick" />
                       </a>
                     );
                   })}

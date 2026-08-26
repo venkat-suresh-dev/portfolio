@@ -6,21 +6,10 @@ import {
   certifications,
   type Certification,
 } from "@/data/certifications";
-import { cn } from "@/lib/utils";
 
-const credentialLinkClassName = cn(
-  "group mt-1.5 inline-flex min-h-9 items-center gap-1",
-  "font-mono text-[0.65rem] tracking-[0.14em] text-text-muted uppercase",
-  "transition-colors duration-200 hover:text-accent",
-  "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-  "motion-reduce:transition-none"
-);
+const credentialLinkClassName = "legend-link mt-1.5 min-h-9";
 
-const outboundIconClassName = cn(
-  "outbound-icon size-3 shrink-0 transition-transform duration-200 ease-out",
-  "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-  "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
-);
+const outboundIconClassName = "outbound-icon size-3 shrink-0";
 
 function CertificationItem({
   certification,
@@ -39,15 +28,15 @@ function CertificationItem({
       <div className="flex items-start justify-between gap-3">
         <h3
           id={nameId}
-          className="min-w-0 font-heading text-[0.95rem] font-medium tracking-tight text-text"
+          className="min-w-0 font-heading text-base font-medium tracking-[-0.015em] text-text"
         >
           {certification.name}
         </h3>
-        <p className="shrink-0 pt-0.5 font-mono text-[0.65rem] tracking-wide text-text-muted">
+        <p className="shrink-0 pt-0.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
           {certification.date}
         </p>
       </div>
-      <p className="mt-0.5 text-sm leading-snug text-text/75">
+      <p className="mt-0.5 text-[0.8125rem] leading-snug text-text-muted">
         {certification.issuer}
       </p>
 
@@ -79,7 +68,7 @@ export function Certifications() {
           <SectionKicker index="§05" label="Certifications" />
           <h2
             id="certifications-heading"
-            className="mt-2 font-heading text-xl font-medium tracking-tight text-text sm:text-[1.45rem]"
+            className="mt-2 font-heading text-xl font-medium tracking-[-0.015em] text-text sm:text-[1.45rem]"
           >
             Certifications
           </h2>

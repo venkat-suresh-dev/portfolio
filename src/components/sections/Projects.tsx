@@ -7,19 +7,9 @@ import { TechLegend } from "@/components/layout/TechLegend";
 import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
-const projectLinkClassName = cn(
-  "group inline-flex min-h-11 items-center gap-1.5",
-  "font-mono text-[0.68rem] tracking-[0.14em] text-text-muted uppercase",
-  "transition-colors duration-200 hover:text-accent",
-  "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-  "motion-reduce:transition-none"
-);
+const projectLinkClassName = "legend-link min-h-11";
 
-const outboundIconClassName = cn(
-  "outbound-icon size-3.5 shrink-0 transition-transform duration-200 ease-out",
-  "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-  "motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
-);
+const outboundIconClassName = "outbound-icon size-3.5 shrink-0";
 
 function ProjectLinks({
   project,
@@ -82,13 +72,13 @@ function FeaturedProject({
           </p>
           <h3
             id={titleId}
-            className="mt-3 font-heading text-xl font-medium tracking-tight text-text sm:text-[1.4rem]"
+            className="mt-3 font-heading text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.65rem]"
           >
             {project.title}
           </h3>
         </header>
 
-        <p className="max-w-xl text-[0.95rem] leading-relaxed text-text lg:pt-1">
+        <p className="max-w-xl text-[0.95rem] leading-[1.7] text-text lg:pt-1">
           {project.description}
         </p>
 
@@ -113,16 +103,16 @@ function SecondaryProject({
 
   return (
     <article aria-labelledby={titleId} className="project-secondary">
-      <p className="font-mono text-[0.65rem] tracking-[0.2em] text-text-muted">
+      <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
         {marker}
       </p>
       <h3
         id={titleId}
-        className="mt-2 font-heading text-lg font-medium tracking-tight text-text sm:text-[1.2rem]"
+        className="mt-2 font-heading text-[1.125rem] font-medium tracking-[-0.02em] text-text sm:text-[1.2rem]"
       >
         {project.title}
       </h3>
-      <p className="mt-2 text-[0.95rem] leading-relaxed text-text">
+      <p className="mt-2 text-[0.95rem] leading-[1.7] text-text">
         {project.description}
       </p>
       <TechLegend labels={project.tech} className="mt-3" />
@@ -153,7 +143,7 @@ export function Projects() {
           <SectionKicker index="§04" label="Projects" />
           <h2
             id="projects-heading"
-            className="mt-2.5 font-heading text-2xl font-medium tracking-tight text-text sm:text-[1.75rem]"
+            className="mt-3 font-heading text-2xl font-medium tracking-[-0.022em] text-text sm:text-[1.85rem]"
           >
             Projects
           </h2>
