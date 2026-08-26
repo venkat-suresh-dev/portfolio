@@ -34,7 +34,7 @@ function ExperienceRole({
             </p>
             <h3
               id={`${entry.id}-title`}
-              className="mt-1 font-heading text-xl font-medium tracking-[-0.02em] text-text sm:text-[1.35rem]"
+              className="mt-1 text-xl font-medium tracking-[-0.02em] text-text sm:text-[1.35rem]"
             >
               {entry.role}
             </h3>
@@ -96,7 +96,6 @@ export function Experience() {
       <div className="page-shell">
         <SectionHeader
           index="§02"
-          label="Experience"
           title="Work Experience"
           headingId="experience-heading"
         />

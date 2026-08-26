@@ -28,14 +28,14 @@ function CertificationItem({
       data-interactive={hasCredential ? "true" : "false"}
     >
       <div className="page-grid items-baseline gap-y-1">
-        <p className="col-span-4 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted md:col-span-1 lg:col-span-2">
+        <p className="col-span-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted md:col-span-1 lg:col-span-2">
           {crtId}
         </p>
 
         <div className="col-span-4 min-w-0 md:col-span-5 lg:col-span-7">
           <h3
             id={nameId}
-            className="font-heading text-base font-medium tracking-[-0.015em] text-text"
+            className="text-[1.0625rem] font-medium tracking-[-0.015em] text-text"
           >
             {certification.name}
           </h3>
@@ -58,7 +58,7 @@ function CertificationItem({
             {certification.issuer}
           </p>
           {certification.date ? (
-            <p className="mt-1 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
+            <p className="mt-1 font-mono text-[0.7rem] tracking-[0.1em] text-text-muted">
               <time>{certification.date}</time>
             </p>
           ) : null}
@@ -78,12 +78,11 @@ export function Certifications() {
       <div className="page-shell">
         <SectionHeader
           index="§05"
-          label="Certifications"
           title="Certifications"
           headingId="certifications-heading"
         />
 
-        <ul className="m-0 list-none border-t border-surface-2/70 p-0">
+        <ul className="m-0 list-none border-t border-hairline p-0">
           {certifications.map((certification, index) => (
             <li key={certification.id} className="min-w-0">
               <CertificationItem

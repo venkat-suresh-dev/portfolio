@@ -1,3 +1,4 @@
+import { DisplayName } from "@/components/layout/DisplayName";
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { profile } from "@/data/profile";
 
@@ -17,32 +18,32 @@ export function Hero() {
     >
       <div className="page-shell">
         <div className="page-grid">
-          <div className="col-span-4 md:col-span-8 lg:col-span-9">
+          <div className="col-span-4 min-w-0 md:col-span-8 lg:col-span-12">
             <SectionKicker index="§01" label="Profile" />
 
-            <h1
+            <DisplayName
+              name={profile.name}
+              as="h1"
               id="hero-heading"
-              className="hero-name mt-3 font-heading text-text"
-            >
-              {profile.name}
-            </h1>
+              className="hero-name mt-5"
+            />
+          </div>
 
-            <p className="hero-role mt-3 font-heading text-text">
-              {profile.discipline}
-            </p>
+          <div className="col-span-4 mt-8 md:col-span-6 md:mt-10 lg:col-span-6 lg:mt-12">
+            <p className="hero-role">{profile.discipline}</p>
 
             {profile.summary ? (
-              <p className="hero-lede mt-3">{profile.summary}</p>
+              <p className="hero-lede mt-4">{profile.summary}</p>
             ) : null}
 
             {profile.location ? (
-              <p className="mt-4 font-mono text-[0.75rem] tracking-[0.08em] text-text-muted">
+              <p className="mt-5 font-mono text-[0.75rem] tracking-[0.1em] text-text-muted">
                 {profile.location}
               </p>
             ) : null}
 
             {hasActions ? (
-              <div className="mt-6 flex flex-wrap items-center gap-2.5">
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-1">
                 {profile.resumeUrl ? (
                   <a
                     href={profile.resumeUrl}
@@ -65,9 +66,12 @@ export function Hero() {
                     href={profile.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="instrument-btn instrument-btn-secondary"
+                    className="text-control gap-1.5"
                   >
                     LinkedIn
+                    <span aria-hidden="true" className="text-control-glyph">
+                      ↗
+                    </span>
                   </a>
                 ) : null}
                 {profile.github ? (
@@ -75,9 +79,12 @@ export function Hero() {
                     href={profile.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="instrument-btn instrument-btn-secondary"
+                    className="text-control gap-1.5"
                   >
                     GitHub
+                    <span aria-hidden="true" className="text-control-glyph">
+                      ↗
+                    </span>
                   </a>
                 ) : null}
               </div>

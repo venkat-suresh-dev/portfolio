@@ -40,7 +40,7 @@ function subscribeToScroll(onStoreChange: () => void) {
   document.addEventListener("click", onStoreChange);
 
   const observer = new IntersectionObserver(onStoreChange, {
-    rootMargin: "-72px 0px -45% 0px",
+    rootMargin: "-88px 0px -45% 0px",
     threshold: 0,
   });
 
@@ -108,7 +108,7 @@ const navLinkClassName = cn(
 );
 
 const mobileNavLinkClassName = cn(
-  "nav-legend min-h-11 w-full justify-start px-1 py-3 text-[0.8rem]",
+  "nav-legend min-h-11 w-full justify-start px-1 py-3 text-[0.75rem]",
   "motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 );
 
@@ -132,12 +132,12 @@ function IdentityMark({
         aria-hidden="true"
         className="h-3 w-px bg-text-muted/70 transition-colors duration-150 group-hover:bg-accent motion-reduce:transition-none"
       />
-      <span className="font-mono text-[0.7rem] tracking-[0.16em] text-text transition-colors duration-150 group-hover:text-accent motion-reduce:transition-none">
+      <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-text transition-colors duration-150 group-hover:text-accent motion-reduce:transition-none">
         {profile.initials}
       </span>
       <span
         aria-hidden="true"
-        className="hidden h-px w-7 bg-surface-2 transition-colors duration-150 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
+        className="hidden h-px w-7 bg-hairline transition-colors duration-150 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
       />
     </a>
   );
@@ -184,16 +184,16 @@ export function Header() {
         "transition-[background-color,border-color,backdrop-filter] duration-200",
         "motion-reduce:transition-none",
         scrolled
-          ? "border-surface-2/80 bg-bg/80 backdrop-blur-md"
-          : "border-transparent bg-transparent"
+          ? "border-hairline bg-bg/85 backdrop-blur-md"
+          : "border-hairline bg-bg"
       )}
     >
-      <div className="page-shell flex h-14 items-center justify-between gap-3">
+      <div className="page-shell flex h-14 items-center justify-between gap-3 md:h-[5.25rem]">
         <IdentityMark />
 
         <nav
           aria-label="Primary"
-          className="hidden items-center gap-5 md:flex lg:gap-7"
+          className="hidden items-center gap-6 md:flex lg:gap-8"
         >
           {visibleNavigationItems.map((item) => {
             const sectionId = item.href.slice(1);
@@ -204,7 +204,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "location" : undefined}
-                className={cn(navLinkClassName, isActive && "text-accent")}
+                className={navLinkClassName}
               >
                 {item.label}
                 <span aria-hidden="true" className="nav-legend-tick" />
@@ -232,10 +232,10 @@ export function Header() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
+              className="w-72 border-hairline bg-surface p-0 sm:max-w-xs"
             >
               <SheetHeader>
-                <SheetTitle className="font-mono text-[0.7rem] tracking-[0.16em] text-text-muted uppercase">
+                <SheetTitle className="font-mono text-[0.6875rem] tracking-[0.16em] text-text-muted uppercase">
                   Navigation
                 </SheetTitle>
                 <SheetDescription className="sr-only">
@@ -255,10 +255,7 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       aria-current={isActive ? "location" : undefined}
-                      className={cn(
-                        mobileNavLinkClassName,
-                        isActive && "text-accent"
-                      )}
+                      className={mobileNavLinkClassName}
                       onClick={() => setMobileNavOpen(false)}
                     >
                       {item.label}

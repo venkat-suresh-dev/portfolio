@@ -1,3 +1,4 @@
+import { DisplayName } from "@/components/layout/DisplayName";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { profile } from "@/data/profile";
 
@@ -54,15 +55,21 @@ export function Contact() {
       <div className="page-shell">
         <SectionHeader
           index="§06"
-          label="Contact"
           title="Contact"
           headingId="contact-heading"
         />
 
         <div className="page-grid">
-          <div className="col-span-4 md:col-span-8 lg:col-span-10">
-            <p className="contact-close font-heading text-text">
-              {profile.name}
+          <div className="col-span-4 min-w-0 md:col-span-8 lg:col-span-12">
+            <DisplayName
+              name={profile.name}
+              className="contact-close"
+            />
+          </div>
+
+          <div className="col-span-4 mt-8 md:col-span-6 lg:col-span-6">
+            <p className="text-[1.0625rem] text-text-muted">
+              {profile.discipline}
             </p>
 
             {links.length > 0 ? (

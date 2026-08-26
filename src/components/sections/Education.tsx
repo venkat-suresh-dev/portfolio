@@ -18,14 +18,21 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
       >
         <h3
           id={`${entry.id}-title`}
-          className="font-heading text-[1.35rem] font-medium tracking-[-0.02em] text-text sm:text-[1.55rem]"
+          className="text-[1.25rem] font-medium tracking-[-0.02em] text-text sm:text-[1.375rem]"
         >
           {entry.degree}
         </h3>
-        <p className="mt-1 text-base text-text sm:text-[1.05rem]">
+        <p className="mt-1 text-[1.0625rem] text-text-muted">
           {entry.institution}
         </p>
-        <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
+
+        {entry.outcome ? (
+          <p className="mt-4 text-[1.0625rem] leading-[1.65] font-medium text-text">
+            {entry.outcome}
+          </p>
+        ) : null}
+
+        <p className="mt-3 font-mono text-[0.7rem] tracking-[0.1em] text-text-muted">
           <time>{period}</time>
           {entry.location ? (
             <>
@@ -37,21 +44,10 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
           ) : null}
         </p>
 
-        {entry.outcome ? (
-          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.7] text-text">
-            {entry.outcome}
-          </p>
-        ) : null}
-
         {modules.length > 0 ? (
-          <ul className="mt-4 grid max-w-2xl grid-cols-1 gap-y-2 sm:grid-cols-2 sm:gap-x-8">
+          <ul className="module-list mt-5">
             {modules.map((module) => (
-              <li
-                key={`${entry.id}-${module}`}
-                className="text-[0.95rem] leading-[1.7] text-text"
-              >
-                {module}
-              </li>
+              <li key={`${entry.id}-${module}`}>{module}</li>
             ))}
           </ul>
         ) : null}
@@ -68,39 +64,36 @@ function GateFeature({ achievement }: { achievement: Achievement }) {
   return (
     <article
       aria-labelledby={`${achievement.id}-heading`}
-      className="gate-feature mt-10 px-5 py-5 sm:mt-12 sm:px-7 sm:py-6"
+      className="gate-feature mt-12 px-5 py-6 sm:mt-16 sm:px-8 sm:py-8"
     >
-      <div className="grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start md:gap-8 lg:gap-10">
+      <div className="grid gap-6 md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:items-end md:gap-10 lg:gap-14">
         <div className="min-w-0">
+          <p className="font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+            {achievement.name}
+            <span className="mx-2" aria-hidden="true">
+              ·
+            </span>
+            <time dateTime={achievement.year}>{achievement.year}</time>
+          </p>
           <h3
             id={`${achievement.id}-heading`}
             aria-label={headingLabel}
-            className="text-highlight"
+            className="mt-3"
           >
             {achievement.label ? (
-              <span className="block font-mono text-[0.72rem] tracking-[0.14em] uppercase">
+              <span className="mb-2 block font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
                 {achievement.label}
               </span>
             ) : null}
-            <span className="mt-1.5 block font-heading text-[clamp(2.5rem,9vw,4.35rem)] leading-none font-medium tracking-[-0.03em] tabular-nums">
-              {achievement.value}
-            </span>
+            <span className="gate-rank">{achievement.value}</span>
           </h3>
         </div>
 
-        <div className="min-w-0 md:pt-1">
-          <p className="font-heading text-lg font-medium tracking-[-0.02em] text-text">
-            {achievement.name}
+        {achievement.context ? (
+          <p className="measure max-w-xl text-[0.9375rem] leading-[1.7] text-text-muted md:pb-1">
+            {achievement.context}
           </p>
-          <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
-            <time dateTime={achievement.year}>{achievement.year}</time>
-          </p>
-          {achievement.context ? (
-            <p className="mt-3 max-w-xl text-[0.95rem] leading-[1.7] text-text">
-              {achievement.context}
-            </p>
-          ) : null}
-        </div>
+        ) : null}
       </div>
     </article>
   );
@@ -120,8 +113,7 @@ export function Education() {
       <div className="page-shell">
         <SectionHeader
           index="§03"
-          label="Education"
-          title="Education & Achievements"
+          title="Education"
           headingId="education-heading"
         />
 

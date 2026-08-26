@@ -76,7 +76,7 @@ function FeaturedProject({
           </p>
           <h3
             id={titleId}
-            className="mt-3 font-heading text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.65rem]"
+            className="mt-3 text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.65rem]"
           >
             {project.title}
           </h3>
@@ -115,7 +115,7 @@ function SecondaryProject({
       </p>
       <h3
         id={titleId}
-        className="mt-2 font-heading text-[1.125rem] font-medium tracking-[-0.02em] text-text sm:text-[1.2rem]"
+        className="mt-2 text-[1.125rem] font-medium tracking-[-0.02em] text-text sm:text-[1.2rem]"
       >
         {project.title}
       </h3>
@@ -152,7 +152,6 @@ export function Projects() {
       <div className="page-shell">
         <SectionHeader
           index="§04"
-          label="Projects"
           title="Projects"
           headingId="projects-heading"
         />
