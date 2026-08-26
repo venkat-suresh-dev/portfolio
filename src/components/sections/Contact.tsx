@@ -1,88 +1,104 @@
-import { Mail } from "lucide-react";
-
-import { SectionKicker } from "@/components/layout/SectionKicker";
-import { SectionReveal } from "@/components/layout/SectionReveal";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { profile } from "@/data/profile";
-import { cn } from "@/lib/utils";
 
-const secondaryActionClassName = cn("text-control gap-1.5");
+type ContactLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+  download?: boolean;
+};
+
+function getContactLinks(): ContactLink[] {
+  const links: ContactLink[] = [];
+
+  if (profile.email) {
+    links.push({ href: `mailto:${profile.email}`, label: "Email" });
+  }
+
+  if (profile.linkedin) {
+    links.push({
+      href: profile.linkedin,
+      label: "LinkedIn",
+      external: true,
+    });
+  }
+
+  if (profile.github) {
+    links.push({
+      href: profile.github,
+      label: "GitHub",
+      external: true,
+    });
+  }
+
+  if (profile.resumeUrl) {
+    links.push({
+      href: profile.resumeUrl,
+      label: "Resume",
+      download: true,
+    });
+  }
+
+  return links;
+}
 
 export function Contact() {
+  const links = getContactLinks();
+
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="contact-stage relative px-4 pt-10 pb-8 sm:px-6 sm:pt-12 sm:pb-8"
+      className="page-section"
     >
-      <SectionReveal className="mx-auto w-full max-w-5xl">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12">
-          <header className="min-w-0">
-            <SectionKicker index="§06" label="Contact" />
-            <h2
-              id="contact-heading"
-              className="mt-3 max-w-lg font-heading text-[1.85rem] leading-[1.18] font-medium tracking-[-0.028em] text-text sm:text-[2.15rem]"
-            >
-              Contact
-            </h2>
-          </header>
+      <div className="page-shell">
+        <SectionHeader
+          index="§06"
+          label="Contact"
+          title="Contact"
+          headingId="contact-heading"
+        />
 
-          <div
-            className="flex min-w-0 flex-col items-start gap-3"
-            aria-label="Contact actions"
-          >
-            {profile.email ? (
-              <a
-                href={`mailto:${profile.email}`}
-                className="instrument-btn instrument-btn-primary"
-              >
-                <Mail aria-hidden="true" className="size-3.5" />
-                Get in Touch
-              </a>
+        <div className="page-grid">
+          <div className="col-span-4 md:col-span-8 lg:col-span-10">
+            <p className="contact-close font-heading text-text">
+              {profile.name}
+            </p>
+
+            {links.length > 0 ? (
+              <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-control gap-1.5"
+                      {...(link.external
+                        ? {
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                          }
+                        : {})}
+                      {...(link.download ? { download: true } : {})}
+                    >
+                      {link.label}
+                      {link.external ? (
+                        <span aria-hidden="true" className="text-control-glyph">
+                          ↗
+                        </span>
+                      ) : null}
+                      {link.download ? (
+                        <span aria-hidden="true" className="text-control-glyph">
+                          ↘
+                        </span>
+                      ) : null}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             ) : null}
-
-            <div className="flex flex-wrap items-center gap-x-5">
-              {profile.linkedin ? (
-                <a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={secondaryActionClassName}
-                >
-                  LinkedIn
-                  <span aria-hidden="true" className="text-control-glyph">
-                    ↗
-                  </span>
-                </a>
-              ) : null}
-              {profile.github ? (
-                <a
-                  href={profile.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={secondaryActionClassName}
-                >
-                  GitHub
-                  <span aria-hidden="true" className="text-control-glyph">
-                    ↗
-                  </span>
-                </a>
-              ) : null}
-              {profile.resumeUrl ? (
-                <a
-                  href={profile.resumeUrl}
-                  download
-                  className={secondaryActionClassName}
-                >
-                  Resume
-                  <span aria-hidden="true" className="text-control-glyph">
-                    ↘
-                  </span>
-                </a>
-              ) : null}
-            </div>
           </div>
         </div>
-      </SectionReveal>
+      </div>
     </section>
   );
 }

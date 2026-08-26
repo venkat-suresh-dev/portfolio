@@ -1,11 +1,17 @@
-import { SectionKicker } from "@/components/layout/SectionKicker";
-import { SectionReveal } from "@/components/layout/SectionReveal";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TechLegend } from "@/components/layout/TechLegend";
 import { experience, type ExperienceEntry } from "@/data/experience";
 
-function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
+function ExperienceRole({
+  entry,
+  index,
+}: {
+  entry: ExperienceEntry;
+  index: number;
+}) {
   const details = entry.details ?? [];
   const technologies = entry.technologies ?? [];
+  const workId = `WRK-${String(index + 1).padStart(2, "0")}`;
 
   return (
     <li className="timeline-entry">
@@ -23,9 +29,12 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
 
         <div className="timeline-content min-w-0">
           <header>
+            <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
+              {workId}
+            </p>
             <h3
               id={`${entry.id}-title`}
-              className="font-heading text-xl font-medium tracking-[-0.02em] text-text sm:text-[1.35rem]"
+              className="mt-1 font-heading text-xl font-medium tracking-[-0.02em] text-text sm:text-[1.35rem]"
             >
               {entry.role}
             </h3>
@@ -45,11 +54,17 @@ function ExperienceRole({ entry }: { entry: ExperienceEntry }) {
             </p>
           </header>
 
+          {entry.impact ? (
+            <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.7] text-text">
+              {entry.impact}
+            </p>
+          ) : null}
+
           {details.length > 0 ? (
             <ul className="timeline-bullets mt-3.5 max-w-2xl space-y-2.5">
-              {details.map((detail, index) => (
+              {details.map((detail, detailIndex) => (
                 <li
-                  key={`${entry.id}-detail-${index}`}
+                  key={`${entry.id}-detail-${detailIndex}`}
                   className="text-[0.95rem] leading-[1.7] text-text"
                 >
                   {detail}
@@ -76,25 +91,24 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative px-4 pt-14 pb-12 sm:px-6 sm:pt-16 sm:pb-14"
+      className="page-section"
     >
-      <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-6 sm:mb-7">
-          <SectionKicker index="§02" label="Experience" />
-          <h2
-            id="experience-heading"
-            className="mt-2.5 font-heading text-2xl font-medium tracking-[-0.018em] text-text sm:text-[1.75rem]"
-          >
-            Work Experience
-          </h2>
-        </header>
+      <div className="page-shell">
+        <SectionHeader
+          index="§02"
+          label="Experience"
+          title="Work Experience"
+          headingId="experience-heading"
+        />
 
-        <ol className="m-0 list-none p-0">
-          {experience.map((entry) => (
-            <ExperienceRole key={entry.id} entry={entry} />
-          ))}
-        </ol>
-      </SectionReveal>
+        <div className="page-grid">
+          <ol className="col-span-4 m-0 list-none p-0 md:col-span-8 lg:col-span-10">
+            {experience.map((entry, index) => (
+              <ExperienceRole key={entry.id} entry={entry} index={index} />
+            ))}
+          </ol>
+        </div>
+      </div>
     </section>
   );
 }

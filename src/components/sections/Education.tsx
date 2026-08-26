@@ -1,5 +1,4 @@
-import { SectionKicker } from "@/components/layout/SectionKicker";
-import { SectionReveal } from "@/components/layout/SectionReveal";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import {
   achievements,
   education,
@@ -27,7 +26,7 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
           {entry.institution}
         </p>
         <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
-          {period}
+          <time>{period}</time>
           {entry.location ? (
             <>
               <span className="mx-2" aria-hidden="true">
@@ -45,7 +44,7 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
         ) : null}
 
         {modules.length > 0 ? (
-          <ul className="mt-3 max-w-2xl space-y-2">
+          <ul className="mt-4 grid max-w-2xl grid-cols-1 gap-y-2 sm:grid-cols-2 sm:gap-x-8">
             {modules.map((module) => (
               <li
                 key={`${entry.id}-${module}`}
@@ -71,7 +70,7 @@ function GateFeature({ achievement }: { achievement: Achievement }) {
       aria-labelledby={`${achievement.id}-heading`}
       className="gate-feature mt-10 px-5 py-5 sm:mt-12 sm:px-7 sm:py-6"
     >
-      <div className="grid gap-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start sm:gap-8 lg:gap-10">
+      <div className="grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-start md:gap-8 lg:gap-10">
         <div className="min-w-0">
           <h3
             id={`${achievement.id}-heading`}
@@ -89,12 +88,12 @@ function GateFeature({ achievement }: { achievement: Achievement }) {
           </h3>
         </div>
 
-        <div className="min-w-0 sm:pt-1">
+        <div className="min-w-0 md:pt-1">
           <p className="font-heading text-lg font-medium tracking-[-0.02em] text-text">
             {achievement.name}
           </p>
           <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
-            {achievement.year}
+            <time dateTime={achievement.year}>{achievement.year}</time>
           </p>
           {achievement.context ? (
             <p className="mt-3 max-w-xl text-[0.95rem] leading-[1.7] text-text">
@@ -116,31 +115,26 @@ export function Education() {
     <section
       id="education"
       aria-labelledby="education-heading"
-      className="relative px-4 pt-12 pb-14 sm:px-6 sm:pt-14 sm:pb-16"
+      className="page-section"
     >
-      <div className="mx-auto w-full max-w-5xl">
-        <SectionReveal>
-          <header className="mb-5 sm:mb-6">
-            <SectionKicker index="§03" label="Education" />
-            <h2
-              id="education-heading"
-              className="mt-2.5 font-heading text-2xl font-medium tracking-[-0.02em] text-text sm:text-[1.75rem]"
-            >
-              Education & Achievements
-            </h2>
-          </header>
+      <div className="page-shell">
+        <SectionHeader
+          index="§03"
+          label="Education"
+          title="Education & Achievements"
+          headingId="education-heading"
+        />
 
-          <ol className="m-0 list-none p-0">
+        <div className="page-grid">
+          <ol className="col-span-4 m-0 list-none p-0 md:col-span-8 lg:col-span-8">
             {education.map((entry) => (
               <EducationItem key={entry.id} entry={entry} />
             ))}
           </ol>
-        </SectionReveal>
+        </div>
 
         {featuredAchievements.map((achievement) => (
-          <SectionReveal key={achievement.id} delay={0.1}>
-            <GateFeature achievement={achievement} />
-          </SectionReveal>
+          <GateFeature key={achievement.id} achievement={achievement} />
         ))}
       </div>
     </section>

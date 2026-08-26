@@ -1,8 +1,6 @@
 import { ArrowUpRight, FolderGit2 } from "lucide-react";
 
-import { CoordinateMotif } from "@/components/layout/CoordinateMotif";
-import { SectionKicker } from "@/components/layout/SectionKicker";
-import { SectionReveal } from "@/components/layout/SectionReveal";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TechLegend } from "@/components/layout/TechLegend";
 import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
@@ -66,14 +64,14 @@ function FeaturedProject({
   project: Project;
   index: number;
 }) {
-  const marker = String(index + 1).padStart(2, "0");
+  const marker = `PRJ-${String(index + 1).padStart(2, "0")}`;
   const titleId = `${project.id}-title`;
 
   return (
     <article aria-labelledby={titleId} className="project-featured">
-      <div className="grid gap-6 lg:grid-cols-[minmax(9.5rem,0.85fr)_minmax(0,1.45fr)_minmax(11rem,0.8fr)] lg:items-start lg:gap-x-10 lg:gap-y-0">
-        <header className="min-w-0">
-          <p className="project-index" aria-hidden="true">
+      <div className="page-grid items-start gap-y-6">
+        <header className="col-span-4 md:col-span-3 lg:col-span-3">
+          <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
             {marker}
           </p>
           <h3
@@ -84,11 +82,14 @@ function FeaturedProject({
           </h3>
         </header>
 
-        <p className="max-w-xl text-[0.95rem] leading-[1.7] text-text lg:pt-1">
+        <p className="col-span-4 max-w-xl text-[0.95rem] leading-[1.7] text-text md:col-span-5 lg:col-span-6">
           {project.summary}
         </p>
 
-        <aside className="flex min-w-0 flex-col gap-4 lg:pt-1" aria-label="Project details">
+        <aside
+          className="col-span-4 flex min-w-0 flex-col gap-4 md:col-span-8 lg:col-span-3"
+          aria-label="Project details"
+        >
           <TechLegend labels={project.technologies} />
           <ProjectLinks project={project} stacked />
         </aside>
@@ -104,7 +105,7 @@ function SecondaryProject({
   project: Project;
   index: number;
 }) {
-  const marker = String(index + 1).padStart(2, "0");
+  const marker = `PRJ-${String(index + 1).padStart(2, "0")}`;
   const titleId = `${project.id}-title`;
 
   return (
@@ -146,19 +147,15 @@ export function Projects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative px-4 pt-12 pb-12 sm:px-6 sm:pt-14 sm:pb-14"
+      className="page-section"
     >
-      <SectionReveal className="mx-auto w-full max-w-5xl">
-        <header className="mb-6 sm:mb-7">
-          <SectionKicker index="§04" label="Projects" />
-          <h2
-            id="projects-heading"
-            className="mt-3 font-heading text-2xl font-medium tracking-[-0.022em] text-text sm:text-[1.85rem]"
-          >
-            Projects
-          </h2>
-          <CoordinateMotif className="mt-3.5 h-5 w-full max-w-md" />
-        </header>
+      <div className="page-shell">
+        <SectionHeader
+          index="§04"
+          label="Projects"
+          title="Projects"
+          headingId="projects-heading"
+        />
 
         <div className="flex flex-col gap-6">
           {featured.map((project, index) => (
@@ -187,7 +184,7 @@ export function Projects() {
             </ul>
           ) : null}
         </div>
-      </SectionReveal>
+      </div>
     </section>
   );
 }

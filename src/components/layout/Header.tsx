@@ -12,12 +12,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { navigationItems } from "@/data/navigation";
+import { getVisibleNavigationItems } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD_PX = 12;
-const SECTION_IDS = navigationItems.map((item) => item.href.slice(1));
+const visibleNavigationItems = getVisibleNavigationItems();
+const SECTION_IDS = visibleNavigationItems.map((item) => item.href.slice(1));
 const ACTIVE_LINE_PX = 220;
 
 type HeaderScrollState = {
@@ -123,7 +124,7 @@ function IdentityMark({
       href="#hero"
       onClick={onClick}
       className={cn(
-        "identity-mark group inline-flex min-h-9 shrink-0 items-center gap-2.5",
+        "identity-mark group inline-flex min-h-11 shrink-0 items-center gap-2.5",
         className
       )}
     >
@@ -187,96 +188,91 @@ export function Header() {
           : "border-transparent bg-transparent"
       )}
     >
-      <div className="px-4 sm:px-6">
-        <div className="shell-wide flex h-14 items-center justify-between gap-3">
-          <IdentityMark />
+      <div className="page-shell flex h-14 items-center justify-between gap-3">
+        <IdentityMark />
 
-          <nav
-            aria-label="Primary"
-            className="hidden items-center gap-5 md:flex lg:gap-7"
-          >
-            {navigationItems.map((item) => {
-              const sectionId = item.href.slice(1);
-              const isActive = activeId === sectionId;
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-5 md:flex lg:gap-7"
+        >
+          {visibleNavigationItems.map((item) => {
+            const sectionId = item.href.slice(1);
+            const isActive = activeId === sectionId;
 
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive ? "location" : undefined}
-                  className={cn(navLinkClassName, isActive && "text-accent")}
-                >
-                  {item.label}
-                  <span
-                    aria-hidden="true"
-                    className="nav-legend-tick"
-                  />
-                </a>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-1">
-            <ResumeLink className="hidden md:inline-flex" />
-
-            <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
-              <SheetTrigger
-                render={
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="menu-trigger cursor-pointer rounded-sm text-text md:hidden hover:bg-transparent hover:text-accent focus-visible:border-transparent focus-visible:ring-0"
-                    aria-label="Open navigation menu"
-                  />
-                }
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "location" : undefined}
+                className={cn(navLinkClassName, isActive && "text-accent")}
               >
-                <Menu aria-hidden="true" />
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
-              >
-                <SheetHeader>
-                  <SheetTitle className="font-mono text-[0.7rem] tracking-[0.16em] text-text-muted uppercase">
-                    Navigation
-                  </SheetTitle>
-                  <SheetDescription className="sr-only">
-                    Page section links
-                  </SheetDescription>
-                </SheetHeader>
-                <nav
-                  aria-label="Mobile"
-                  className="flex flex-col gap-0.5 px-4 pb-6"
-                >
-                  {navigationItems.map((item) => {
-                    const sectionId = item.href.slice(1);
-                    const isActive = activeId === sectionId;
+                {item.label}
+                <span aria-hidden="true" className="nav-legend-tick" />
+              </a>
+            );
+          })}
+        </nav>
 
-                    return (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        aria-current={isActive ? "location" : undefined}
-                        className={cn(
-                          mobileNavLinkClassName,
-                          isActive && "text-accent"
-                        )}
-                        onClick={() => setMobileNavOpen(false)}
-                      >
-                        {item.label}
-                        <span aria-hidden="true" className="nav-legend-tick" />
-                      </a>
-                    );
-                  })}
-                  <ResumeLink
-                    className="mt-3"
-                    onClick={() => setMobileNavOpen(false)}
-                  />
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
+        <div className="flex items-center gap-1">
+          <ResumeLink className="hidden md:inline-flex" />
+
+          <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
+            <SheetTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="menu-trigger min-h-11 min-w-11 cursor-pointer rounded-sm text-text md:hidden hover:bg-transparent hover:text-accent focus-visible:border-transparent focus-visible:ring-0"
+                  aria-label="Open navigation menu"
+                />
+              }
+            >
+              <Menu aria-hidden="true" />
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-72 border-surface-2 bg-surface p-0 sm:max-w-xs"
+            >
+              <SheetHeader>
+                <SheetTitle className="font-mono text-[0.7rem] tracking-[0.16em] text-text-muted uppercase">
+                  Navigation
+                </SheetTitle>
+                <SheetDescription className="sr-only">
+                  Page section links
+                </SheetDescription>
+              </SheetHeader>
+              <nav
+                aria-label="Mobile"
+                className="flex flex-col gap-0.5 px-4 pb-6"
+              >
+                {visibleNavigationItems.map((item) => {
+                  const sectionId = item.href.slice(1);
+                  const isActive = activeId === sectionId;
+
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      aria-current={isActive ? "location" : undefined}
+                      className={cn(
+                        mobileNavLinkClassName,
+                        isActive && "text-accent"
+                      )}
+                      onClick={() => setMobileNavOpen(false)}
+                    >
+                      {item.label}
+                      <span aria-hidden="true" className="nav-legend-tick" />
+                    </a>
+                  );
+                })}
+                <ResumeLink
+                  className="mt-3"
+                  onClick={() => setMobileNavOpen(false)}
+                />
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
