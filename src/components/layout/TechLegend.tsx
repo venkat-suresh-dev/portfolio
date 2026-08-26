@@ -4,7 +4,7 @@ export function TechLegend({
   labels,
   className,
 }: {
-  labels: string[];
+  labels: readonly string[];
   className?: string;
 }) {
   return (

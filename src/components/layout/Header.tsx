@@ -149,9 +149,13 @@ function ResumeLink({
   className?: string;
   onClick?: () => void;
 }) {
+  if (!profile.resumeUrl) {
+    return null;
+  }
+
   return (
     <a
-      href={profile.resumePath}
+      href={profile.resumeUrl}
       download
       onClick={onClick}
       className={cn("text-control", className)}
@@ -238,7 +242,7 @@ export function Header() {
                     Navigation
                   </SheetTitle>
                   <SheetDescription className="sr-only">
-                    Page section links and resume
+                    Page section links
                   </SheetDescription>
                 </SheetHeader>
                 <nav

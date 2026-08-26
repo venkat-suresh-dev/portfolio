@@ -32,9 +32,11 @@ function CertificationItem({
         >
           {certification.name}
         </h3>
-        <p className="shrink-0 pt-0.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
-          {certification.date}
-        </p>
+        {certification.date ? (
+          <p className="shrink-0 pt-0.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
+            {certification.date}
+          </p>
+        ) : null}
       </div>
       <p className="mt-0.5 text-[0.8125rem] leading-snug text-text-muted">
         {certification.issuer}

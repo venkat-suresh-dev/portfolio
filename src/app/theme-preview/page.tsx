@@ -136,9 +136,9 @@ export default function ThemePreviewPage() {
               <div className="flex flex-wrap gap-2">
                 <Badge>§01</Badge>
                 <Badge>§02</Badge>
-                <Badge className="text-accent">SYSTEM.STATUS</Badge>
+                <Badge className="text-accent">SAMPLE · SYSTEM.STATUS</Badge>
                 <Badge className="border-accent/30 text-accent">
-                  GATE.AIR.340
+                  SAMPLE · highlight
                 </Badge>
               </div>
             </div>
@@ -167,7 +167,7 @@ export default function ThemePreviewPage() {
               NLP
             </Badge>
             <Badge className="border-highlight/40 bg-highlight/10 text-highlight">
-              GATE AIR 340
+              SAMPLE · highlight
             </Badge>
           </div>
         </section>

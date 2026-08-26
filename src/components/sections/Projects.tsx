@@ -18,6 +18,10 @@ function ProjectLinks({
   project: Project;
   stacked?: boolean;
 }) {
+  if (!project.repositoryUrl && !project.demoUrl) {
+    return null;
+  }
+
   return (
     <div
       className={cn(
@@ -27,19 +31,21 @@ function ProjectLinks({
           : "mt-auto flex-wrap items-center gap-x-5 gap-y-0 pt-3"
       )}
     >
-      <a
-        href={project.repoUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Repository for ${project.title}`}
-        className={projectLinkClassName}
-      >
-        <FolderGit2 aria-hidden="true" className="size-3.5 shrink-0" />
-        Repository
-      </a>
-      {project.liveUrl ? (
+      {project.repositoryUrl ? (
         <a
-          href={project.liveUrl}
+          href={project.repositoryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Repository for ${project.title}`}
+          className={projectLinkClassName}
+        >
+          <FolderGit2 aria-hidden="true" className="size-3.5 shrink-0" />
+          Repository
+        </a>
+      ) : null}
+      {project.demoUrl ? (
+        <a
+          href={project.demoUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Live demo of ${project.title}`}
@@ -79,11 +85,11 @@ function FeaturedProject({
         </header>
 
         <p className="max-w-xl text-[0.95rem] leading-[1.7] text-text lg:pt-1">
-          {project.description}
+          {project.summary}
         </p>
 
         <aside className="flex min-w-0 flex-col gap-4 lg:pt-1" aria-label="Project details">
-          <TechLegend labels={project.tech} />
+          <TechLegend labels={project.technologies} />
           <ProjectLinks project={project} stacked />
         </aside>
       </div>
@@ -113,9 +119,9 @@ function SecondaryProject({
         {project.title}
       </h3>
       <p className="mt-2 text-[0.95rem] leading-[1.7] text-text">
-        {project.description}
+        {project.summary}
       </p>
-      <TechLegend labels={project.tech} className="mt-3" />
+      <TechLegend labels={project.technologies} className="mt-3" />
       <ProjectLinks project={project} />
     </article>
   );
@@ -128,6 +134,10 @@ function secondaryGridClass(count: number) {
 }
 
 export function Projects() {
+  if (projects.length === 0) {
+    return null;
+  }
+
   const featured = projects.filter((project) => project.featured);
   const secondary = projects.filter((project) => !project.featured);
   const featuredCount = featured.length;

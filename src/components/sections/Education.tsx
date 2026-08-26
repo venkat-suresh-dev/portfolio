@@ -3,12 +3,13 @@ import { SectionReveal } from "@/components/layout/SectionReveal";
 import {
   achievements,
   education,
-  type AchievementEntry,
+  type Achievement,
   type EducationEntry,
 } from "@/data/education";
 
 function EducationItem({ entry }: { entry: EducationEntry }) {
-  const details = entry.details ?? [];
+  const modules = entry.modules ?? [];
+  const period = entry.end ? `${entry.start} – ${entry.end}` : entry.start;
 
   return (
     <li>
@@ -26,21 +27,31 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
           {entry.institution}
         </p>
         <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
-          {entry.dates}
-          <span className="mx-2" aria-hidden="true">
-            ·
-          </span>
-          <span>{entry.location}</span>
+          {period}
+          {entry.location ? (
+            <>
+              <span className="mx-2" aria-hidden="true">
+                ·
+              </span>
+              <span>{entry.location}</span>
+            </>
+          ) : null}
         </p>
 
-        {details.length > 0 ? (
+        {entry.outcome ? (
+          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.7] text-text">
+            {entry.outcome}
+          </p>
+        ) : null}
+
+        {modules.length > 0 ? (
           <ul className="mt-3 max-w-2xl space-y-2">
-            {details.map((detail, index) => (
+            {modules.map((module) => (
               <li
-                key={`${entry.id}-detail-${index}`}
+                key={`${entry.id}-${module}`}
                 className="text-[0.95rem] leading-[1.7] text-text"
               >
-                {detail}
+                {module}
               </li>
             ))}
           </ul>
@@ -50,7 +61,11 @@ function EducationItem({ entry }: { entry: EducationEntry }) {
   );
 }
 
-function GateFeature({ achievement }: { achievement: AchievementEntry }) {
+function GateFeature({ achievement }: { achievement: Achievement }) {
+  const headingLabel = achievement.label
+    ? `${achievement.label} ${achievement.value}`
+    : `${achievement.name} ${achievement.value}`;
+
   return (
     <article
       aria-labelledby={`${achievement.id}-heading`}
@@ -60,12 +75,14 @@ function GateFeature({ achievement }: { achievement: AchievementEntry }) {
         <div className="min-w-0">
           <h3
             id={`${achievement.id}-heading`}
-            aria-label={`${achievement.subtitle} ${achievement.value}`}
+            aria-label={headingLabel}
             className="text-highlight"
           >
-            <span className="block font-mono text-[0.72rem] tracking-[0.14em] uppercase">
-              {achievement.subtitle}
-            </span>
+            {achievement.label ? (
+              <span className="block font-mono text-[0.72rem] tracking-[0.14em] uppercase">
+                {achievement.label}
+              </span>
+            ) : null}
             <span className="mt-1.5 block font-heading text-[clamp(2.5rem,9vw,4.35rem)] leading-none font-medium tracking-[-0.03em] tabular-nums">
               {achievement.value}
             </span>
@@ -74,14 +91,16 @@ function GateFeature({ achievement }: { achievement: AchievementEntry }) {
 
         <div className="min-w-0 sm:pt-1">
           <p className="font-heading text-lg font-medium tracking-[-0.02em] text-text">
-            {achievement.title}
+            {achievement.name}
           </p>
           <p className="mt-1.5 font-mono text-[0.7rem] tracking-[0.06em] text-text-muted">
             {achievement.year}
           </p>
-          <p className="mt-3 max-w-xl text-[0.95rem] leading-[1.7] text-text">
-            All-India Rank {achievement.value}. {achievement.description}
-          </p>
+          {achievement.context ? (
+            <p className="mt-3 max-w-xl text-[0.95rem] leading-[1.7] text-text">
+              {achievement.context}
+            </p>
+          ) : null}
         </div>
       </div>
     </article>

@@ -28,53 +28,6 @@ const BOOT_TOTAL_MS =
 
 type BootStatus = "pending" | "running" | "done";
 
-function Highlights() {
-  return (
-    <ul
-      aria-label="Highlights"
-      className="hero-highlights grid grid-cols-2 gap-x-0 gap-y-4 sm:grid-cols-4"
-    >
-      {profile.highlights.map((item) => (
-        <li
-          key={item.id}
-          className={cn(
-            "hero-highlight relative px-2 sm:px-2.5",
-            "first:pl-0 sm:first:pl-0",
-            item.featured && "hero-highlight--featured"
-          )}
-        >
-          <p
-            className={cn(
-              "hero-highlight-value font-heading tracking-tight",
-              item.featured ? "text-highlight" : "text-text"
-            )}
-          >
-            {item.value}
-          </p>
-          <p
-            className={cn(
-              "mt-0.5 font-mono text-[0.6875rem] tracking-[0.14em] uppercase",
-              item.featured ? "text-highlight/85" : "text-text-muted"
-            )}
-          >
-            {item.label}
-          </p>
-          {item.detail ? (
-            <p
-              className={cn(
-                "mt-0.5 text-[0.75rem] leading-snug",
-                item.featured ? "text-highlight/75" : "text-text-muted"
-              )}
-            >
-              {item.detail}
-            </p>
-          ) : null}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function Hero() {
   const [systemReduceMotion, setSystemReduceMotion] = useState(false);
   const [bootStatus, setBootStatus] = useState<BootStatus>("pending");
@@ -209,26 +162,24 @@ export function Hero() {
             </h1>
 
             <p className="hero-role mt-2.5 font-heading text-text">
-              {profile.role}
+              {profile.discipline}
             </p>
 
-            <p className="hero-lede mt-2">
-              {profile.tagline}
-            </p>
-
-            <p className="hero-intro mt-1.5">
-              {profile.shortIntro}
-            </p>
+            {profile.summary ? (
+              <p className="hero-lede mt-2">{profile.summary}</p>
+            ) : null}
 
             <div className="hero-actions mt-6 flex flex-wrap items-center gap-2.5">
-              <a
-                href={profile.resumePath}
-                download
-                className="instrument-btn instrument-btn-primary"
-              >
-                <ArrowDownToLine aria-hidden="true" className="size-3.5" />
-                Download Resume
-              </a>
+              {profile.resumeUrl ? (
+                <a
+                  href={profile.resumeUrl}
+                  download
+                  className="instrument-btn instrument-btn-primary"
+                >
+                  <ArrowDownToLine aria-hidden="true" className="size-3.5" />
+                  Download Resume
+                </a>
+              ) : null}
               <a
                 href="#contact"
                 className="instrument-btn instrument-btn-secondary"
@@ -248,20 +199,28 @@ export function Hero() {
                 <p className="font-mono text-[0.6875rem] tracking-[0.16em] text-text-muted uppercase">
                   PROFILE.STATUS
                 </p>
-                <p className="font-mono text-[0.8rem] tracking-[0.12em] text-accent uppercase">
-                  AVAILABLE
-                </p>
+                {profile.availability ? (
+                  <p className="font-mono text-[0.8rem] tracking-[0.12em] text-accent uppercase">
+                    {profile.availability}
+                  </p>
+                ) : null}
               </div>
 
               <dl className="hero-status-meta grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-3 gap-y-1 font-mono text-[0.7rem] tracking-[0.08em]">
-                <dt className="text-text-muted">LOC</dt>
-                <dd className="min-w-0 text-text">
-                  {profile.location ?? "[PLACEHOLDER]"}
-                </dd>
-                <dt className="text-text-muted">FOCUS</dt>
-                <dd className="min-w-0 text-text">[PLACEHOLDER]</dd>
-                <dt className="text-text-muted">SIGNAL</dt>
-                <dd className="min-w-0 text-text">[PLACEHOLDER]</dd>
+                {profile.location ? (
+                  <>
+                    <dt className="text-text-muted">LOC</dt>
+                    <dd className="min-w-0 text-text">{profile.location}</dd>
+                  </>
+                ) : null}
+                {profile.focus && profile.focus.length > 0 ? (
+                  <>
+                    <dt className="text-text-muted">FOCUS</dt>
+                    <dd className="min-w-0 text-text">
+                      {profile.focus.join(" · ")}
+                    </dd>
+                  </>
+                ) : null}
               </dl>
             </div>
 
@@ -294,23 +253,6 @@ export function Hero() {
             </div>
           </aside>
         </div>
-
-        <motion.div
-          className="hero-highlights-panel relative mt-6 pt-4 sm:mt-6 sm:pt-4"
-          initial={false}
-          animate={
-            isResolving
-              ? { opacity: 1, y: 0 }
-              : { opacity: 0.4, y: 8 }
-          }
-          transition={
-            motionOff
-              ? { duration: 0 }
-              : { duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.05 }
-          }
-        >
-          <Highlights />
-        </motion.div>
       </div>
     </section>
   );

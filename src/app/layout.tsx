@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { GridBackground } from "@/components/layout/GridBackground";
 import { Header } from "@/components/layout/Header";
 import { ScanlineOverlay } from "@/components/layout/ScanlineOverlay";
+import { profile } from "@/data/profile";
 
 import "./globals.css";
 
@@ -31,8 +32,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Data Science / AI-ML portfolio",
+  title: profile.name,
+  description: profile.discipline,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
