@@ -4276,6 +4276,477 @@ html:has(#intro-gate-style) .intro-mark {
   }
 }
 
+/* FIELD / 01 — N-body computational playground */
+
+.page-section--field {
+  padding-block: 2.25rem;
+}
+
+@media (min-width: 1280px) {
+  .page-section--field {
+    padding-block: 2.75rem 3rem;
+  }
+}
+
+.field-main {
+  padding-bottom: 3.5rem;
+}
+
+.field-page-shell {
+  padding-top: 0.5rem;
+}
+
+.field-back {
+  margin: 0;
+}
+
+.field-page-header {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.field-kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.field-heading {
+  margin-top: 0.55rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .field-heading {
+    font-size: 1.375rem;
+  }
+}
+
+.field-system {
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-system);
+}
+
+.field-instrument {
+  outline: none;
+}
+
+.field-instrument:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.field-stage {
+  margin-bottom: 1.25rem;
+}
+
+.field-viewport {
+  position: relative;
+  width: 100%;
+  height: 20.5rem;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+@media (min-width: 768px) {
+  .field-viewport {
+    height: min(58vh, 34rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .field-viewport {
+    height: min(70vh, 42rem);
+  }
+}
+
+.field-viewport canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.field-viewport--live {
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.field-console {
+  display: grid;
+  gap: 1.75rem 2.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid var(--border-hairline);
+}
+
+@media (min-width: 768px) {
+  .field-console {
+    grid-template-columns: minmax(0, 1.4fr) minmax(12rem, 0.7fr);
+    align-items: start;
+  }
+}
+
+.field-controls-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+}
+
+.field-action {
+  min-height: 2.75rem;
+  padding: 0 0.15rem;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-system);
+  cursor: pointer;
+}
+
+.field-action[aria-pressed="true"] {
+  color: var(--text-primary);
+}
+
+.field-action:hover,
+.field-action:focus-visible {
+  color: color-mix(in srgb, var(--accent-system) 80%, var(--text-primary));
+}
+
+.field-action:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.field-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1rem;
+  margin-top: 0.35rem;
+}
+
+.field-preset {
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+
+.field-preset.is-active {
+  color: var(--accent-system);
+}
+
+.field-preset:hover,
+.field-preset:focus-visible {
+  color: var(--text-primary);
+}
+
+.field-preset:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.field-params {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  max-width: 28rem;
+}
+
+.field-param-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.field-param-value {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.field-range {
+  appearance: none;
+  width: 100%;
+  height: 2.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.field-range:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.field-range::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--border-hairline);
+}
+
+.field-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 8px;
+  height: 12px;
+  margin-top: -5.5px;
+  border: 0;
+  border-radius: 0;
+  background: var(--accent-system);
+}
+
+.field-range::-moz-range-track {
+  height: 1px;
+  background: var(--border-hairline);
+}
+
+.field-range::-moz-range-thumb {
+  width: 8px;
+  height: 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--accent-system);
+}
+
+.field-range-track {
+  position: relative;
+  display: block;
+  height: 1px;
+  margin: 1.1rem 0 1.35rem;
+  background: var(--border-hairline);
+}
+
+.field-range-thumb {
+  position: absolute;
+  top: 50%;
+  left: 44%;
+  width: 8px;
+  height: 12px;
+  background: var(--accent-system);
+  transform: translate(-50%, -50%);
+}
+
+.field-telemetry-kicker {
+  margin: 0 0 0.45rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-hairline);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.field-telemetry-list {
+  margin: 0;
+}
+
+.field-telemetry-row {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.35rem 0.75rem;
+  align-items: baseline;
+  padding-block: 0.16rem;
+}
+
+.field-telemetry-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.field-telemetry-row dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.field-telemetry-row dd[data-state="running"] {
+  color: var(--accent-system);
+}
+
+.field-notes {
+  padding-top: 0.5rem;
+}
+
+.field-explain {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.field-technical {
+  margin: 1.1rem 0 0;
+  max-width: 62ch;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+}
+
+.field-teaser {
+  align-items: start;
+  row-gap: 1.25rem;
+}
+
+.field-teaser-title {
+  margin-top: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.field-teaser-line {
+  margin-top: 0.85rem;
+  max-width: 36ch;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.field-teaser-enter {
+  margin-top: 0.35rem;
+}
+
+.field-teaser-plate {
+  display: block;
+  min-height: 9rem;
+  text-decoration: none;
+}
+
+.field-teaser-plate .field-viewport {
+  height: 9.25rem;
+  border: 1px solid var(--border-hairline);
+}
+
+@media (min-width: 768px) {
+  .field-teaser-plate .field-viewport {
+    height: 11.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .field-teaser-plate .field-viewport {
+    height: 12.5rem;
+  }
+}
+
+.field-teaser-plate:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.field-specimen-view {
+  height: 14rem;
+  border: 1px solid var(--border-hairline);
+}
+
+@media (min-width: 768px) {
+  .field-specimen-view {
+    height: 16rem;
+  }
+}
+
+.field-specimen-meta {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  max-width: 28rem;
+}
+
+.field-specimen-states {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .field-specimen-states {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field-state-chip {
+  margin: 0;
+  padding: 0.65rem 0 0.55rem;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.field-state-chip span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.field-state-chip strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.field-state-chip[data-state="running"] strong {
+  color: var(--accent-system);
+}
+
+@media (max-width: 639px) {
+  .field-viewport {
+    height: 18.5rem;
+  }
+
+  .field-teaser-plate .field-viewport {
+    height: 9.25rem;
+  }
+
+  .field-specimen-view {
+    height: 12.5rem;
+  }
+
+  .field-console {
+    gap: 1.25rem;
+  }
+
+  .field-preset {
+    font-size: 0.625rem;
+  }
+}
+
 @media (forced-colors: active) {
   html {
     scrollbar-color: CanvasText Canvas;
@@ -4288,7 +4759,9 @@ html:has(#intro-gate-style) .intro-mark {
 
   .observation-row dd,
   .viz-figure-caption,
-  .embedding-point {
+  .embedding-point,
+  .field-telemetry-row dd,
+  .field-state-chip strong {
     forced-color-adjust: auto;
   }
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { FieldSpecimen } from "@/components/field/FieldSpecimen";
 import { FigureFrame } from "@/components/layout/FigureFrame";
 import { PrototypeControl } from "@/components/layout/PrototypeControl";
 import { ObservationTelemetry } from "@/components/sections/ObservationTelemetry";
@@ -542,7 +543,7 @@ export default function ThemePreviewPage() {
             ["Measurement", "Evidence / project data"],
             ["Network", "Technical relationships"],
             ["State", "Interaction changes"],
-            ["Field", "Reserved — playground later"],
+            ["Field", "Computational playground"],
           ].map(([term, job]) => (
             <div
               key={term}
@@ -711,7 +712,7 @@ export default function ThemePreviewPage() {
         />
       </section>
 
-      <section aria-labelledby="scrollbar-heading" className="mb-8">
+      <section aria-labelledby="scrollbar-heading" className="mb-16">
         <SpecimenHeading index="QA-26" headingId="scrollbar-heading">
           Scrollbar
         </SpecimenHeading>
@@ -735,6 +736,17 @@ export default function ThemePreviewPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section aria-labelledby="field-heading" className="mb-8">
+        <SpecimenHeading index="QA-27" headingId="field-heading">
+          Field / 01
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · canonical particle · trail · measurement frame · parameter ·
+          state
+        </p>
+        <FieldSpecimen />
       </section>
     </main>
   );

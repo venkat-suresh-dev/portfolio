@@ -1,3 +1,4 @@
+import { FieldTeaser } from "@/components/field/FieldTeaser";
 import { Certifications } from "@/components/sections/Certifications";
 import { Contact } from "@/components/sections/Contact";
 import { Education } from "@/components/sections/Education";
@@ -12,6 +13,7 @@ export default function Home() {
       <Experience />
       <Education />
       <Projects />
+      <FieldTeaser />
       <Certifications />
       <Contact />
     </main>
