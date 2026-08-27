@@ -8,6 +8,7 @@ export type ProjectFigureMeta = {
   status?: FigureStatus;
   statusLabel?: string;
   alt: string;
+  chrome?: boolean;
 };
 
 export type ArchitectureStage = {

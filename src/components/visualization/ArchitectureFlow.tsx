@@ -14,6 +14,7 @@ export function ArchitectureFlow({
   status,
   statusLabel,
   alt,
+  chrome = true,
   stages,
   animate = true,
 }: ProjectFigureMeta & {
@@ -37,6 +38,7 @@ export function ArchitectureFlow({
       status={status}
       statusLabel={statusLabel}
       alt={alt}
+      chrome={chrome}
     >
       <InViewOnce
         className="arch-flow"

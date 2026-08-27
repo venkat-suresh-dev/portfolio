@@ -14,6 +14,7 @@ export function ModelEvaluation({
   status,
   statusLabel,
   alt,
+  chrome = true,
   metrics,
   confusion,
   comparison,
@@ -34,6 +35,7 @@ export function ModelEvaluation({
       status={status}
       statusLabel={statusLabel}
       alt={alt}
+      chrome={chrome}
     >
       <div className="model-eval">
         {hasMetrics ? (

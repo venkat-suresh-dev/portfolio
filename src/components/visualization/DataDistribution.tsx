@@ -19,6 +19,7 @@ export function DataDistribution({
   status,
   statusLabel,
   alt,
+  chrome = true,
   variant,
   bins,
   points,
@@ -38,6 +39,7 @@ export function DataDistribution({
       status={status}
       statusLabel={statusLabel}
       alt={alt}
+      chrome={chrome}
     >
       {variant === "scatter" ? (
         <ScatterPlot points={points ?? []} />

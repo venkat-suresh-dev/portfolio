@@ -38,6 +38,7 @@ export function MetricPlot({
   status,
   statusLabel,
   alt,
+  chrome = true,
   points,
   unit,
   xLabel,
@@ -62,6 +63,7 @@ export function MetricPlot({
         status={status}
         statusLabel={statusLabel}
         alt={alt}
+        chrome={chrome}
       >
         <p className="viz-empty">No series provided.</p>
       </ProjectFigure>
@@ -90,6 +92,7 @@ export function MetricPlot({
       status={status}
       statusLabel={statusLabel}
       alt={alt}
+      chrome={chrome}
     >
       <div className="metric-plot">
         <div className="metric-plot-y">

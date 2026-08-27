@@ -3,6 +3,11 @@ import type { ReactNode } from "react";
 import { FieldSpecimen } from "@/components/field/FieldSpecimen";
 import { FigureFrame } from "@/components/layout/FigureFrame";
 import { PrototypeControl } from "@/components/layout/PrototypeControl";
+import { EvidenceAperture } from "@/components/projects/EvidenceAperture";
+import { EvidenceFigure } from "@/components/projects/EvidenceFigure";
+import { EvidencePlane } from "@/components/projects/EvidencePlane";
+import { ProjectEvidenceView } from "@/components/projects/ProjectEvidenceView";
+import { TechnicalCaption } from "@/components/projects/TechnicalCaption";
 import { ObservationTelemetry } from "@/components/sections/ObservationTelemetry";
 import {
   ArchitectureFlow,
@@ -26,6 +31,7 @@ import {
   DEMO_NOTICE,
   DEMO_SCATTER,
 } from "@/components/visualization/demo-data";
+import { prototypeProjects } from "@/data/prototype/projects";
 import { cn } from "@/lib/utils";
 
 const palette = [
@@ -738,7 +744,7 @@ export default function ThemePreviewPage() {
         </div>
       </section>
 
-      <section aria-labelledby="field-heading" className="mb-8">
+      <section aria-labelledby="field-heading" className="mb-16">
         <SpecimenHeading index="QA-27" headingId="field-heading">
           Field / 01
         </SpecimenHeading>
@@ -747,6 +753,138 @@ export default function ThemePreviewPage() {
           state
         </p>
         <FieldSpecimen />
+      </section>
+
+      <section aria-labelledby="spread-heading" className="mb-16">
+        <SpecimenHeading index="QA-28" headingId="spread-heading">
+          Featured project spread
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · PROTOTYPE · not production evidence
+        </p>
+        <div className="qa-project-spread">
+          <p className="project-folio" aria-hidden="true">
+            01
+          </p>
+          <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
+            PRJ-01 · PROTOTYPE
+          </p>
+          <p className="project-featured-title">
+            <span className="project-title-placeholder">[PLACEHOLDER]</span>
+            <span className="project-title-text">Featured Project</span>
+          </p>
+          <p className="project-featured-summary placeholder-copy">
+            [PLACEHOLDER] Spread specimen for layout QA. Not a real claim.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="aperture-heading" className="mb-16">
+        <SpecimenHeading index="QA-29" headingId="aperture-heading">
+          Media aperture
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · rest versus inspect · prototype plane
+        </p>
+        <div className="grid gap-8 lg:grid-cols-2">
+          {prototypeProjects[0]?.evidence?.[2] ? (
+            <>
+              <div>
+                <p className="mb-3 font-mono text-[0.625rem] tracking-[0.14em] text-text-tertiary uppercase">
+                  Rest
+                </p>
+                <EvidenceAperture
+                  figure={prototypeProjects[0].evidence[2]}
+                  className="qa-aperture-rest"
+                >
+                  <ProjectEvidenceView
+                    figure={prototypeProjects[0].evidence[2]}
+                  />
+                </EvidenceAperture>
+              </div>
+              <div>
+                <p className="mb-3 font-mono text-[0.625rem] tracking-[0.14em] text-text-tertiary uppercase">
+                  Inspect
+                </p>
+                <EvidenceAperture
+                  figure={prototypeProjects[0].evidence[2]}
+                  className="qa-aperture-active"
+                >
+                  <ProjectEvidenceView
+                    figure={prototypeProjects[0].evidence[2]}
+                  />
+                </EvidenceAperture>
+              </div>
+            </>
+          ) : null}
+        </div>
+      </section>
+
+      <section aria-labelledby="selector-heading" className="mb-16">
+        <SpecimenHeading index="QA-30" headingId="selector-heading">
+          Figure selector
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · technical report index · prototype figures
+        </p>
+        {prototypeProjects[0]?.evidence ? (
+          <EvidencePlane figures={prototypeProjects[0].evidence} />
+        ) : null}
+      </section>
+
+      <section aria-labelledby="caption-heading" className="mb-16">
+        <SpecimenHeading index="QA-31" headingId="caption-heading">
+          Technical caption
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · publication caption structure
+        </p>
+        <figure className="max-w-xl">
+          <TechnicalCaption
+            figureId="FIG.00"
+            title="SYSTEM ARCHITECTURE"
+            caption="Prototype system-flow specimen. Synthetic structure for layout validation."
+            source="PROTOTYPE / SYNTHETIC"
+          />
+        </figure>
+      </section>
+
+      <section aria-labelledby="cover-heading" className="mb-16">
+        <SpecimenHeading index="QA-32" headingId="cover-heading">
+          Case-study cover
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · technical report cover fragment
+        </p>
+        <header className="case-study-cover max-w-3xl">
+          <p className="case-study-cover-kicker">
+            <span>PRJ-01</span>
+            <span>Technical report</span>
+            <span className="prototype-mark">PROTOTYPE</span>
+          </p>
+          <p className="case-study-cover-status">PROTOTYPE</p>
+          <p className="case-study-cover-title">
+            <span className="project-title-placeholder">[PLACEHOLDER]</span>
+            <span className="project-title-text">Featured Project</span>
+          </p>
+          <p className="case-study-cover-thesis placeholder-copy">
+            [PLACEHOLDER] Cover specimen. Not a real thesis.
+          </p>
+        </header>
+      </section>
+
+      <section aria-labelledby="frame-heading" className="mb-8">
+        <SpecimenHeading index="QA-33" headingId="frame-heading">
+          Project evidence frame
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · labeled placeholder plane · not a fake screenshot
+        </p>
+        {prototypeProjects[0]?.evidence?.[2] ? (
+          <div className="max-w-3xl">
+            <EvidenceFigure figure={prototypeProjects[0].evidence[2]} />
+          </div>
+        ) : null}
       </section>
     </main>
   );

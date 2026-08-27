@@ -23,6 +23,7 @@ export function ProjectFigure({
   status,
   statusLabel,
   alt,
+  chrome = true,
   children,
   className,
 }: ProjectFigureMeta & {
@@ -30,6 +31,17 @@ export function ProjectFigure({
   className?: string;
 }) {
   const resolvedStatus = statusText(status, statusLabel);
+
+  if (!chrome) {
+    return (
+      <div className={cn("viz-figure viz-figure--embedded", className)}>
+        <div className="viz-figure-plate viz-figure-plate--embedded">
+          {children}
+        </div>
+        <p className="sr-only">{alt}</p>
+      </div>
+    );
+  }
 
   return (
     <figure className={cn("viz-figure", className)}>

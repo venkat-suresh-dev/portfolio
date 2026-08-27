@@ -1,225 +1,9 @@
-import Link from "next/link";
-
-import { FigureFrame } from "@/components/layout/FigureFrame";
-import { InViewOnce } from "@/components/layout/InViewOnce";
-import {
-  PrototypeControl,
-  PrototypeMark,
-} from "@/components/layout/PrototypeControl";
-import { SectionHeader } from "@/components/layout/SectionHeader";
-import { TechLegend } from "@/components/layout/TechLegend";
+import { FeaturedProject } from "@/components/projects/FeaturedProject";
+import { SecondaryProject } from "@/components/projects/SecondaryProject";
 import {
   resolvedProjects,
   SHOW_PROTOTYPE_CONTENT,
 } from "@/data/resolved";
-import type { Project } from "@/data/projects";
-
-function projectDocId(project: Project, index: number) {
-  return project.docId ?? `PRJ-${String(index + 1).padStart(2, "0")}`;
-}
-
-function figureIdFor(index: number) {
-  return `FIG. ${String(index + 1).padStart(2, "0")}`;
-}
-
-function ProjectAction({
-  href,
-  label,
-  external = false,
-}: {
-  href?: string;
-  label: string;
-  external?: boolean;
-}) {
-  if (href) {
-    const className = "legend-link min-h-11";
-    if (href.startsWith("/")) {
-      return (
-        <Link href={href} className={className}>
-          {label}
-          <span aria-hidden="true" className="text-control-glyph">
-            ↗
-          </span>
-        </Link>
-      );
-    }
-
-    return (
-      <a
-        href={href}
-        className={className}
-        {...(external
-          ? { target: "_blank", rel: "noopener noreferrer" }
-          : {})}
-      >
-        {label}
-        <span aria-hidden="true" className="text-control-glyph">
-          ↗
-        </span>
-      </a>
-    );
-  }
-
-  return (
-    <PrototypeControl label={label} className="legend-link min-h-11">
-      {label}
-      <span aria-hidden="true" className="text-control-glyph">
-        ↗
-      </span>
-    </PrototypeControl>
-  );
-}
-
-function ProjectActions({ project }: { project: Project }) {
-  const caseStudyHref = project.caseStudy
-    ? `/projects/${project.slug}`
-    : undefined;
-
-  return (
-    <div className="project-actions">
-      <ProjectAction href={caseStudyHref} label="Case study" />
-      <ProjectAction
-        href={project.repositoryUrl}
-        label="Repository"
-        external
-      />
-      <ProjectAction href={project.demoUrl} label="Live" external />
-    </div>
-  );
-}
-
-function FeaturedProject({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  const marker = projectDocId(project, index);
-  const titleId = `${project.id}-title`;
-  const figureId = figureIdFor(index);
-  const titleParts = project.title.match(/^(\[PLACEHOLDER\])\s*(.*)$/);
-
-  return (
-    <InViewOnce as="article" className="project-featured" aria-labelledby={titleId} data-doc-id={marker}>
-      <div className="page-grid project-featured-grid items-start gap-y-8">
-        <header className="project-featured-heading col-span-4 md:col-span-4 xl:col-span-7">
-          <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
-            <span>{marker}</span>
-            {project.prototype ? <PrototypeMark /> : null}
-          </p>
-          <p className="project-figure-intent">PROJECT INDEX / FEATURED EVIDENCE</p>
-          <h3
-            id={titleId}
-            className="project-featured-title"
-          >
-            {titleParts ? (
-              <>
-                <span className="project-title-placeholder">{titleParts[1]}</span>
-                <span className="project-title-text">{titleParts[2]}</span>
-              </>
-            ) : (
-              project.title
-            )}
-          </h3>
-        </header>
-
-        <div className="project-featured-story col-span-4 md:col-span-4 md:col-start-5 xl:col-span-5 xl:col-start-8">
-          <p className="project-featured-summary placeholder-copy">
-            {project.summary}
-          </p>
-        </div>
-
-        <div className="project-featured-meta col-span-4 md:col-span-8 xl:col-span-12">
-          <dl className="project-featured-metadata">
-            {project.role ? (
-              <div className="project-meta-field">
-                <dt>Role</dt>
-                <dd>{project.role}</dd>
-              </div>
-            ) : null}
-            <div className="project-meta-field">
-              <dt>Status</dt>
-              <dd>{project.statusLabel ?? project.status}</dd>
-            </div>
-            <div className="project-meta-field project-meta-field--stack">
-              <dt>Stack</dt>
-              <dd>
-                <TechLegend labels={project.technologies} />
-              </dd>
-            </div>
-          </dl>
-          <div className="project-featured-actions">
-            <ProjectActions project={project} />
-          </div>
-        </div>
-
-        <div className="project-featured-figure col-span-4 md:col-span-8 xl:col-span-12">
-          <FigureFrame
-            figureId={figureId}
-            kind="PROJECT EVIDENCE"
-            mediaMeta="16∶9 · CROP"
-            caption="[PLACEHOLDER] Featured project figure"
-            label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
-            featured
-          />
-        </div>
-      </div>
-    </InViewOnce>
-  );
-}
-
-function SecondaryProject({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  const marker = projectDocId(project, index);
-  const titleId = `${project.id}-title`;
-  const figureId = figureIdFor(index);
-
-  return (
-    <InViewOnce
-      as="article"
-      className="project-index-item"
-      aria-labelledby={titleId}
-      data-doc-id={marker}
-      simplifyOnMobile
-    >
-      <div className="project-index-figure">
-        <FigureFrame
-          figureId={figureId}
-          kind="PROJECT EVIDENCE"
-          mediaMeta="16∶11 · CROP"
-          caption="[PLACEHOLDER] Project figure"
-          label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
-        />
-      </div>
-      <div className="project-index-copy min-w-0">
-        <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
-          <span>{marker}</span>
-          {project.prototype ? <PrototypeMark /> : null}
-        </p>
-        <h3
-          id={titleId}
-          className="mt-2 text-[1.2rem] font-medium tracking-[-0.02em] text-text sm:text-[1.3125rem]"
-        >
-          {project.title}
-        </h3>
-        <p className="placeholder-copy mt-2 text-[0.95rem] leading-[1.7]">
-          {project.summary}
-        </p>
-        <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary uppercase">
-          {project.statusLabel ?? project.status}
-        </p>
-        <TechLegend labels={project.technologies} className="mt-3" />
-        <ProjectActions project={project} />
-      </div>
-    </InViewOnce>
-  );
-}
 
 export function Projects() {
   if (resolvedProjects.length === 0) {
@@ -237,39 +21,43 @@ export function Projects() {
       className="page-section page-section--projects"
     >
       <div className="page-shell">
-        <SectionHeader
-          index="§04"
-          title="Projects"
-          headingId="projects-heading"
-        />
+        <header className="projects-opening">
+          <p className="projects-opening-index">§04</p>
+          <div className="projects-opening-copy">
+            <h2 id="projects-heading" className="projects-opening-title">
+              Projects
+            </h2>
+            <p className="projects-opening-intent">Built systems</p>
+          </div>
+        </header>
         {SHOW_PROTOTYPE_CONTENT ? (
-          <p className="mb-8 max-w-xl font-mono text-[0.75rem] tracking-[0.08em] text-text-muted">
+          <p className="projects-opening-note">
             PROTOTYPE · Index fixtures for the final project system. Not
             production evidence.
           </p>
         ) : null}
 
         <div className="project-stage">
-            {featured.map((project, index) => (
-              <FeaturedProject
-                key={project.id}
-                project={project}
-                index={index}
-              />
-            ))}
+          {featured.map((project, index) => (
+            <FeaturedProject
+              key={project.id}
+              project={project}
+              index={index}
+            />
+          ))}
 
-            {secondary.length > 0 ? (
-              <ul className="project-index">
-                {secondary.map((project, index) => (
-                  <li key={project.id} className="min-w-0">
-                    <SecondaryProject
-                      project={project}
-                      index={featuredCount + index}
-                    />
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+          {secondary.length > 0 ? (
+            <ul className="project-index">
+              {secondary.map((project, index) => (
+                <li key={project.id} className="min-w-0">
+                  <SecondaryProject
+                    project={project}
+                    index={featuredCount + index}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </div>
     </section>

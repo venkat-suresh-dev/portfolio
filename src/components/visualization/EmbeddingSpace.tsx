@@ -21,6 +21,7 @@ export function EmbeddingSpace({
   status,
   statusLabel,
   alt,
+  chrome = true,
   points,
   clusters,
 }: ProjectFigureMeta & {
@@ -44,6 +45,7 @@ export function EmbeddingSpace({
       status={status}
       statusLabel={statusLabel}
       alt={alt}
+      chrome={chrome}
     >
       <div className="embedding-space">
         <svg

@@ -2,28 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { FigureFrame } from "@/components/layout/FigureFrame";
-import {
-  PrototypeControl,
-  PrototypeMark,
-} from "@/components/layout/PrototypeControl";
+import { InViewOnce } from "@/components/layout/InViewOnce";
+import { PrototypeMark } from "@/components/layout/PrototypeControl";
 import { TechLegend } from "@/components/layout/TechLegend";
+import { CaseStudyIndex } from "@/components/projects/CaseStudyIndex";
+import { EvidenceFigure } from "@/components/projects/EvidenceFigure";
+import { ProjectActions } from "@/components/projects/ProjectActions";
 import { getProjectBySlug, resolvedProjects } from "@/data/resolved";
-
-const CASE_STUDY_SECTIONS = [
-  ["overview", "Overview"],
-  ["problem", "Problem"],
-  ["context", "Context"],
-  ["approach", "Approach"],
-  ["architecture", "Architecture"],
-  ["implementation", "Implementation"],
-  ["evaluation", "Evaluation"],
-  ["results", "Results"],
-  ["limitations", "Limitations"],
-  ["learnings", "Learnings"],
-] as const;
-
-type CaseStudyKey = (typeof CASE_STUDY_SECTIONS)[number][0];
+import {
+  projectDocId,
+  projectEvidenceByIds,
+  projectStatusLabel,
+  splitProjectTitle,
+} from "@/lib/projects";
 
 export function generateStaticParams() {
   return resolvedProjects
@@ -60,117 +51,106 @@ export default async function ProjectCaseStudyPage({
   }
 
   const caseStudy = project.caseStudy;
-  const docId = project.docId ?? "PRJ-01";
-  const figures = caseStudy.figures ?? [];
-  const architectureFigure = figures[0];
-  const evaluationFigure = figures[1];
+  const docId = projectDocId(project, 0);
+  const status = projectStatusLabel(project);
+  const { placeholder, text } = splitProjectTitle(project.title);
+  const coverFigure = project.evidence?.[0];
 
   return (
     <main id="content" tabIndex={-1} className="page-section case-study-page">
-      <article className="page-shell">
-        <p className="font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted">
-          <Link href="/#projects" className="legend-link min-h-11">
+      <article className="page-shell case-study-document">
+        <p className="case-study-back">
+          <Link href="/#projects" className="project-action project-action--secondary">
             ← Projects
           </Link>
         </p>
 
-        <header className="case-study-header mt-8 max-w-3xl">
-          <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
+        <header className="case-study-cover">
+          <p className="case-study-cover-kicker">
             <span>{docId}</span>
+            <span>Technical report</span>
             {project.prototype ? <PrototypeMark /> : null}
           </p>
-          <h1 className="mt-4 text-[2rem] font-medium tracking-[-0.03em] text-text sm:text-[2.75rem]">
-            {project.title}
+          <p className="case-study-cover-status">{status}</p>
+          <h1 className="case-study-cover-title">
+            {placeholder ? (
+              <>
+                <span className="project-title-placeholder">{placeholder}</span>
+                <span className="project-title-text">{text}</span>
+              </>
+            ) : (
+              project.title
+            )}
           </h1>
-          <p className="placeholder-copy mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.65]">
+          <p className="case-study-cover-thesis placeholder-copy">
             {project.summary}
           </p>
-          <p className="mt-4 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary uppercase">
-            {project.statusLabel ?? project.status}
-            {project.role ? ` · ${project.role}` : null}
-          </p>
-          <TechLegend labels={project.technologies} className="mt-4" />
+          <dl className="case-study-cover-meta">
+            {project.role ? (
+              <div className="project-meta-field">
+                <dt>Role</dt>
+                <dd>{project.role}</dd>
+              </div>
+            ) : null}
+            <div className="project-meta-field">
+              <dt>Status</dt>
+              <dd>{status}</dd>
+            </div>
+            {project.year ? (
+              <div className="project-meta-field">
+                <dt>Year</dt>
+                <dd>{project.year}</dd>
+              </div>
+            ) : null}
+            <div className="project-meta-field project-meta-field--stack">
+              <dt>Stack</dt>
+              <dd>
+                <TechLegend labels={project.technologies} />
+              </dd>
+            </div>
+          </dl>
+          <ProjectActions project={project} showCaseStudy={false} />
         </header>
 
-        <div className="mt-14">
-          {CASE_STUDY_SECTIONS.map(([key, heading]) => {
-            const body = caseStudy[key as CaseStudyKey];
-            if (!body) return null;
+        {coverFigure ? (
+          <InViewOnce className="case-study-cover-figure" amount={0.18}>
+            <EvidenceFigure figure={coverFigure} featured />
+          </InViewOnce>
+        ) : null}
+
+        <CaseStudyIndex sections={caseStudy.sections} />
+
+        <div className="case-study-body">
+          {caseStudy.sections.map((section) => {
+            const figures = projectEvidenceByIds(project, section.figureIds);
 
             return (
               <section
-                key={key}
+                key={section.id}
+                id={`case-${section.id}`}
                 className="case-study-block"
-                aria-labelledby={`case-${key}`}
+                aria-labelledby={`case-heading-${section.id}`}
               >
-                <h2 id={`case-${key}`}>{heading}</h2>
-                <p className="placeholder-copy">{body}</p>
-
-                {key === "architecture" && architectureFigure ? (
-                  <div className="mt-8 max-w-3xl">
-                    <FigureFrame
-                      figureId={architectureFigure.id}
-                      caption={architectureFigure.caption}
-                      label="[PLACEHOLDER] Architecture figure"
-                      interactive={false}
-                    />
-                  </div>
-                ) : null}
-
-                {key === "evaluation" && evaluationFigure ? (
-                  <div className="mt-8 max-w-3xl">
-                    <FigureFrame
-                      figureId={evaluationFigure.id}
-                      caption={evaluationFigure.caption}
-                      label="[PLACEHOLDER] Evaluation figure"
-                      interactive={false}
-                    />
-                  </div>
-                ) : null}
+                <h2 id={`case-heading-${section.id}`}>
+                  <span>{section.index}</span>
+                  {section.heading}
+                </h2>
+                <p className="placeholder-copy">{section.body}</p>
+                {section.paragraphs?.map((paragraph) => (
+                  <p key={paragraph} className="placeholder-copy">
+                    {paragraph}
+                  </p>
+                ))}
+                {figures.map((figure) => (
+                  <EvidenceFigure
+                    key={`${section.id}-${figure.id}`}
+                    figure={figure}
+                    className="case-study-block-figure"
+                  />
+                ))}
               </section>
             );
           })}
-
-          <section className="case-study-block" aria-labelledby="case-links">
-            <h2 id="case-links">Links</h2>
-            <div className="mt-4 flex flex-wrap items-center gap-x-5">
-              {project.repositoryUrl ? (
-                <a
-                  href={project.repositoryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="legend-link min-h-11"
-                >
-                  Repository
-                  <span aria-hidden="true">↗</span>
-                </a>
-              ) : (
-                <PrototypeControl
-                  label="Repository"
-                  className="legend-link min-h-11"
-                >
-                  Repository
-                  <span aria-hidden="true">↗</span>
-                </PrototypeControl>
-              )}
-              {project.demoUrl ? (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="legend-link min-h-11"
-                >
-                  Live
-                  <span aria-hidden="true">↗</span>
-                </a>
-              ) : (
-                <PrototypeControl label="Live" className="legend-link min-h-11">
-                  Live
-                  <span aria-hidden="true">↗</span>
-                </PrototypeControl>
-              )}
-            </div>
-          </section>
         </div>
       </article>
     </main>
