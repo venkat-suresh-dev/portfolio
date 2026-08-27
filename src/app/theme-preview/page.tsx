@@ -2,6 +2,29 @@ import type { ReactNode } from "react";
 
 import { FigureFrame } from "@/components/layout/FigureFrame";
 import { PrototypeControl } from "@/components/layout/PrototypeControl";
+import { ObservationTelemetry } from "@/components/sections/ObservationTelemetry";
+import {
+  ArchitectureFlow,
+  DataDistribution,
+  EmbeddingSpace,
+  MetricPlot,
+  ModelEvaluation,
+  SystemParticle,
+} from "@/components/visualization";
+import {
+  DEMO_ARCHITECTURE_STAGES,
+  DEMO_CATEGORIES,
+  DEMO_CONFUSION,
+  DEMO_DENSITY,
+  DEMO_EMBEDDING_CLUSTERS,
+  DEMO_EMBEDDING_POINTS,
+  DEMO_EVALUATION_METRICS,
+  DEMO_HISTOGRAM,
+  DEMO_METRIC_POINTS,
+  DEMO_MODEL_COMPARISON,
+  DEMO_NOTICE,
+  DEMO_SCATTER,
+} from "@/components/visualization/demo-data";
 import { cn } from "@/lib/utils";
 
 const palette = [
@@ -484,7 +507,7 @@ export default function ThemePreviewPage() {
         </div>
       </section>
 
-      <section aria-labelledby="motion-heading" className="mb-8">
+      <section aria-labelledby="motion-heading" className="mb-16">
         <SpecimenHeading index="QA-16" headingId="motion-heading">
           Motion / reduced motion
         </SpecimenHeading>
@@ -502,6 +525,215 @@ export default function ThemePreviewPage() {
           >
             Prototype control
           </PrototypeControl>
+        </div>
+      </section>
+
+      <section aria-labelledby="vocabulary-heading" className="mb-16">
+        <SpecimenHeading index="QA-18" headingId="vocabulary-heading">
+          System vocabulary
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · each concept has one job
+        </p>
+        <dl className="max-w-xl border-t border-hairline">
+          {[
+            ["Particle", "Attention / state / transmission"],
+            ["Trajectory", "Progression through time"],
+            ["Measurement", "Evidence / project data"],
+            ["Network", "Technical relationships"],
+            ["State", "Interaction changes"],
+            ["Field", "Reserved — playground later"],
+          ].map(([term, job]) => (
+            <div
+              key={term}
+              className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-3 border-b border-hairline py-3"
+            >
+              <dt className="font-mono text-[0.6875rem] tracking-[0.12em] text-text-tertiary uppercase">
+                {term}
+              </dt>
+              <dd className="m-0 text-[0.9375rem] text-text-muted">{job}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section aria-labelledby="observation-heading" className="mb-16">
+        <SpecimenHeading index="QA-19" headingId="observation-heading">
+          Observation telemetry
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          LIVE viewport and scroll on this page · section idle without homepage
+          anchors
+        </p>
+        <div className="max-w-sm border-t border-hairline pt-4">
+          <ObservationTelemetry className="observation--preview" />
+        </div>
+      </section>
+
+      <section aria-labelledby="particle-heading" className="mb-16">
+        <SpecimenHeading index="QA-20" headingId="particle-heading">
+          Canonical particle
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · white-hot center · cyan edge · controlled halo
+        </p>
+        <div className="particle-specimen border-t border-hairline pt-6">
+          <SystemParticle />
+          <SystemParticle size="sm" />
+          <p className="font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary">
+            Intro / active trajectory node / contact transmission
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="arch-heading" className="mb-16">
+        <SpecimenHeading index="QA-21" headingId="arch-heading">
+          Architecture flow
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          {DEMO_NOTICE}
+        </p>
+        <ArchitectureFlow
+          figureId="FIG. P1"
+          caption="Prototype request path. Not a production architecture."
+          source="Theme preview · synthetic stages"
+          status="synthetic"
+          alt="Prototype architecture flow from client through API and service to cache."
+          stages={[...DEMO_ARCHITECTURE_STAGES]}
+        />
+      </section>
+
+      <section aria-labelledby="metric-heading" className="mb-16">
+        <SpecimenHeading index="QA-22" headingId="metric-heading">
+          Metric plot
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          {DEMO_NOTICE}
+        </p>
+        <MetricPlot
+          figureId="FIG. P2"
+          caption="Synthetic series with a reference threshold. Not measured results."
+          source="Theme preview · synthetic series"
+          status="synthetic"
+          alt="Prototype line plot decreasing from 1.00 to 0.20 over 32 steps, with a reference line at 0.30."
+          points={[...DEMO_METRIC_POINTS]}
+          unit="arb."
+          xLabel="step"
+          yLabel="Synthetic loss units"
+          threshold={0.3}
+          thresholdLabel="ref"
+        />
+      </section>
+
+      <section aria-labelledby="eval-heading" className="mb-16">
+        <SpecimenHeading index="QA-23" headingId="eval-heading">
+          Model evaluation
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          {DEMO_NOTICE}
+        </p>
+        <ModelEvaluation
+          figureId="FIG. P3"
+          caption="Prototype metrics, confusion counts, and model comparison. Not academic evidence."
+          source="Theme preview · round synthetic values"
+          status="synthetic"
+          alt="Prototype evaluation with F1 0.80, a four-cell confusion matrix, and three model scores."
+          metrics={[...DEMO_EVALUATION_METRICS]}
+          confusion={{ ...DEMO_CONFUSION }}
+          comparison={[...DEMO_MODEL_COMPARISON]}
+        />
+      </section>
+
+      <section aria-labelledby="dist-heading" className="mb-16">
+        <SpecimenHeading index="QA-24" headingId="dist-heading">
+          Data distribution
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          {DEMO_NOTICE}
+        </p>
+        <div className="space-y-12">
+          <DataDistribution
+            figureId="FIG. P4"
+            caption="Prototype histogram. Bin values are synthetic."
+            source="Theme preview · synthetic bins"
+            status="synthetic"
+            alt="Prototype histogram with six bins peaking at 14."
+            variant="histogram"
+            bins={[...DEMO_HISTOGRAM]}
+            yLabel="Synthetic counts"
+          />
+          <DataDistribution
+            figureId="FIG. P5"
+            caption="Prototype category distribution."
+            source="Theme preview · synthetic categories"
+            status="synthetic"
+            alt="Prototype category bars for A B C and D."
+            variant="category"
+            bins={[...DEMO_CATEGORIES]}
+          />
+          <DataDistribution
+            figureId="FIG. P6"
+            caption="Prototype density-like polyline. Not a fitted kernel."
+            source="Theme preview · synthetic density"
+            status="synthetic"
+            alt="Prototype density-like curve rising then falling across seven points."
+            variant="density"
+            points={[...DEMO_DENSITY]}
+            yLabel="Synthetic density"
+          />
+          <DataDistribution
+            figureId="FIG. P7"
+            caption="Prototype scatter distribution."
+            source="Theme preview · synthetic points"
+            status="synthetic"
+            alt="Prototype scatter of ten unlabeled points."
+            variant="scatter"
+            points={[...DEMO_SCATTER]}
+          />
+        </div>
+      </section>
+
+      <section aria-labelledby="embed-heading" className="mb-16">
+        <SpecimenHeading index="QA-25" headingId="embed-heading">
+          Embedding / vector space
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          {DEMO_NOTICE}
+        </p>
+        <EmbeddingSpace
+          figureId="FIG. P8"
+          caption="Prototype clusters for layout only. Not a computed embedding."
+          source="Theme preview · synthetic points"
+          status="synthetic"
+          alt="Prototype vector space with three labeled clusters. Select a point to read its sample metadata."
+          points={[...DEMO_EMBEDDING_POINTS]}
+          clusters={[...DEMO_EMBEDDING_CLUSTERS]}
+        />
+      </section>
+
+      <section aria-labelledby="scrollbar-heading" className="mb-8">
+        <SpecimenHeading index="QA-26" headingId="scrollbar-heading">
+          Scrollbar
+        </SpecimenHeading>
+        <p className="mb-4 font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted uppercase">
+          SAMPLE · Option B · 1px cyan measurement edge · desktop ≥1024
+        </p>
+        <div className="flex items-start gap-8 border-t border-hairline pt-6">
+          <div className="scrollbar-specimen" aria-hidden="true">
+            <div className="scrollbar-specimen-track">
+              <div className="scrollbar-specimen-thumb" />
+            </div>
+          </div>
+          <div className="max-w-md text-[0.9375rem] leading-[1.7] text-text-muted">
+            <p>
+              Track is a hairline rail. Thumb is graphite with a 1px cyan
+              measurement edge. Firefox uses a muted graphite/cyan mix. Mobile
+              keeps the native overlay scrollbar.
+            </p>
+            <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary">
+              Wayfinding = section identity · Scrollbar = page position
+            </p>
+          </div>
         </div>
       </section>
     </main>

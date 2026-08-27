@@ -5,6 +5,7 @@ import {
 } from "@/components/layout/PrototypeControl";
 import { SectionKicker } from "@/components/layout/SectionKicker";
 import { LocalClock } from "@/components/sections/LocalClock";
+import { ObservationTelemetry } from "@/components/sections/ObservationTelemetry";
 import { profile } from "@/data/profile";
 import {
   resolvedClock,
@@ -83,7 +84,10 @@ export function Hero() {
       <div className="page-shell">
         <div className="page-grid hero-composition">
           <div className="hero-reveal hero-reveal--kicker hero-grid-content col-span-4 md:col-span-8 xl:col-span-12">
-            <SectionKicker index="§01" label="Profile" />
+            <div className="hero-kicker-row">
+              <SectionKicker index="§01" label="Profile" />
+              <ObservationTelemetry />
+            </div>
           </div>
 
           <div className="hero-reveal hero-reveal--name hero-grid-content col-span-4 min-w-0 md:col-span-8 xl:col-span-12">

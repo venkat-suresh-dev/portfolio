@@ -28,9 +28,9 @@ export function Contact() {
             <div className="contact-signal" aria-hidden="true">
               <span className="contact-signal-line" />
               <span className="contact-signal-track">
-                <span className="contact-signal-particle" />
+                <span className="contact-signal-particle system-particle" />
               </span>
-              <span className="contact-signal-node" />
+              <span className="contact-signal-node system-particle" />
             </div>
 
             <div className="contact-statement col-span-4 min-w-0 md:col-span-8 xl:col-span-8">

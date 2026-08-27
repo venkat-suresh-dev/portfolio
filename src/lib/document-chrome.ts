@@ -46,10 +46,13 @@ function readState(): DocumentChromeState {
   const atBottom =
     window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
   if (atBottom) {
-    activeId = WAYFINDING_SECTIONS.at(-1)?.id ?? null;
+    const last = WAYFINDING_SECTIONS.at(-1);
+    if (last && document.getElementById(last.id)) {
+      activeId = last.id;
+    }
   }
 
-  if (window.scrollY < 40) {
+  if (window.scrollY < 40 && document.getElementById("hero")) {
     activeId = "hero";
   }
 
@@ -116,6 +119,15 @@ function getSnapshot() {
 
 function getServerSnapshot() {
   return SERVER_SNAPSHOT;
+}
+
+/** Subscribe without React. Used by observation telemetry DOM writes. */
+export function subscribeDocumentChrome(onStoreChange: () => void) {
+  return subscribe(onStoreChange);
+}
+
+export function getDocumentChromeState() {
+  return clientSnapshot;
 }
 
 export function useDocumentChrome() {
