@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/components/layout/SectionHeader";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
+import { InViewOnce } from "@/components/layout/InViewOnce";
 import { AcademicWork } from "@/components/sections/AcademicWork";
 import {
   achievements,
@@ -115,7 +115,6 @@ export function Education() {
           headingId="education-heading"
         />
 
-        <ScrollReveal>
         <div className="page-grid education-record-grid items-start gap-y-10 xl:gap-y-0">
           <ol className="col-span-4 m-0 list-none p-0 md:col-span-8 xl:col-span-7">
             {education.map((entry) => (
@@ -128,15 +127,13 @@ export function Education() {
           {featuredAchievements.length > 0 ? (
             <div className="col-span-4 md:col-span-8 xl:col-span-5">
               {featuredAchievements.map((achievement) => (
-                <GateFeature
-                  key={achievement.id}
-                  achievement={achievement}
-                />
+                <InViewOnce key={achievement.id} className="gate-observe">
+                  <GateFeature achievement={achievement} />
+                </InViewOnce>
               ))}
             </div>
           ) : null}
         </div>
-        </ScrollReveal>
 
         {education.map((entry) =>
           entry.academicProjects && entry.academicProjects.length > 0 ? (

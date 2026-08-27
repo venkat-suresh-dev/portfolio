@@ -1,6 +1,6 @@
 import { ExperienceDisclosure } from "@/components/sections/ExperienceDisclosure";
+import { ExperienceTrajectory } from "@/components/layout/ExperienceTrajectory";
 import { SectionHeader } from "@/components/layout/SectionHeader";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { TechLegend } from "@/components/layout/TechLegend";
 import { PrototypeMark } from "@/components/layout/PrototypeControl";
 import {
@@ -47,7 +47,7 @@ function ExperienceRole({
         </p>
 
         <div className="timeline-rail trajectory-rail" aria-hidden="true">
-          <span className="timeline-node trajectory-node" />
+          <span className="timeline-node trajectory-node" data-trajectory-node="" />
           <span className="trajectory-tick trajectory-tick--upper" />
           <span className="trajectory-tick trajectory-tick--lower" />
         </div>
@@ -155,20 +155,20 @@ export function Experience() {
           </p>
         ) : null}
 
-        <ScrollReveal>
-          <div className="page-grid experience-composition">
+        <div className="page-grid experience-composition">
             <div className="trajectory-axis col-span-4 md:col-span-8 xl:col-span-10" aria-hidden="true">
               <span>TRAJECTORY / WORK RECORD</span>
               <span className="trajectory-axis-line" />
               <span>WRK INDEX</span>
             </div>
-            <ol className="trajectory-list col-span-4 m-0 list-none p-0 md:col-span-8 xl:col-span-10">
-              {resolvedExperience.map((entry, index) => (
-                <ExperienceRole key={entry.id} entry={entry} index={index} />
-              ))}
-            </ol>
+            <ExperienceTrajectory className="trajectory-list-wrap col-span-4 md:col-span-8 xl:col-span-10">
+              <ol className="trajectory-list m-0 list-none p-0">
+                {resolvedExperience.map((entry, index) => (
+                  <ExperienceRole key={entry.id} entry={entry} index={index} />
+                ))}
+              </ol>
+            </ExperienceTrajectory>
           </div>
-        </ScrollReveal>
       </div>
     </section>
   );

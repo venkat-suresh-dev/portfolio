@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 import { FigureFrame } from "@/components/layout/FigureFrame";
+import { InViewOnce } from "@/components/layout/InViewOnce";
 import {
   PrototypeControl,
   PrototypeMark,
 } from "@/components/layout/PrototypeControl";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TechLegend } from "@/components/layout/TechLegend";
 import {
@@ -101,11 +101,7 @@ function FeaturedProject({
   const titleParts = project.title.match(/^(\[PLACEHOLDER\])\s*(.*)$/);
 
   return (
-    <article
-      aria-labelledby={titleId}
-      className="project-featured"
-      data-doc-id={marker}
-    >
+    <InViewOnce as="article" className="project-featured" aria-labelledby={titleId} data-doc-id={marker}>
       <div className="page-grid project-featured-grid items-start gap-y-8">
         <header className="project-featured-heading col-span-4 md:col-span-4 xl:col-span-7">
           <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
@@ -169,7 +165,7 @@ function FeaturedProject({
           />
         </div>
       </div>
-    </article>
+    </InViewOnce>
   );
 }
 
@@ -185,10 +181,12 @@ function SecondaryProject({
   const figureId = figureIdFor(index);
 
   return (
-    <article
-      aria-labelledby={titleId}
+    <InViewOnce
+      as="article"
       className="project-index-item"
+      aria-labelledby={titleId}
       data-doc-id={marker}
+      simplifyOnMobile
     >
       <div className="project-index-figure">
         <FigureFrame
@@ -219,7 +217,7 @@ function SecondaryProject({
         <TechLegend labels={project.technologies} className="mt-3" />
         <ProjectActions project={project} />
       </div>
-    </article>
+    </InViewOnce>
   );
 }
 
@@ -251,8 +249,7 @@ export function Projects() {
           </p>
         ) : null}
 
-        <ScrollReveal>
-          <div className="project-stage">
+        <div className="project-stage">
             {featured.map((project, index) => (
               <FeaturedProject
                 key={project.id}
@@ -273,8 +270,7 @@ export function Projects() {
                 ))}
               </ul>
             ) : null}
-          </div>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );

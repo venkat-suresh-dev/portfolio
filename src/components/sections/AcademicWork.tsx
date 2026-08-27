@@ -1,4 +1,5 @@
 import { DocumentFigure } from "@/components/layout/DocumentFigure";
+import { InViewOnce } from "@/components/layout/InViewOnce";
 import { TechLegend } from "@/components/layout/TechLegend";
 import type { AcademicProject, EducationDocument } from "@/data/education";
 import type { Metric } from "@/data/types";
@@ -73,7 +74,7 @@ function LeadAcademicItem({
   return (
     <article
       aria-labelledby={headingId}
-      className="academic-lead"
+      className="min-w-0"
       data-doc-id={docId}
     >
       <div className="academic-lead-copy">
@@ -191,10 +192,14 @@ export function AcademicWork({
           continued && "academic-composition--continued"
         )}
       >
-        {lead ? <LeadAcademicItem project={lead} index={0} /> : null}
+        {lead ? (
+          <InViewOnce className="academic-lead">
+            <LeadAcademicItem project={lead} index={0} />
+          </InViewOnce>
+        ) : null}
 
         {supporting.length > 0 ? (
-          <div className="academic-supporting">
+          <InViewOnce className="academic-supporting" simplifyOnMobile>
             {supporting.map((project, index) => (
               <SupportingAcademicItem
                 key={project.id}
@@ -202,7 +207,7 @@ export function AcademicWork({
                 index={index + 1}
               />
             ))}
-          </div>
+          </InViewOnce>
         ) : null}
 
         {documents.map((document) => (

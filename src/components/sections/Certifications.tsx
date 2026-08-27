@@ -1,6 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
 
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import {
   certifications,
@@ -89,7 +88,6 @@ export function Certifications() {
           headingId="certifications-heading"
         />
 
-        <ScrollReveal>
         <div className="credential-ledger">
           <div
             className="credential-legend page-grid"
@@ -116,7 +114,6 @@ export function Certifications() {
             ))}
           </ul>
         </div>
-        </ScrollReveal>
       </div>
     </section>
   );

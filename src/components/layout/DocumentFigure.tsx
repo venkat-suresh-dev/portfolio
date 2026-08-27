@@ -26,7 +26,7 @@ export function DocumentFigure({
       </p>
 
       {hasImage && document.src && document.width && document.height ? (
-        <figure className="mt-4">
+        <figure className="mt-4 document-inspect">
           <a
             href={document.src}
             target="_blank"
@@ -51,13 +51,13 @@ export function DocumentFigure({
           </figcaption>
         </figure>
       ) : (
-        <div className="mt-4">
+        <div className="mt-4 document-inspect">
           <FigureFrame
             figureId={document.id}
             caption={document.caption}
             label={"[PLACEHOLDER]\nDEGREE DOCUMENT"}
             alt="Prototype placeholder for future degree document"
-            interactive={false}
+            interactive
             variant="document"
           />
         </div>

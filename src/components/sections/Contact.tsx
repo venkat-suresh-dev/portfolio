@@ -1,6 +1,6 @@
 import { DisplayName } from "@/components/layout/DisplayName";
+import { InViewOnce } from "@/components/layout/InViewOnce";
 import { PrototypeControl } from "@/components/layout/PrototypeControl";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { profile } from "@/data/profile";
 import { resolvedContact } from "@/data/resolved";
@@ -23,10 +23,13 @@ export function Contact() {
 
         <p className="contact-communication-label">ESTABLISH COMMUNICATION</p>
 
-        <ScrollReveal>
+        <InViewOnce className="contact-finale" simplifyOnMobile>
           <div className="page-grid contact-composition">
             <div className="contact-signal" aria-hidden="true">
               <span className="contact-signal-line" />
+              <span className="contact-signal-track">
+                <span className="contact-signal-particle" />
+              </span>
               <span className="contact-signal-node" />
             </div>
 
@@ -34,7 +37,13 @@ export function Contact() {
               {closing ? (
                 <>
                   <p className="contact-eyebrow">{closing.closingEyebrow}</p>
-                  <p className="contact-close mt-4">{closing.closingStatement}</p>
+                  <p className="contact-close mt-4">
+                    {closing.closingStatement.split("\n").map((line) => (
+                      <span key={line} className="contact-close-line">
+                        {line}
+                      </span>
+                    ))}
+                  </p>
                 </>
               ) : (
                 <DisplayName name={profile.name} className="contact-close" />
@@ -146,7 +155,7 @@ export function Contact() {
               </ul>
             </div>
           </div>
-        </ScrollReveal>
+        </InViewOnce>
       </div>
     </section>
   );

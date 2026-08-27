@@ -95,18 +95,20 @@ export function Hero() {
             />
           </div>
 
-          <div className="hero-reveal hero-reveal--summary hero-grid-content col-span-4 mt-6 md:col-span-5 md:mt-8 xl:col-span-7 xl:mt-8">
-            <p className="hero-role">{profile.discipline}</p>
-            {resolvedProfile.summary ? (
-              <p className="hero-lede placeholder-copy mt-4">
-                {resolvedProfile.summary}
-              </p>
-            ) : null}
-            {profile.location ? (
-              <p className="mt-4 font-mono text-[0.75rem] tracking-[0.1em] text-text-muted">
-                {profile.location}
-              </p>
-            ) : null}
+          <div className="hero-grid-content col-span-4 mt-6 md:col-span-5 md:mt-8 xl:col-span-7 xl:mt-8">
+            <div className="hero-reveal hero-reveal--summary">
+              <p className="hero-role">{profile.discipline}</p>
+              {resolvedProfile.summary ? (
+                <p className="hero-lede placeholder-copy mt-4">
+                  {resolvedProfile.summary}
+                </p>
+              ) : null}
+              {profile.location ? (
+                <p className="mt-4 font-mono text-[0.75rem] tracking-[0.1em] text-text-muted">
+                  {profile.location}
+                </p>
+              ) : null}
+            </div>
 
             <div className="hero-reveal hero-reveal--cta mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               {profile.resumeUrl ? (
@@ -116,6 +118,9 @@ export function Hero() {
                   className="instrument-btn instrument-btn-primary"
                 >
                   Download résumé
+                  <span aria-hidden="true" className="instrument-btn-glyph">
+                    ↘
+                  </span>
                 </a>
               ) : (
                 <PrototypeControl
@@ -123,6 +128,9 @@ export function Hero() {
                   className="instrument-btn instrument-btn-primary"
                 >
                   Download résumé
+                  <span aria-hidden="true" className="instrument-btn-glyph">
+                    ↘
+                  </span>
                 </PrototypeControl>
               )}
 
@@ -132,10 +140,16 @@ export function Hero() {
                   className="instrument-btn instrument-btn-secondary"
                 >
                   Get in touch
+                  <span aria-hidden="true" className="instrument-btn-glyph">
+                    →
+                  </span>
                 </a>
               ) : (
                 <Link href="/#contact" className="instrument-btn instrument-btn-secondary">
                   Get in touch
+                  <span aria-hidden="true" className="instrument-btn-glyph">
+                    →
+                  </span>
                 </Link>
               )}
 
