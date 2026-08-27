@@ -4,6 +4,8 @@ import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { GridBackground } from "@/components/layout/GridBackground";
 import { Header } from "@/components/layout/Header";
+import { MobileProgress } from "@/components/layout/MobileProgress";
+import { WayfindingRail } from "@/components/layout/WayfindingRail";
 import { profile } from "@/data/profile";
 
 import "./globals.css";
@@ -44,7 +46,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <GridBackground />
+        <MobileProgress />
         <Header />
+        <WayfindingRail />
         <div className="relative flex flex-1 flex-col">{children}</div>
         <Footer />
       </body>

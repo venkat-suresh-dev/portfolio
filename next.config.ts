@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Prevent Next.js from regenerating AGENTS.md over the design authority.
+  agentRules: false,
 };
 
 export default nextConfig;

@@ -2,8 +2,11 @@ import type { Metric } from "./types";
 
 export type { Metric };
 
+export type ExperienceEmphasis = "lead" | "standard" | "quiet";
+
 export type ExperienceEntry = {
   id: string;
+  docId?: string;
   role: string;
   company: string;
   period: string;
@@ -12,6 +15,8 @@ export type ExperienceEntry = {
   metrics?: readonly Metric[];
   details?: readonly string[];
   technologies?: readonly string[];
+  emphasis?: ExperienceEmphasis;
+  prototype?: boolean;
 };
 
 /** Empty until verified roles are supplied. */

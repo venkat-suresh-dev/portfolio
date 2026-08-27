@@ -1,5 +1,4 @@
-import { experience } from "./experience";
-import { projects } from "./projects";
+import { resolvedExperience, resolvedProjects } from "./resolved";
 
 export type NavigationItem = {
   id: string;
@@ -13,11 +12,11 @@ export type NavigationItem = {
  * §05 Certifications · §06 Contact
  */
 export const navigationItems: readonly NavigationItem[] = [
-  { id: "experience", label: "Experience", href: "#experience" },
-  { id: "education", label: "Education", href: "#education" },
-  { id: "projects", label: "Projects", href: "#projects" },
-  { id: "certifications", label: "Certifications", href: "#certifications" },
-  { id: "contact", label: "Contact", href: "#contact" },
+  { id: "experience", label: "Experience", href: "/#experience" },
+  { id: "education", label: "Education", href: "/#education" },
+  { id: "projects", label: "Projects", href: "/#projects" },
+  { id: "certifications", label: "Certifications", href: "/#certifications" },
+  { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
 /**
@@ -28,8 +27,8 @@ export const navigationItems: readonly NavigationItem[] = [
  */
 export function getVisibleNavigationItems(): readonly NavigationItem[] {
   return navigationItems.filter((item) => {
-    if (item.id === "experience") return experience.length > 0;
-    if (item.id === "projects") return projects.length > 0;
+    if (item.id === "experience") return resolvedExperience.length > 0;
+    if (item.id === "projects") return resolvedProjects.length > 0;
     return true;
   });
 }

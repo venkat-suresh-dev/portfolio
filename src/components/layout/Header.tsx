@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { Menu } from "lucide-react";
 
+import { PrototypeControl } from "@/components/layout/PrototypeControl";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -14,93 +16,11 @@ import {
 } from "@/components/ui/sheet";
 import { getVisibleNavigationItems } from "@/data/navigation";
 import { profile } from "@/data/profile";
+import { SHOW_PROTOTYPE_CONTENT } from "@/data/resolved";
+import { useDocumentChrome } from "@/lib/document-chrome";
 import { cn } from "@/lib/utils";
 
-const SCROLL_THRESHOLD_PX = 12;
 const visibleNavigationItems = getVisibleNavigationItems();
-const SECTION_IDS = visibleNavigationItems.map((item) => item.href.slice(1));
-const ACTIVE_LINE_PX = 220;
-
-type HeaderScrollState = {
-  scrolled: boolean;
-  activeId: string | null;
-};
-
-const SERVER_SNAPSHOT: HeaderScrollState = {
-  scrolled: false,
-  activeId: null,
-};
-
-let clientSnapshot: HeaderScrollState = SERVER_SNAPSHOT;
-
-function subscribeToScroll(onStoreChange: () => void) {
-  window.addEventListener("scroll", onStoreChange, { passive: true });
-  window.addEventListener("hashchange", onStoreChange);
-  window.addEventListener("resize", onStoreChange);
-  document.addEventListener("click", onStoreChange);
-
-  const observer = new IntersectionObserver(onStoreChange, {
-    rootMargin: "-88px 0px -45% 0px",
-    threshold: 0,
-  });
-
-  for (const id of SECTION_IDS) {
-    const element = document.getElementById(id);
-    if (element) observer.observe(element);
-  }
-
-  onStoreChange();
-
-  return () => {
-    window.removeEventListener("scroll", onStoreChange);
-    window.removeEventListener("hashchange", onStoreChange);
-    window.removeEventListener("resize", onStoreChange);
-    document.removeEventListener("click", onStoreChange);
-    observer.disconnect();
-  };
-}
-
-function readScrollState(): HeaderScrollState {
-  const scrolled = window.scrollY > SCROLL_THRESHOLD_PX;
-  let activeId: string | null = null;
-
-  for (const id of SECTION_IDS) {
-    const element = document.getElementById(id);
-    if (!element) continue;
-    if (element.getBoundingClientRect().top <= ACTIVE_LINE_PX) {
-      activeId = id;
-    }
-  }
-
-  const doc = document.documentElement;
-  const atBottom =
-    window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
-  if (atBottom) {
-    activeId = SECTION_IDS.at(-1) ?? null;
-  }
-
-  if (window.scrollY < 40) {
-    activeId = null;
-  }
-
-  return { scrolled, activeId };
-}
-
-function getScrollSnapshot() {
-  const next = readScrollState();
-  if (
-    next.scrolled === clientSnapshot.scrolled &&
-    next.activeId === clientSnapshot.activeId
-  ) {
-    return clientSnapshot;
-  }
-  clientSnapshot = next;
-  return clientSnapshot;
-}
-
-function getServerScrollSnapshot() {
-  return SERVER_SNAPSHOT;
-}
 
 const navLinkClassName = cn(
   "nav-legend py-1",
@@ -120,8 +40,8 @@ function IdentityMark({
   onClick?: () => void;
 }) {
   return (
-    <a
-      href="#hero"
+    <Link
+      href="/#hero"
       onClick={onClick}
       className={cn(
         "identity-mark group inline-flex min-h-11 shrink-0 items-center gap-2.5",
@@ -130,65 +50,67 @@ function IdentityMark({
     >
       <span
         aria-hidden="true"
-        className="h-3 w-px bg-text-muted/70 transition-colors duration-150 group-hover:bg-accent motion-reduce:transition-none"
+        className="h-3 w-px bg-text-tertiary transition-colors duration-150 group-hover:bg-accent motion-reduce:transition-none"
       />
       <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-text transition-colors duration-150 group-hover:text-accent motion-reduce:transition-none">
         {profile.initials}
       </span>
-      <span
-        aria-hidden="true"
-        className="hidden h-px w-7 bg-hairline transition-colors duration-150 group-hover:bg-accent/50 sm:block motion-reduce:transition-none"
-      />
-    </a>
+    </Link>
   );
 }
 
-function ResumeLink({
+function ResumeControl({
   className,
   onClick,
 }: {
   className?: string;
   onClick?: () => void;
 }) {
-  if (!profile.resumeUrl) {
+  if (profile.resumeUrl) {
+    return (
+      <a
+        href={profile.resumeUrl}
+        download
+        onClick={onClick}
+        className={cn("text-control", className)}
+      >
+        Resume
+        <span aria-hidden="true" className="text-control-glyph text-[0.85em] leading-none">
+          ↘
+        </span>
+      </a>
+    );
+  }
+
+  if (!SHOW_PROTOTYPE_CONTENT) {
     return null;
   }
 
   return (
-    <a
-      href={profile.resumeUrl}
-      download
-      onClick={onClick}
-      className={cn("text-control", className)}
-    >
+    <PrototypeControl label="Resume" className={cn("text-control", className)}>
       Resume
       <span aria-hidden="true" className="text-control-glyph text-[0.85em] leading-none">
         ↘
       </span>
-    </a>
+    </PrototypeControl>
   );
 }
 
+function sectionIdFromHref(href: string) {
+  const hashIndex = href.indexOf("#");
+  if (hashIndex >= 0) {
+    return href.slice(hashIndex + 1);
+  }
+  return href.replace(/^\//, "");
+}
+
 export function Header() {
-  const { scrolled, activeId } = useSyncExternalStore(
-    subscribeToScroll,
-    getScrollSnapshot,
-    getServerScrollSnapshot
-  );
+  const { scrolled, navActiveId } = useDocumentChrome();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-40 border-b",
-        "transition-[background-color,border-color,backdrop-filter] duration-200",
-        "motion-reduce:transition-none",
-        scrolled
-          ? "border-hairline bg-bg/85 backdrop-blur-md"
-          : "border-hairline bg-bg"
-      )}
-    >
-      <div className="page-shell flex h-14 items-center justify-between gap-3 md:h-[5.25rem]">
+    <header className="site-header" data-scrolled={scrolled ? "true" : "false"}>
+      <div className="page-shell flex h-full items-center justify-between gap-3">
         <IdentityMark />
 
         <nav
@@ -196,11 +118,11 @@ export function Header() {
           className="hidden items-center gap-6 md:flex lg:gap-8"
         >
           {visibleNavigationItems.map((item) => {
-            const sectionId = item.href.slice(1);
-            const isActive = activeId === sectionId;
+            const sectionId = sectionIdFromHref(item.href);
+            const isActive = navActiveId === sectionId;
 
             return (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "location" : undefined}
@@ -208,13 +130,15 @@ export function Header() {
               >
                 {item.label}
                 <span aria-hidden="true" className="nav-legend-tick" />
-              </a>
+              </Link>
             );
           })}
         </nav>
 
         <div className="flex items-center gap-1">
-          <ResumeLink className="hidden md:inline-flex" />
+          <span className="hidden md:inline-flex">
+            <ResumeControl />
+          </span>
 
           <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
             <SheetTrigger
@@ -247,11 +171,11 @@ export function Header() {
                 className="flex flex-col gap-0.5 px-4 pb-6"
               >
                 {visibleNavigationItems.map((item) => {
-                  const sectionId = item.href.slice(1);
-                  const isActive = activeId === sectionId;
+                  const sectionId = sectionIdFromHref(item.href);
+                  const isActive = navActiveId === sectionId;
 
                   return (
-                    <a
+                    <Link
                       key={item.href}
                       href={item.href}
                       aria-current={isActive ? "location" : undefined}
@@ -260,10 +184,10 @@ export function Header() {
                     >
                       {item.label}
                       <span aria-hidden="true" className="nav-legend-tick" />
-                    </a>
+                    </Link>
                   );
                 })}
-                <ResumeLink
+                <ResumeControl
                   className="mt-3"
                   onClick={() => setMobileNavOpen(false)}
                 />

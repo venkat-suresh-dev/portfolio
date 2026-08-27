@@ -1,56 +1,18 @@
 import { DisplayName } from "@/components/layout/DisplayName";
+import { PrototypeControl } from "@/components/layout/PrototypeControl";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { profile } from "@/data/profile";
-
-type ContactLink = {
-  href: string;
-  label: string;
-  external?: boolean;
-  download?: boolean;
-};
-
-function getContactLinks(): ContactLink[] {
-  const links: ContactLink[] = [];
-
-  if (profile.email) {
-    links.push({ href: `mailto:${profile.email}`, label: "Email" });
-  }
-
-  if (profile.linkedin) {
-    links.push({
-      href: profile.linkedin,
-      label: "LinkedIn",
-      external: true,
-    });
-  }
-
-  if (profile.github) {
-    links.push({
-      href: profile.github,
-      label: "GitHub",
-      external: true,
-    });
-  }
-
-  if (profile.resumeUrl) {
-    links.push({
-      href: profile.resumeUrl,
-      label: "Resume",
-      download: true,
-    });
-  }
-
-  return links;
-}
+import { resolvedContact } from "@/data/resolved";
 
 export function Contact() {
-  const links = getContactLinks();
+  const closing = resolvedContact;
 
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="page-section"
+      className="page-section page-section--contact"
     >
       <div className="page-shell">
         <SectionHeader
@@ -59,52 +21,125 @@ export function Contact() {
           headingId="contact-heading"
         />
 
-        <div className="page-grid">
-          <div className="col-span-4 min-w-0 md:col-span-8 lg:col-span-12">
-            <DisplayName
-              name={profile.name}
-              className="contact-close"
-            />
-          </div>
+        <ScrollReveal>
+          <div className="page-grid">
+            <div className="col-span-4 min-w-0 md:col-span-8 xl:col-span-12">
+              {closing ? (
+                <>
+                  <p className="contact-eyebrow">{closing.closingEyebrow}</p>
+                  <p className="contact-close mt-4">{closing.closingStatement}</p>
+                </>
+              ) : (
+                <DisplayName name={profile.name} className="contact-close" />
+              )}
+            </div>
 
-          <div className="col-span-4 mt-8 md:col-span-6 lg:col-span-6">
-            <p className="text-[1.0625rem] text-text-muted">
-              {profile.discipline}
-            </p>
+            <div className="col-span-4 mt-10 md:col-span-6 xl:col-span-6">
+              <p className="text-[1.0625rem] text-text-muted">
+                {profile.discipline}
+              </p>
+              {profile.location ? (
+                <p className="mt-3 font-mono text-[0.75rem] tracking-[0.1em] text-text-muted">
+                  {profile.location}
+                </p>
+              ) : null}
 
-            {links.length > 0 ? (
-              <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
-                {links.map((link) => (
-                  <li key={link.label}>
+              <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-1">
+                <li>
+                  {profile.email ? (
                     <a
-                      href={link.href}
+                      href={`mailto:${profile.email}`}
                       className="text-control gap-1.5"
-                      {...(link.external
-                        ? {
-                            target: "_blank",
-                            rel: "noopener noreferrer",
-                          }
-                        : {})}
-                      {...(link.download ? { download: true } : {})}
                     >
-                      {link.label}
-                      {link.external ? (
-                        <span aria-hidden="true" className="text-control-glyph">
-                          ↗
-                        </span>
-                      ) : null}
-                      {link.download ? (
-                        <span aria-hidden="true" className="text-control-glyph">
-                          ↘
-                        </span>
-                      ) : null}
+                      Email
                     </a>
-                  </li>
-                ))}
+                  ) : (
+                    <PrototypeControl
+                      label="Email"
+                      className="text-control gap-1.5"
+                    >
+                      Email
+                    </PrototypeControl>
+                  )}
+                </li>
+                <li>
+                  {profile.linkedin ? (
+                    <a
+                      href={profile.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-control gap-1.5"
+                    >
+                      LinkedIn
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↗
+                      </span>
+                    </a>
+                  ) : (
+                    <PrototypeControl
+                      label="LinkedIn"
+                      className="text-control gap-1.5"
+                    >
+                      LinkedIn
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↗
+                      </span>
+                    </PrototypeControl>
+                  )}
+                </li>
+                <li>
+                  {profile.github ? (
+                    <a
+                      href={profile.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-control gap-1.5"
+                    >
+                      GitHub
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↗
+                      </span>
+                    </a>
+                  ) : (
+                    <PrototypeControl
+                      label="GitHub"
+                      className="text-control gap-1.5"
+                    >
+                      GitHub
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↗
+                      </span>
+                    </PrototypeControl>
+                  )}
+                </li>
+                <li>
+                  {profile.resumeUrl ? (
+                    <a
+                      href={profile.resumeUrl}
+                      download
+                      className="text-control gap-1.5"
+                    >
+                      Résumé
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↘
+                      </span>
+                    </a>
+                  ) : (
+                    <PrototypeControl
+                      label="Résumé"
+                      className="text-control gap-1.5"
+                    >
+                      Résumé
+                      <span aria-hidden="true" className="text-control-glyph">
+                        ↘
+                      </span>
+                    </PrototypeControl>
+                  )}
+                </li>
               </ul>
-            ) : null}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

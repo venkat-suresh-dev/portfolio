@@ -8,7 +8,13 @@ export type ProjectFigure = {
   caption?: string;
 };
 
+export type CaseStudyFigure = {
+  id: string;
+  caption: string;
+};
+
 export type ProjectCaseStudy = {
+  overview?: string;
   problem?: string;
   context?: string;
   approach?: string;
@@ -18,6 +24,7 @@ export type ProjectCaseStudy = {
   results?: string;
   limitations?: string;
   learnings?: string;
+  figures?: readonly CaseStudyFigure[];
 };
 
 export type Project = {
@@ -26,6 +33,7 @@ export type Project = {
   title: string;
   summary: string;
   status: ProjectStatus;
+  statusLabel?: string;
   technologies: readonly string[];
   role?: string;
   tags?: readonly string[];
@@ -35,6 +43,8 @@ export type Project = {
   figures?: readonly ProjectFigure[];
   caseStudy?: ProjectCaseStudy;
   claims?: readonly string[];
+  docId?: string;
+  prototype?: boolean;
 };
 
 /** Empty until verified portfolio projects are supplied. */

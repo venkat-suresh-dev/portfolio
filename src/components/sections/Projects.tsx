@@ -1,58 +1,89 @@
-import { ArrowUpRight, FolderGit2 } from "lucide-react";
+import Link from "next/link";
 
+import { FigureFrame } from "@/components/layout/FigureFrame";
+import {
+  PrototypeControl,
+  PrototypeMark,
+} from "@/components/layout/PrototypeControl";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TechLegend } from "@/components/layout/TechLegend";
-import { projects, type Project } from "@/data/projects";
-import { cn } from "@/lib/utils";
+import {
+  resolvedProjects,
+  SHOW_PROTOTYPE_CONTENT,
+} from "@/data/resolved";
+import type { Project } from "@/data/projects";
 
-const projectLinkClassName = "legend-link min-h-11";
+function projectDocId(project: Project, index: number) {
+  return project.docId ?? `PRJ-${String(index + 1).padStart(2, "0")}`;
+}
 
-const outboundIconClassName = "outbound-icon size-3.5 shrink-0";
+function figureIdFor(index: number) {
+  return `FIG. ${String(index + 1).padStart(2, "0")}`;
+}
 
-function ProjectLinks({
-  project,
-  stacked = false,
+function ProjectAction({
+  href,
+  label,
+  external = false,
 }: {
-  project: Project;
-  stacked?: boolean;
+  href?: string;
+  label: string;
+  external?: boolean;
 }) {
-  if (!project.repositoryUrl && !project.demoUrl) {
-    return null;
+  if (href) {
+    const className = "legend-link min-h-11";
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} className={className}>
+          {label}
+          <span aria-hidden="true" className="text-control-glyph">
+            ↗
+          </span>
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        href={href}
+        className={className}
+        {...(external
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
+        {label}
+        <span aria-hidden="true" className="text-control-glyph">
+          ↗
+        </span>
+      </a>
+    );
   }
 
   return (
-    <div
-      className={cn(
-        "flex",
-        stacked
-          ? "flex-col items-start gap-0"
-          : "mt-auto flex-wrap items-center gap-x-5 gap-y-0 pt-3"
-      )}
-    >
-      {project.repositoryUrl ? (
-        <a
-          href={project.repositoryUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Repository for ${project.title}`}
-          className={projectLinkClassName}
-        >
-          <FolderGit2 aria-hidden="true" className="size-3.5 shrink-0" />
-          Repository
-        </a>
-      ) : null}
-      {project.demoUrl ? (
-        <a
-          href={project.demoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Live demo of ${project.title}`}
-          className={projectLinkClassName}
-        >
-          <ArrowUpRight aria-hidden="true" className={outboundIconClassName} />
-          Live demo
-        </a>
-      ) : null}
+    <PrototypeControl label={label} className="legend-link min-h-11">
+      {label}
+      <span aria-hidden="true" className="text-control-glyph">
+        ↗
+      </span>
+    </PrototypeControl>
+  );
+}
+
+function ProjectActions({ project }: { project: Project }) {
+  const caseStudyHref = project.caseStudy
+    ? `/projects/${project.slug}`
+    : undefined;
+
+  return (
+    <div className="project-actions">
+      <ProjectAction href={caseStudyHref} label="Case study" />
+      <ProjectAction
+        href={project.repositoryUrl}
+        label="Repository"
+        external
+      />
+      <ProjectAction href={project.demoUrl} label="Live" external />
     </div>
   );
 }
@@ -64,35 +95,56 @@ function FeaturedProject({
   project: Project;
   index: number;
 }) {
-  const marker = `PRJ-${String(index + 1).padStart(2, "0")}`;
+  const marker = projectDocId(project, index);
   const titleId = `${project.id}-title`;
+  const figureId = figureIdFor(index);
 
   return (
-    <article aria-labelledby={titleId} className="project-featured">
-      <div className="page-grid items-start gap-y-6">
-        <header className="col-span-4 md:col-span-3 lg:col-span-3">
-          <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
-            {marker}
+    <article
+      aria-labelledby={titleId}
+      className="project-featured"
+      data-doc-id={marker}
+    >
+      <div className="page-grid items-start gap-y-8">
+        <header className="col-span-4 md:col-span-3 xl:col-span-3">
+          <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
+            <span>{marker}</span>
+            {project.prototype ? <PrototypeMark /> : null}
           </p>
           <h3
             id={titleId}
-            className="mt-3 text-[1.35rem] font-medium tracking-tight text-text sm:text-[1.65rem]"
+            className="mt-3 text-[1.5rem] font-medium tracking-tight text-text sm:text-[1.85rem]"
           >
             {project.title}
           </h3>
+          {project.role ? (
+            <p className="placeholder-copy mt-3 font-mono text-[0.75rem] tracking-[0.08em]">
+              {project.role}
+            </p>
+          ) : null}
         </header>
 
-        <p className="col-span-4 max-w-xl text-[0.95rem] leading-[1.7] text-text md:col-span-5 lg:col-span-6">
-          {project.summary}
-        </p>
+        <div className="col-span-4 md:col-span-5 xl:col-span-5">
+          <p className="placeholder-copy max-w-xl text-[0.95rem] leading-[1.7]">
+            {project.summary}
+          </p>
+          <p className="mt-4 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary uppercase">
+            {project.statusLabel ?? project.status}
+          </p>
+          <TechLegend labels={project.technologies} className="mt-4" />
+          <ProjectActions project={project} />
+        </div>
 
-        <aside
-          className="col-span-4 flex min-w-0 flex-col gap-4 md:col-span-8 lg:col-span-3"
-          aria-label="Project details"
-        >
-          <TechLegend labels={project.technologies} />
-          <ProjectLinks project={project} stacked />
-        </aside>
+        <div className="col-span-4 md:col-span-8 xl:col-span-12">
+          <FigureFrame
+            figureId={figureId}
+            kind="PROJECT EVIDENCE"
+            mediaMeta="16∶9 · CROP"
+            caption="[PLACEHOLDER] Featured project figure"
+            label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
+            featured
+          />
+        </div>
       </div>
     </article>
   );
@@ -105,49 +157,61 @@ function SecondaryProject({
   project: Project;
   index: number;
 }) {
-  const marker = `PRJ-${String(index + 1).padStart(2, "0")}`;
+  const marker = projectDocId(project, index);
   const titleId = `${project.id}-title`;
+  const figureId = figureIdFor(index);
 
   return (
-    <article aria-labelledby={titleId} className="project-secondary">
-      <p className="font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
-        {marker}
-      </p>
-      <h3
-        id={titleId}
-        className="mt-2 text-[1.125rem] font-medium tracking-[-0.02em] text-text sm:text-[1.2rem]"
-      >
-        {project.title}
-      </h3>
-      <p className="mt-2 text-[0.95rem] leading-[1.7] text-text">
-        {project.summary}
-      </p>
-      <TechLegend labels={project.technologies} className="mt-3" />
-      <ProjectLinks project={project} />
+    <article
+      aria-labelledby={titleId}
+      className="project-index-item"
+      data-doc-id={marker}
+    >
+      <FigureFrame
+        figureId={figureId}
+        kind="PROJECT EVIDENCE"
+        mediaMeta="16∶11 · CROP"
+        caption="[PLACEHOLDER] Project figure"
+        label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
+      />
+      <div className="project-index-copy min-w-0">
+        <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
+          <span>{marker}</span>
+          {project.prototype ? <PrototypeMark /> : null}
+        </p>
+        <h3
+          id={titleId}
+          className="mt-2 text-[1.2rem] font-medium tracking-[-0.02em] text-text sm:text-[1.3125rem]"
+        >
+          {project.title}
+        </h3>
+        <p className="placeholder-copy mt-2 text-[0.95rem] leading-[1.7]">
+          {project.summary}
+        </p>
+        <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary uppercase">
+          {project.statusLabel ?? project.status}
+        </p>
+        <TechLegend labels={project.technologies} className="mt-3" />
+        <ProjectActions project={project} />
+      </div>
     </article>
   );
 }
 
-function secondaryGridClass(count: number) {
-  if (count <= 1) return "grid-cols-1";
-  if (count === 3) return "grid-cols-1 lg:grid-cols-3";
-  return "grid-cols-1 md:grid-cols-2";
-}
-
 export function Projects() {
-  if (projects.length === 0) {
+  if (resolvedProjects.length === 0) {
     return null;
   }
 
-  const featured = projects.filter((project) => project.featured);
-  const secondary = projects.filter((project) => !project.featured);
+  const featured = resolvedProjects.filter((project) => project.featured);
+  const secondary = resolvedProjects.filter((project) => !project.featured);
   const featuredCount = featured.length;
 
   return (
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="page-section"
+      className="page-section page-section--projects"
     >
       <div className="page-shell">
         <SectionHeader
@@ -155,34 +219,37 @@ export function Projects() {
           title="Projects"
           headingId="projects-heading"
         />
+        {SHOW_PROTOTYPE_CONTENT ? (
+          <p className="mb-8 max-w-xl font-mono text-[0.75rem] tracking-[0.08em] text-text-muted">
+            PROTOTYPE · Index fixtures for the final project system. Not
+            production evidence.
+          </p>
+        ) : null}
 
-        <div className="flex flex-col gap-6">
-          {featured.map((project, index) => (
-            <FeaturedProject
-              key={project.id}
-              project={project}
-              index={index}
-            />
-          ))}
+        <ScrollReveal>
+          <div className="project-stage">
+            {featured.map((project, index) => (
+              <FeaturedProject
+                key={project.id}
+                project={project}
+                index={index}
+              />
+            ))}
 
-          {secondary.length > 0 ? (
-            <ul
-              className={cn(
-                "m-0 grid list-none gap-3 p-0",
-                secondaryGridClass(secondary.length)
-              )}
-            >
-              {secondary.map((project, index) => (
-                <li key={project.id} className="min-w-0">
-                  <SecondaryProject
-                    project={project}
-                    index={featuredCount + index}
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
+            {secondary.length > 0 ? (
+              <ul className="project-index">
+                {secondary.map((project, index) => (
+                  <li key={project.id} className="min-w-0">
+                    <SecondaryProject
+                      project={project}
+                      index={featuredCount + index}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
