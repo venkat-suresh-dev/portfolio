@@ -24,6 +24,7 @@ export function WayfindingRail() {
       aria-label="Document wayfinding"
       style={{ "--doc-progress": String(progress) } as CSSProperties}
     >
+      <p className="wayfinding-kicker">DOC / INDEX</p>
       <nav className="wayfinding-index" aria-label="Section index">
         {WAYFINDING_SECTIONS.map((section) => (
           <Link

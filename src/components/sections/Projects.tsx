@@ -98,6 +98,7 @@ function FeaturedProject({
   const marker = projectDocId(project, index);
   const titleId = `${project.id}-title`;
   const figureId = figureIdFor(index);
+  const titleParts = project.title.match(/^(\[PLACEHOLDER\])\s*(.*)$/);
 
   return (
     <article
@@ -105,37 +106,59 @@ function FeaturedProject({
       className="project-featured"
       data-doc-id={marker}
     >
-      <div className="page-grid items-start gap-y-8">
-        <header className="col-span-4 md:col-span-3 xl:col-span-3">
+      <div className="page-grid project-featured-grid items-start gap-y-8">
+        <header className="project-featured-heading col-span-4 md:col-span-4 xl:col-span-7">
           <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
             <span>{marker}</span>
             {project.prototype ? <PrototypeMark /> : null}
           </p>
+          <p className="project-figure-intent">PROJECT INDEX / FEATURED EVIDENCE</p>
           <h3
             id={titleId}
-            className="mt-3 text-[1.5rem] font-medium tracking-tight text-text sm:text-[1.85rem]"
+            className="project-featured-title"
           >
-            {project.title}
+            {titleParts ? (
+              <>
+                <span className="project-title-placeholder">{titleParts[1]}</span>
+                <span className="project-title-text">{titleParts[2]}</span>
+              </>
+            ) : (
+              project.title
+            )}
           </h3>
-          {project.role ? (
-            <p className="placeholder-copy mt-3 font-mono text-[0.75rem] tracking-[0.08em]">
-              {project.role}
-            </p>
-          ) : null}
         </header>
 
-        <div className="col-span-4 md:col-span-5 xl:col-span-5">
-          <p className="placeholder-copy max-w-xl text-[0.95rem] leading-[1.7]">
+        <div className="project-featured-story col-span-4 md:col-span-4 md:col-start-5 xl:col-span-5 xl:col-start-8">
+          <p className="project-featured-summary placeholder-copy">
             {project.summary}
           </p>
-          <p className="mt-4 font-mono text-[0.6875rem] tracking-[0.1em] text-text-tertiary uppercase">
-            {project.statusLabel ?? project.status}
-          </p>
-          <TechLegend labels={project.technologies} className="mt-4" />
-          <ProjectActions project={project} />
         </div>
 
-        <div className="col-span-4 md:col-span-8 xl:col-span-12">
+        <div className="project-featured-meta col-span-4 md:col-span-8 xl:col-span-12">
+          <dl className="project-featured-metadata">
+            {project.role ? (
+              <div className="project-meta-field">
+                <dt>Role</dt>
+                <dd>{project.role}</dd>
+              </div>
+            ) : null}
+            <div className="project-meta-field">
+              <dt>Status</dt>
+              <dd>{project.statusLabel ?? project.status}</dd>
+            </div>
+            <div className="project-meta-field project-meta-field--stack">
+              <dt>Stack</dt>
+              <dd>
+                <TechLegend labels={project.technologies} />
+              </dd>
+            </div>
+          </dl>
+          <div className="project-featured-actions">
+            <ProjectActions project={project} />
+          </div>
+        </div>
+
+        <div className="project-featured-figure col-span-4 md:col-span-8 xl:col-span-12">
           <FigureFrame
             figureId={figureId}
             kind="PROJECT EVIDENCE"
@@ -167,13 +190,15 @@ function SecondaryProject({
       className="project-index-item"
       data-doc-id={marker}
     >
-      <FigureFrame
-        figureId={figureId}
-        kind="PROJECT EVIDENCE"
-        mediaMeta="16∶11 · CROP"
-        caption="[PLACEHOLDER] Project figure"
-        label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
-      />
+      <div className="project-index-figure">
+        <FigureFrame
+          figureId={figureId}
+          kind="PROJECT EVIDENCE"
+          mediaMeta="16∶11 · CROP"
+          caption="[PLACEHOLDER] Project figure"
+          label={"[PLACEHOLDER]\nREAL PROJECT IMAGE"}
+        />
+      </div>
       <div className="project-index-copy min-w-0">
         <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
           <span>{marker}</span>

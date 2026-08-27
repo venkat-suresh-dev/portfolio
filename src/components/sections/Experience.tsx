@@ -40,17 +40,19 @@ function ExperienceRole({
       <article
         aria-labelledby={`${entry.id}-title`}
         data-doc-id={workId}
-        className="grid grid-cols-[0.7rem_minmax(0,1fr)] gap-x-3 md:grid-cols-[6.75rem_0.85rem_minmax(0,1fr)] md:gap-x-5"
+        className="trajectory-record grid grid-cols-[0.7rem_minmax(0,1fr)] gap-x-3 md:grid-cols-[6.75rem_0.85rem_minmax(0,1fr)] md:gap-x-5"
       >
         <p className="hidden pt-[0.4rem] text-right font-mono text-[0.7rem] leading-snug tracking-[0.06em] text-text-muted md:block">
           {entry.period}
         </p>
 
-        <div className="timeline-rail" aria-hidden="true">
-          <span className="timeline-node" />
+        <div className="timeline-rail trajectory-rail" aria-hidden="true">
+          <span className="timeline-node trajectory-node" />
+          <span className="trajectory-tick trajectory-tick--upper" />
+          <span className="trajectory-tick trajectory-tick--lower" />
         </div>
 
-        <div className="timeline-content min-w-0">
+        <div className="timeline-content trajectory-content min-w-0">
           <header className="experience-heading">
             <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
               <span>{workId}</span>
@@ -154,8 +156,13 @@ export function Experience() {
         ) : null}
 
         <ScrollReveal>
-          <div className="page-grid">
-            <ol className="col-span-4 m-0 list-none p-0 md:col-span-8 xl:col-span-10">
+          <div className="page-grid experience-composition">
+            <div className="trajectory-axis col-span-4 md:col-span-8 xl:col-span-10" aria-hidden="true">
+              <span>TRAJECTORY / WORK RECORD</span>
+              <span className="trajectory-axis-line" />
+              <span>WRK INDEX</span>
+            </div>
+            <ol className="trajectory-list col-span-4 m-0 list-none p-0 md:col-span-8 xl:col-span-10">
               {resolvedExperience.map((entry, index) => (
                 <ExperienceRole key={entry.id} entry={entry} index={index} />
               ))}

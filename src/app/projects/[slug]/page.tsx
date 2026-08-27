@@ -66,7 +66,7 @@ export default async function ProjectCaseStudyPage({
   const evaluationFigure = figures[1];
 
   return (
-    <main id="content" tabIndex={-1} className="page-section">
+    <main id="content" tabIndex={-1} className="page-section case-study-page">
       <article className="page-shell">
         <p className="font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted">
           <Link href="/#projects" className="legend-link min-h-11">
@@ -74,7 +74,7 @@ export default async function ProjectCaseStudyPage({
           </Link>
         </p>
 
-        <header className="mt-8 max-w-3xl">
+        <header className="case-study-header mt-8 max-w-3xl">
           <p className="flex flex-wrap items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-text-muted">
             <span>{docId}</span>
             {project.prototype ? <PrototypeMark /> : null}

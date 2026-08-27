@@ -174,8 +174,8 @@ export function AcademicWork({
   return (
     <section aria-labelledby={headingId} className="academic-work">
       <header className="mb-8 sm:mb-10">
-        <p className="font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted">
-          Master&apos;s
+        <p className="academic-work-kicker font-mono text-[0.6875rem] tracking-[0.12em] text-text-muted">
+          Master&apos;s <span aria-hidden="true">·</span> Research record
         </p>
         <h3
           id={headingId}

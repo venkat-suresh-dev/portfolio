@@ -81,12 +81,12 @@ export function Hero() {
       className="page-section page-section--hero hero-stage"
     >
       <div className="page-shell">
-        <div className="page-grid">
-          <div className="hero-reveal hero-reveal--kicker col-span-4 md:col-span-8 xl:col-span-12">
+        <div className="page-grid hero-composition">
+          <div className="hero-reveal hero-reveal--kicker hero-grid-content col-span-4 md:col-span-8 xl:col-span-12">
             <SectionKicker index="§01" label="Profile" />
           </div>
 
-          <div className="hero-reveal hero-reveal--name col-span-4 min-w-0 md:col-span-8 xl:col-span-12">
+          <div className="hero-reveal hero-reveal--name hero-grid-content col-span-4 min-w-0 md:col-span-8 xl:col-span-12">
             <DisplayName
               name={profile.name}
               as="h1"
@@ -95,7 +95,7 @@ export function Hero() {
             />
           </div>
 
-          <div className="hero-reveal hero-reveal--summary col-span-4 mt-6 md:col-span-5 md:mt-8 xl:col-span-7 xl:mt-8">
+          <div className="hero-reveal hero-reveal--summary hero-grid-content col-span-4 mt-6 md:col-span-5 md:mt-8 xl:col-span-7 xl:mt-8">
             <p className="hero-role">{profile.discipline}</p>
             {resolvedProfile.summary ? (
               <p className="hero-lede placeholder-copy mt-4">
@@ -165,7 +165,7 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="hero-reveal hero-reveal--status col-span-4 mt-10 md:col-span-3 md:col-start-6 md:mt-8 xl:col-span-5 xl:col-start-8 xl:mt-8">
+          <div className="hero-reveal hero-reveal--status hero-grid-content col-span-4 mt-10 md:col-span-3 md:col-start-6 md:mt-8 xl:col-span-5 xl:col-start-8 xl:mt-8">
             <StatusPanel />
           </div>
         </div>

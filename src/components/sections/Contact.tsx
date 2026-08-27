@@ -21,9 +21,16 @@ export function Contact() {
           headingId="contact-heading"
         />
 
+        <p className="contact-communication-label">ESTABLISH COMMUNICATION</p>
+
         <ScrollReveal>
-          <div className="page-grid">
-            <div className="col-span-4 min-w-0 md:col-span-8 xl:col-span-12">
+          <div className="page-grid contact-composition">
+            <div className="contact-signal" aria-hidden="true">
+              <span className="contact-signal-line" />
+              <span className="contact-signal-node" />
+            </div>
+
+            <div className="contact-statement col-span-4 min-w-0 md:col-span-8 xl:col-span-8">
               {closing ? (
                 <>
                   <p className="contact-eyebrow">{closing.closingEyebrow}</p>
@@ -34,7 +41,7 @@ export function Contact() {
               )}
             </div>
 
-            <div className="col-span-4 mt-10 md:col-span-6 xl:col-span-6">
+            <div className="contact-details col-span-4 mt-10 md:col-span-6 md:col-start-3 xl:col-span-4 xl:col-start-9">
               <p className="text-[1.0625rem] text-text-muted">
                 {profile.discipline}
               </p>

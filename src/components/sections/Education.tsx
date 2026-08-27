@@ -116,7 +116,7 @@ export function Education() {
         />
 
         <ScrollReveal>
-        <div className="page-grid items-start gap-y-10 xl:gap-y-0">
+        <div className="page-grid education-record-grid items-start gap-y-10 xl:gap-y-0">
           <ol className="col-span-4 m-0 list-none p-0 md:col-span-8 xl:col-span-7">
             {education.map((entry) => (
               <li key={entry.id}>
